@@ -5,7 +5,9 @@ const root = path.resolve(__dirname, '..');
 const engine = require(path.resolve(process.env.FLATPPL_JS_DIR || path.join(root, '../flatppl-js'), 'packages/engine/index.ts'));
 const request = JSON.parse(fs.readFileSync(0, 'utf8'));
 const expressions = Array.isArray(request) ? request : null;
-const sources = Object.fromEntries(fs.readdirSync(root).filter(name => name.endsWith('.flatppl'))
+const modulePaths = ['main.flatppl', ...fs.readdirSync(path.join(root, 'src'))
+  .filter(name => name.endsWith('.flatppl')).map(name => 'src/' + name)];
+const sources = Object.fromEntries(modulePaths
   .map(name => [path.join(root, name), fs.readFileSync(path.join(root, name), 'utf8')]));
 const source = expressions ? 'flatppl_compat = "0.1"\na = load_module("../main.flatppl")\n'
   + expressions.map((expression, i) => `probe${i} = ${expression}`).join('\n') : request.source;

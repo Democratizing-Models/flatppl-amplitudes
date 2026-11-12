@@ -5,7 +5,7 @@ The p K channel closes below threshold while the Sigma pi channel stays open.
 The amplitude includes the closed channel through analytic continuation.
 %%%
 flatppl_compat = "0.1"
-a = load_module("main.flatppl")
+a = load_module("../main.flatppl")
 sigma = elementof(posreals)
 amplitude = a.resonance_multichannel_breitwigner(
   sigma,

@@ -4,10 +4,10 @@
 Amplitude-analysis helpers. Each component module also loads on its own.
 %%%
 flatppl_compat = "0.1"
-angular = load_module("angular.flatppl")
-lineshapes = load_module("lineshapes.flatppl")
-kinematics = load_module("kinematics.flatppl")
-dalitz = load_module("dalitz.flatppl")
+angular = load_module("src/angular.flatppl")
+lineshapes = load_module("src/lineshapes.flatppl")
+kinematics = load_module("src/kinematics.flatppl")
+dalitz = load_module("src/dalitz.flatppl")
 clebschgordan = angular.clebschgordan
 clebschgordan_doublearg = angular.clebschgordan_doublearg
 ls_coupling = angular.ls_coupling

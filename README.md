@@ -5,7 +5,7 @@ angular-momentum couplings, Wigner matrices, Lorentz boosts, and Dalitz angles.
 
 ```flatppl
 flatppl_compat = "0.1"
-amp = load_module("https://raw.githubusercontent.com/Democratizing-Models/flatppl-amplitudes/main/flatppl-amplitudes.flatppl.zip")
+amp = load_module("https://raw.githubusercontent.com/Democratizing-Models/flatppl-amplitudes/main/dist/flatppl-amplitudes.flatppl.zip")
 
 coupling = amp.ls_coupling(3, 1, 2, 2, 1, 1, 0)
 rotation = amp.wignerd_matrix_doublearg(1, 0.4)
@@ -26,12 +26,12 @@ See the [function reference](docs/reference.md) for all 15 functions, domains,
 phase conventions, and test commands. Spin arguments that determine array
 sizes must be fixed before compilation.
 
-[example.flatppl](example.flatppl) evaluates a two-channel Lambda(1405)
+[The Lambda(1405) example](examples/lambda1405.flatppl) evaluates a two-channel
 lineshape, including the closed-channel continuation. Values, gradients, and
 `vmap` pass checks on CPU and GH200 in float32 and float64.
 
 The library follows [the PR 234 proposal](https://github.com/flatppl/flatppl-design/pull/234)
 and the [existing LHCb implementations](https://github.com/Democratizing-Models/statsmodel-rosetta-stone/tree/lhcb-amplitude-models/src/physics/hadron/amplitude-serialization).
-It uses ordinary FlatPPL modules. Each helper file can also be loaded directly.
+It uses ordinary FlatPPL modules. Each helper in `src/` can also be loaded directly.
 
 MIT license. See [LICENSE](LICENSE) and [third-party notices](THIRD-PARTY-NOTICES.txt).

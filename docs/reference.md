@@ -4,11 +4,11 @@
 
 | Module | Functions |
 |---|---|
-| `angular.flatppl` | `clebschgordan(j1,m1,j2,m2,j,m)`, `clebschgordan_doublearg(two_j1,two_m1,two_j2,two_m2,two_j,two_m)`, `ls_coupling(two_j,two_j1,two_j2,two_l,two_s,two_lambda1,two_lambda2)` |
-| `angular.flatppl` | `wignerd_matrix(j,cosbeta)`, `wignerd_matrix_doublearg(two_j,cosbeta)` |
-| `lineshapes.flatppl` | `twobody_phasespace(sigma,ma,mb)`, `resonance_multichannel_breitwigner(sigma,m,gsq,mas,mbs,ls,ds)`, `resonance_bugg_breitwigner(sigma,m,width,sa,gamma)` |
-| `kinematics.flatppl` | `mass_squared(p)`, `boost_to_rest(p,P)`, `boost_from_rest(p,P)`, `helicity_frame(p,P,child)`, `helicity_angles(p,P,child)` |
-| `dalitz.flatppl` | `dalitz_cos_theta(k,sigmas,m0,ms)`, `dalitz_cos_zeta(i,k,l,sigmas,m0,ms)` |
+| `src/angular.flatppl` | `clebschgordan(j1,m1,j2,m2,j,m)`, `clebschgordan_doublearg(two_j1,two_m1,two_j2,two_m2,two_j,two_m)`, `ls_coupling(two_j,two_j1,two_j2,two_l,two_s,two_lambda1,two_lambda2)` |
+| `src/angular.flatppl` | `wignerd_matrix(j,cosbeta)`, `wignerd_matrix_doublearg(two_j,cosbeta)` |
+| `src/lineshapes.flatppl` | `twobody_phasespace(sigma,ma,mb)`, `resonance_multichannel_breitwigner(sigma,m,gsq,mas,mbs,ls,ds)`, `resonance_bugg_breitwigner(sigma,m,width,sa,gamma)` |
+| `src/kinematics.flatppl` | `mass_squared(p)`, `boost_to_rest(p,P)`, `boost_from_rest(p,P)`, `helicity_frame(p,P,child)`, `helicity_angles(p,P,child)` |
+| `src/dalitz.flatppl` | `dalitz_cos_theta(k,sigmas,m0,ms)`, `dalitz_cos_zeta(i,k,l,sigmas,m0,ms)` |
 
 The integer-spin angular functions delegate to the doubled-spin functions.
 Clebsch-Gordan coefficients use Condon–Shortley phases and return zero for forbidden couplings.
@@ -64,16 +64,16 @@ After changing library code, regenerate the checked-in browser bundle from the r
 
 ```sh
 flatppl pack main.flatppl /tmp/flatppl-amplitudes.flatppl.zip
-cp /tmp/flatppl-amplitudes.flatppl.zip flatppl-amplitudes.flatppl.zip
+cp /tmp/flatppl-amplitudes.flatppl.zip dist/flatppl-amplitudes.flatppl.zip
 ```
 
 The output path supplied to `pack` must be new. Only the library and its helper modules enter this bundle.
 
-`example.flatppl` exposes an invariant-mass input and the Lambda(1405) intensity output.
+`examples/lambda1405.flatppl` exposes an invariant-mass input and the Lambda(1405) intensity output.
 From the repository root, compile it with the Rust CLI:
 
 ```sh
-flatppl stablehlo example.flatppl --dtype f64 -o example.mlir
+flatppl stablehlo examples/lambda1405.flatppl --dtype f64 -o example.mlir
 ```
 
 The numerical tests use an existing environment with NumPy and SymPy, plus Node and the JS engine checkout:
