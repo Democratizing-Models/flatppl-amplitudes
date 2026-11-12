@@ -1,0 +1,21 @@
+%%%
+# Two-channel Lambda(1405) lineshape
+
+The p K channel closes below threshold while the Sigma pi channel stays open.
+The amplitude includes the closed channel through analytic continuation.
+%%%
+flatppl_compat = "0.1"
+a = load_module("main.flatppl")
+sigma = elementof(posreals)
+amplitude = a.resonance_multichannel_breitwigner(
+  sigma,
+  1.4051,
+  [0.328725260215546, 0.328725260215546],
+  [0.938272046, 1.18937],
+  [0.493677, 0.13957018],
+  [0, 0],
+  [1.5, 1.5],
+)
+intensity = real(amplitude) ^ 2 + imag(amplitude) ^ 2
+inputs = sigma
+outputs = intensity

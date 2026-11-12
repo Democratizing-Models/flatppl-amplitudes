@@ -1,0 +1,22 @@
+%%%
+# Coupled-channel lineshapes
+
+Masses share one energy unit. `sigma` is positive invariant mass squared.
+The phase-space factors continue from the upper half-plane, including below
+the pseudothreshold. Channel vectors must have equal, nonzero lengths.
+%%%
+flatppl_compat = "0.1"
+hep = standard_module("particle-physics", "0.1")
+# Keep inactive square-root branches away from zero for finite interior AD.
+_positive_sqrt(x) = ifelse(x > 0, sqrt(ifelse(x > 0, x, 1.0)), 0.0)
+_upper_sqrt(x) = complex(_positive_sqrt(x), _positive_sqrt(-x))
+twobody_phasespace = (sigma, ma, mb) -> _upper_sqrt(1 - (ma + mb) ^ 2 / sigma) * _upper_sqrt(1 - (ma - mb) ^ 2 / sigma)
+_barrier_polynomial = (l, z) -> [1.0, 1 + z, 9 + z * (3 + z), 225 + z * (45 + z * (6 + z)), 11025 + z * (1575 + z * (135 + z * (10 + z))), 893025 + z * (99225 + z * (6300 + z * (315 + z * (15 + z)))), 108056025 + z * (9823275 + z * (496125 + z * (18900 + z * (630 + z * (21 + z))))), 18261468225.0 + z * (1404728325 + z * (58939650 + z * (1819125 + z * (47250 + z * (1134 + z * (28 + z))))))][l + 1]
+# For l=0 the numerator is exactly one, including at radius zero.
+_barrier_squared = (l, z) -> ifelse(l == 0, 1.0, z) ^ l / _barrier_polynomial(l, z)
+_channel = (sigma, gsq, ma, mb, l, d) -> gsq * twobody_phasespace(sigma, ma, mb) * _barrier_squared(l, d ^ 2 * hep.kallen(sigma, ma ^ 2, mb ^ 2) / (4 * sigma))
+_channel_real = (sigma, gsq, ma, mb, l, d) -> real(_channel(sigma, gsq, ma, mb, l, d))
+_channel_imag = (sigma, gsq, ma, mb, l, d) -> imag(_channel(sigma, gsq, ma, mb, l, d))
+resonance_multichannel_breitwigner = (sigma, m, gsq, mas, mbs, ls, ds) -> 1 / complex(m ^ 2 - sigma + sum(_channel_imag.([sigma], gsq, mas, mbs, ls, ds)), -sum(_channel_real.([sigma], gsq, mas, mbs, ls, ds)))
+% Simplified LHCb Adler-zero form, not the full Bugg model.
+resonance_bugg_breitwigner = (sigma, m, width, sa, gamma) -> 1 / (m ^ 2 - sigma - complex(0.0, 1.0) * m * width * (sigma - sa) / (m ^ 2 - sa) * exp(-gamma * sigma))

@@ -1,0 +1,24 @@
+%%%
+# Angular momentum
+
+Condon-Shortley Clebsch-Gordan coefficients, LS helicity couplings, and
+Wigner small-d matrices. Spin arguments that determine array sizes must be fixed.
+%%%
+flatppl_compat = "0.1"
+angular_logfactorial = n -> loggamma(max(0, n) + 1)
+angular_cg_term = (k, a, b, c, d, e, logprefactor) -> ifelse(min(min(a - k, b - k), min(c - k, min(d + k, e + k))) >= 0, (-1) ^ k * exp(logprefactor - angular_logfactorial(k) - angular_logfactorial(a - k) - angular_logfactorial(b - k) - angular_logfactorial(c - k) - angular_logfactorial(d + k) - angular_logfactorial(e + k)), 0)
+angular_cg_sum = (a, b, c, d, e, logprefactor, ks) -> sum(broadcast(angular_cg_term, k = ks, a = a, b = b, c = c, d = d, e = e, logprefactor = logprefactor))
+angular_cg_prefactor = (j1, m1, j2, m2, j, m) -> (log(j + 1) + angular_logfactorial(div(j + j1 - j2, 2)) + angular_logfactorial(div(j - j1 + j2, 2)) + angular_logfactorial(div(j1 + j2 - j, 2)) - angular_logfactorial(div(j1 + j2 + j, 2) + 1) + angular_logfactorial(div(j + m, 2)) + angular_logfactorial(div(j - m, 2)) + angular_logfactorial(div(j1 - m1, 2)) + angular_logfactorial(div(j1 + m1, 2)) + angular_logfactorial(div(j2 - m2, 2)) + angular_logfactorial(div(j2 + m2, 2))) / 2
+% Clebsch-Gordan coefficient with doubled spin and magnetic quantum numbers.
+clebschgordan_doublearg = (two_j1, two_m1, two_j2, two_m2, two_j, two_m) -> ifelse(two_m1 + two_m2 == two_m && abs(two_m1) <= two_j1 && abs(two_m2) <= two_j2 && abs(two_m) <= two_j && abs(two_j1 - two_j2) <= two_j && two_j <= two_j1 + two_j2 && mod(two_j1 + two_m1, 2) == 0 && mod(two_j2 + two_m2, 2) == 0 && mod(two_j + two_m, 2) == 0 && mod(two_j1 + two_j2 + two_j, 2) == 0, angular_cg_sum(div(two_j1 + two_j2 - two_j, 2), div(two_j1 - two_m1, 2), div(two_j2 + two_m2, 2), div(two_j - two_j2 + two_m1, 2), div(two_j - two_j1 - two_m2, 2), angular_cg_prefactor(two_j1, two_m1, two_j2, two_m2, two_j, two_m), linspace(0, two_j1 + two_j2, two_j1 + two_j2 + 1)), 0)
+% Integer-spin Clebsch-Gordan coefficient.
+clebschgordan = (j1, m1, j2, m2, j, m) -> clebschgordan_doublearg(2 * j1, 2 * m1, 2 * j2, 2 * m2, 2 * j, 2 * m)
+% LS helicity coupling with all momenta and helicities doubled.
+ls_coupling = (two_j, two_j1, two_j2, two_l, two_s, two_lambda1, two_lambda2) -> sqrt((two_l + 1) / (two_j + 1)) * clebschgordan_doublearg(two_j1, two_lambda1, two_j2, -two_lambda2, two_s, two_lambda1 - two_lambda2) * clebschgordan_doublearg(two_l, 0, two_s, two_lambda1 - two_lambda2, two_j, two_lambda1 - two_lambda2)
+angular_wigner_term = (k, two_j, a, b, delta, c, s, logprefactor) -> ifelse(min(min(a - k, b - k), delta + k) >= 0, (-1) ^ (delta + k) * exp(logprefactor - angular_logfactorial(a - k) - angular_logfactorial(k) - angular_logfactorial(delta + k) - angular_logfactorial(b - k)) * c ^ max(0, two_j - delta - 2 * k) * s ^ max(0, delta + 2 * k), 0)
+angular_wignerd_entry = (two_j, two_m1, two_m2, cosbeta, k) -> angular_wigner_term(k, two_j, (two_j + two_m2) / 2, (two_j - two_m1) / 2, (two_m1 - two_m2) / 2, sqrt((1 + cosbeta) / 2), sqrt((1 - cosbeta) / 2), (angular_logfactorial((two_j + two_m1) / 2) + angular_logfactorial((two_j - two_m1) / 2) + angular_logfactorial((two_j + two_m2) / 2) + angular_logfactorial((two_j - two_m2) / 2)) / 2)
+angular_wigner_reduce = terms -> aggregate(sum, [.a, .b], terms[.a, .b, .k])
+angular_wignerd_grid = (two_j, cosbeta, momenta, ks) -> angular_wigner_reduce(broadcast(angular_wignerd_entry, two_j = two_j, two_m1 = addaxes(momenta, 0, 2), two_m2 = addaxes(addaxes(momenta, 1, 0), 0, 1), cosbeta = cosbeta, k = addaxes(ks, 2, 0)))
+% Rows and columns descend from m = j to m = -j.
+wignerd_matrix_doublearg = (two_j, cosbeta) -> angular_wignerd_grid(two_j, cosbeta, two_j .- 2 .* linspace(0, two_j, two_j + 1), linspace(0, two_j, two_j + 1))
+wignerd_matrix = (j, cosbeta) -> wignerd_matrix_doublearg(2 * j, cosbeta)

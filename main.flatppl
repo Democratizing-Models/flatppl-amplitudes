@@ -1,0 +1,25 @@
+%%%
+# FlatPPL amplitudes
+
+Amplitude-analysis helpers. Each component module also loads on its own.
+%%%
+flatppl_compat = "0.1"
+angular = load_module("angular.flatppl")
+lineshapes = load_module("lineshapes.flatppl")
+kinematics = load_module("kinematics.flatppl")
+dalitz = load_module("dalitz.flatppl")
+clebschgordan = angular.clebschgordan
+clebschgordan_doublearg = angular.clebschgordan_doublearg
+ls_coupling = angular.ls_coupling
+wignerd_matrix = angular.wignerd_matrix
+wignerd_matrix_doublearg = angular.wignerd_matrix_doublearg
+twobody_phasespace = lineshapes.twobody_phasespace
+resonance_multichannel_breitwigner = lineshapes.resonance_multichannel_breitwigner
+resonance_bugg_breitwigner = lineshapes.resonance_bugg_breitwigner
+mass_squared = kinematics.mass_squared
+boost_to_rest = kinematics.boost_to_rest
+boost_from_rest = kinematics.boost_from_rest
+helicity_frame = kinematics.helicity_frame
+helicity_angles = kinematics.helicity_angles
+dalitz_cos_theta = dalitz.dalitz_cos_theta
+dalitz_cos_zeta = dalitz.dalitz_cos_zeta
