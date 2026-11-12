@@ -5,20 +5,22 @@ angular-momentum couplings, Wigner matrices, Lorentz boosts, and Dalitz angles.
 
 ```flatppl
 flatppl_compat = "0.1"
-amp = load_module("https://github.com/Democratizing-Models/flatppl-amplitudes/archive/refs/heads/main.zip")
+amp = load_module("https://raw.githubusercontent.com/Democratizing-Models/flatppl-amplitudes/main/flatppl-amplitudes.flatppl.zip")
 
 coupling = amp.ls_coupling(3, 1, 2, 2, 1, 1, 0)
 rotation = amp.wignerd_matrix_doublearg(1, 0.4)
 ```
 
-With the Rust CLI, run `flatppl prepare model.flatppl` before compiling a model
-that imports the URL. The archive contains the library entry `main.flatppl`
-inside GitHub's repository folder. A local checkout also loads with
+With the Rust CLI, run `flatppl prepare model.flatppl` and approve the URL before
+compiling a model that imports it. The ZIP contains the library entry `main.flatppl`
+and its helper modules. A local checkout also loads with
 `load_module("path/to/flatppl-amplitudes")` or `load_module("main.flatppl")`
 from a file in that checkout.
 
-The `main` ZIP follows the current branch. To pin the source, use
-`https://github.com/Democratizing-Models/flatppl-amplitudes/archive/<commit-sha>.zip`.
+The URL follows the current branch. Replace `main` with a commit SHA to pin it.
+The [GitHub source ZIP](https://github.com/Democratizing-Models/flatppl-amplitudes/archive/refs/heads/main.zip)
+also loads in the Rust CLI. Browser imports need the raw ZIP above because
+GitHub's archive endpoint redirects and restricts cross-origin requests.
 
 See the [function reference](docs/reference.md) for all 15 functions, domains,
 phase conventions, and test commands. Spin arguments that determine array

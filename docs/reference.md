@@ -60,6 +60,15 @@ Physical-domain preconditions are caller obligations. These helpers do not valid
 
 ## Example and checks
 
+After changing library code, regenerate the checked-in browser bundle from the repository root:
+
+```sh
+flatppl pack main.flatppl /tmp/flatppl-amplitudes.flatppl.zip
+cp /tmp/flatppl-amplitudes.flatppl.zip flatppl-amplitudes.flatppl.zip
+```
+
+The output path supplied to `pack` must be new. Only the library and its helper modules enter this bundle.
+
 `example.flatppl` exposes an invariant-mass input and the Lambda(1405) intensity output.
 From the repository root, compile it with the Rust CLI:
 
