@@ -35,7 +35,8 @@ sizes must be fixed before compilation.
 lineshape, including the closed-channel continuation. Values, gradients, and
 `vmap` pass checks on CPU and GH200 in float32 and float64.
 
-For complete decay examples, see the [LHCb amplitude models](https://github.com/Democratizing-Models/statsmodel-rosetta-stone/tree/lhcb-amplitude-models/src/physics/hadron/amplitude-serialization).
+The [complete LHCb examples](docs/lhcb-examples.md) cover Λc, Λb, and both B+ amplitudes,
+with kinematics, amplitude model, and observable presented in that order.
 Each helper module in `src/` can also be loaded directly.
 
 MIT license. See [LICENSE](LICENSE) and [third-party notices](THIRD-PARTY-NOTICES.txt).

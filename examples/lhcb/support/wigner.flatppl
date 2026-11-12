@@ -1,0 +1,18 @@
+%%%
+# Scalar Wigner entries
+
+Use the library’s finite sum for one requested entry, without constructing unused helicities.
+%%%
+flatppl_compat = "0.1"
+angular = load_module("../../../src/angular.flatppl")
+
+wignerd_doublearg(two_j, two_m1, two_m2, cosbeta) = (
+    sum(broadcast(
+        angular.angular_wignerd_entry,
+        two_j = two_j,
+        two_m1 = two_m1,
+        two_m2 = two_m2,
+        cosbeta = cosbeta,
+        k = linspace(0, two_j, two_j + 1)
+    ))
+)

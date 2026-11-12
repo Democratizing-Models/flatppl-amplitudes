@@ -1,0 +1,279 @@
+%%%
+# B+ → anti-D0 π− D+ K+, C = + (LHCb, arXiv:2406.03156): amplitude model
+
+Helicity amplitudes and published couplings. Masses are in GeV.
+%%%
+flatppl_compat = "0.1"
+amp = load_module("../../../main.flatppl")
+hep = standard_module("particle-physics", "0.1")
+bw = load_module("../support/breitwigner.flatppl")
+wd = load_module("../support/wigner.flatppl")
+
+# ----------------------------------------------------------------------------
+# Masses
+# ----------------------------------------------------------------------------
+
+m0 = 5.27934  % B+
+m1 = 1.86483  % anti-D0
+m2 = 0.13957039  % pi-
+m3 = 1.86965  % D+
+m4 = 0.493677  % K+
+s0 = m0^2
+ms1 = m1^2
+ms2 = m2^2
+ms3 = m3^2
+ms4 = m4^2
+mass2 = amp.mass_squared
+to_frame(p, P, sign) = amp.helicity_frame(p, P, ifelse(sign > 0, 1, 2))
+abs3(p) = sqrt(p[2]^2 + p[3]^2 + p[4]^2)
+cos_theta_dir(p) = p[4] / abs3(p)
+phi_dir(p) = atan2(p[3], p[2])
+
+# ----------------------------------------------------------------------------
+# Lineshapes of the resonances, as functions of the mass squared s
+# ----------------------------------------------------------------------------
+
+% lineshape_Dst (generic_function)
+ls_Dst(s) = exp(-0.5 * ((sqrt(s) - 2.01026) / 1.0e-6)^16)
+% lineshape_X(3872) (generic_function)
+ls_X_3872(s) = amp.resonance_multichannel_breitwigner(s, 3.87165, s .* [0.00015918785632281445, 0.0015221150006828033], [2.01026, 2.01026], [1.86965, 1.86965], [0, 2], [0.0, 3.0])
+% lineshape_X(3915)(0-) (BreitWigner)
+ls_X_3915_0(s) = bw.resonance_breitwigner(s, 3.944541826791121, 0.12967347104307578, hep.breakup_momentum(sqrt(s), 2.01026, 1.86965), hep.breakup_momentum(3.944541826791121, 2.01026, 1.86965), hep.blatt_weisskopf(1, hep.breakup_momentum(sqrt(s), 2.01026, 1.86965), 3.0), hep.blatt_weisskopf(1, hep.breakup_momentum(3.944541826791121, 2.01026, 1.86965), 3.0))
+% lineshape_chi(c2)(3930) (BreitWigner)
+ls_chi_c2_3930(s) = bw.resonance_breitwigner(s, 3.9272, 0.024, hep.breakup_momentum(sqrt(s), 2.01026, 1.86965), hep.breakup_momentum(3.9272, 2.01026, 1.86965), hep.blatt_weisskopf(2, hep.breakup_momentum(sqrt(s), 2.01026, 1.86965), 3.0), hep.blatt_weisskopf(2, hep.breakup_momentum(3.9272, 2.01026, 1.86965), 3.0))
+% lineshape_X(3940)(1.) (generic_function)
+ls_X_3940_1(s) = amp.resonance_multichannel_breitwigner(s, 4.000356038444546, s .* [0.09197174317593033, 0.42581168301131467], [2.01026, 2.01026], [1.86965, 1.86965], [0, 2], [0.0, 3.0])
+% lineshape_X(3993) (generic_function)
+ls_X_3993(s) = amp.resonance_multichannel_breitwigner(s, 4.012482696497617, s .* [0.04879117475081541, 0.04911172900765339], [2.01026, 2.01026], [1.86965, 1.86965], [0, 2], [0.0, 3.0])
+% lineshape_Psi(4040) (BreitWigner)
+ls_Psi_4040(s) = bw.resonance_breitwigner(s, 4.039, 0.08, hep.breakup_momentum(sqrt(s), 2.01026, 1.86965), hep.breakup_momentum(4.039, 2.01026, 1.86965), hep.blatt_weisskopf(1, hep.breakup_momentum(sqrt(s), 2.01026, 1.86965), 3.0), hep.blatt_weisskopf(1, hep.breakup_momentum(4.039, 2.01026, 1.86965), 3.0))
+% lineshape_X(4300) (generic_function)
+ls_X_4300(s) = amp.resonance_multichannel_breitwigner(s, 4.307256285732596, s .* [0.008519656138455888, 0.0347237677616316], [2.01026, 2.01026], [1.86965, 1.86965], [0, 2], [0.0, 3.0])
+% lineshape_NR(0-)SPp (generic_function)
+ls_NR_0_SPp(s) = exp(-(-0.11261265753519498) * (s - 4.35^2)) * cis(-0.3362692520521029 * (s - 4.35^2))
+% lineshape_NR(1.)PSp (Polynomial)
+ls_NR_1_PSp(s) = polynomial(coefficients = [1.0], x = s)
+% lineshape_NR(0-)SPm (Polynomial)
+ls_NR_0_SPm(s) = polynomial(coefficients = [1.0], x = s)
+% lineshape_NR(1-)PPm (Polynomial)
+ls_NR_1_PPm(s) = polynomial(coefficients = [1.0], x = s)
+
+ls_2_0_0_2_0_0_0 = amp.ls_coupling(2, 0, 0, 2, 0, 0, 0)
+ls_2_2_0_0_2_m2_0 = amp.ls_coupling(2, 2, 0, 0, 2, -2, 0)
+ls_2_2_0_0_2_0_0 = amp.ls_coupling(2, 2, 0, 0, 2, 0, 0)
+ls_2_2_0_0_2_2_0 = amp.ls_coupling(2, 2, 0, 0, 2, 2, 0)
+ls_0_2_0_2_2_0_0 = amp.ls_coupling(0, 2, 0, 2, 2, 0, 0)
+ls_2_2_0_4_2_m2_0 = amp.ls_coupling(2, 2, 0, 4, 2, -2, 0)
+ls_2_2_0_4_2_0_0 = amp.ls_coupling(2, 2, 0, 4, 2, 0, 0)
+ls_2_2_0_4_2_2_0 = amp.ls_coupling(2, 2, 0, 4, 2, 2, 0)
+ls_0_0_0_0_0_0_0 = amp.ls_coupling(0, 0, 0, 0, 0, 0, 0)
+ls_4_2_0_4_2_m2_0 = amp.ls_coupling(4, 2, 0, 4, 2, -2, 0)
+ls_4_2_0_4_2_2_0 = amp.ls_coupling(4, 2, 0, 4, 2, 2, 0)
+ls_0_4_0_4_4_0_0 = amp.ls_coupling(0, 4, 0, 4, 4, 0, 0)
+ls_2_2_0_2_2_m2_0 = amp.ls_coupling(2, 2, 0, 2, 2, -2, 0)
+ls_2_2_0_2_2_2_0 = amp.ls_coupling(2, 2, 0, 2, 2, 2, 0)
+
+
+# ----------------------------------------------------------------------------
+# Four-momenta of the final-state particles in the parent rest frame
+# ----------------------------------------------------------------------------
+
+p1 = elementof(cartpow(reals, 4))  % anti-D0
+p2 = elementof(cartpow(reals, 4))  % pi-
+p3 = elementof(cartpow(reals, 4))  % D+
+p4 = elementof(cartpow(reals, 4))  % K+
+% Invariant masses of all lines
+minv_12 = sqrt(mass2(p1 + p2))
+minv_12_3 = sqrt(mass2(p1 + p2 + p3))
+
+# ----------------------------------------------------------------------------
+# Helicity frames and angles of topology 1, [[[1, 2], 3], 4]
+# ----------------------------------------------------------------------------
+
+t1_dir_12_3_4 = p1 + p2 + p3  % first child in the frame of 12_3_4
+t1_cos_theta_12_3_4 = cos_theta_dir(t1_dir_12_3_4)
+t1_phi_12_3_4 = phi_dir(t1_dir_12_3_4)
+t1_P_12_3 = p1 + p2 + p3
+t1_p1_12_3 = to_frame(p1, t1_P_12_3, 1.0)
+t1_p2_12_3 = to_frame(p2, t1_P_12_3, 1.0)
+t1_p3_12_3 = to_frame(p3, t1_P_12_3, 1.0)
+t1_dir_12_3 = t1_p1_12_3 + t1_p2_12_3  % first child in the frame of 12_3
+t1_cos_theta_12_3 = cos_theta_dir(t1_dir_12_3)
+t1_phi_12_3 = phi_dir(t1_dir_12_3)
+t1_P_12 = t1_p1_12_3 + t1_p2_12_3
+t1_p1_12 = to_frame(t1_p1_12_3, t1_P_12, 1.0)
+t1_p2_12 = to_frame(t1_p2_12_3, t1_P_12, 1.0)
+t1_dir_12 = t1_p1_12  % first child in the frame of 12
+t1_cos_theta_12 = cos_theta_dir(t1_dir_12)
+t1_phi_12 = phi_dir(t1_dir_12)
+
+# ----------------------------------------------------------------------------
+# Decay chains
+# ----------------------------------------------------------------------------
+
+# Line amplitudes a<chain>_<line>_<2λ> for the helicity λ of the line, written
+# once and used by the later chains with the same line amplitudes
+# c01_X_3872_l1_l0: [[[1, 2], 3], 4], weight -0.1495245549758687 - 0.0i
+# vertex 12: LS coupling, L = 1, S = 0
+a01_12_m2 = ls_2_0_0_2_0_0_0 * cis(-2 * t1_phi_12 / 2) * wd.wignerd_doublearg(2, -2, 0, t1_cos_theta_12) * sqrt(3.0) * ls_Dst(minv_12^2)
+a01_12_0 = ls_2_0_0_2_0_0_0 * cis(0 * t1_phi_12 / 2) * wd.wignerd_doublearg(2, 0, 0, t1_cos_theta_12) * sqrt(3.0) * ls_Dst(minv_12^2)
+a01_12_p2 = ls_2_0_0_2_0_0_0 * cis(2 * t1_phi_12 / 2) * wd.wignerd_doublearg(2, 2, 0, t1_cos_theta_12) * sqrt(3.0) * ls_Dst(minv_12^2)
+% vertex 12_3: LS coupling, L = 0, S = 1
+a01_12_3_0 = ((
+    ls_2_2_0_0_2_m2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, -2, t1_cos_theta_12_3) * a01_12_m2
+    + ls_2_2_0_0_2_0_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 0, t1_cos_theta_12_3) * a01_12_0
+    + ls_2_2_0_0_2_2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 2, t1_cos_theta_12_3) * a01_12_p2
+)) * sqrt(3.0) * ls_X_3872(minv_12_3^2)
+% vertex 12_3_4: LS coupling, L = 1, S = 1
+a01_12_3_4_0 = ls_0_2_0_2_2_0_0 * a01_12_3_0 * hep.blatt_weisskopf(1, hep.breakup_momentum(m0, minv_12_3, m4), 3.0)
+c01_X_3872_l1_l0 = -0.1495245549758687 * a01_12_3_4_0
+# c02_X_3872_l1_l2: [[[1, 2], 3], 4], weight -0.11974831471312643 + 0.44658495720177055i
+# vertex 12_3: LS coupling, L = 2, S = 1
+a02_12_3_0 = ((
+    ls_2_2_0_4_2_m2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, -2, t1_cos_theta_12_3) * a01_12_m2
+    + ls_2_2_0_4_2_0_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 0, t1_cos_theta_12_3) * a01_12_0
+    + ls_2_2_0_4_2_2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 2, t1_cos_theta_12_3) * a01_12_p2
+)) * sqrt(3.0) * ls_X_3872(minv_12_3^2) * hep.blatt_weisskopf(2, hep.breakup_momentum(minv_12_3, minv_12, m3), 3.0)
+% vertex 12_3_4: LS coupling, L = 1, S = 1
+a02_12_3_4_0 = ls_0_2_0_2_2_0_0 * a02_12_3_0 * hep.blatt_weisskopf(1, hep.breakup_momentum(m0, minv_12_3, m4), 3.0)
+c02_X_3872_l1_l2 = (-0.11974831471312643 + 0.44658495720177055 * im) * a02_12_3_4_0
+# c03_X_3915_0_l0_l1: [[[1, 2], 3], 4], weight -0.13461137661404168 + 0.1428154768213997i
+# vertex 12_3: LS coupling, L = 1, S = 1
+a03_12_3_0 = ls_0_2_0_2_2_0_0 * a01_12_0 * sqrt(1.0) * ls_X_3915_0(minv_12_3^2) * hep.blatt_weisskopf(1, hep.breakup_momentum(minv_12_3, minv_12, m3), 3.0)
+% vertex 12_3_4: LS coupling, L = 0, S = 0
+a03_12_3_4_0 = ls_0_0_0_0_0_0_0 * a03_12_3_0
+c03_X_3915_0_l0_l1 = (-0.13461137661404168 + 0.1428154768213997 * im) * a03_12_3_4_0
+# c04_chi_c2_3930_l2_l2: [[[1, 2], 3], 4], weight -0.06309647933299936 - 0.18924645907846138i
+# vertex 12_3: LS coupling, L = 2, S = 1
+a04_12_3_0 = ((
+    ls_4_2_0_4_2_m2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(4, 0, -2, t1_cos_theta_12_3) * a01_12_m2
+    + ls_4_2_0_4_2_2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(4, 0, 2, t1_cos_theta_12_3) * a01_12_p2
+)) * sqrt(5.0) * ls_chi_c2_3930(minv_12_3^2) * hep.blatt_weisskopf(2, hep.breakup_momentum(minv_12_3, minv_12, m3), 3.0)
+% vertex 12_3_4: LS coupling, L = 2, S = 2
+a04_12_3_4_0 = ls_0_4_0_4_4_0_0 * a04_12_3_0 * hep.blatt_weisskopf(2, hep.breakup_momentum(m0, minv_12_3, m4), 3.0)
+c04_chi_c2_3930_l2_l2 = (-0.06309647933299936 - 0.18924645907846138 * im) * a04_12_3_4_0
+# c05_X_3940_1_l1_l0: [[[1, 2], 3], 4], weight 0.13375014295364962 - 0.04961261344347765i
+# vertex 12_3: LS coupling, L = 0, S = 1
+a05_12_3_0 = ((
+    ls_2_2_0_0_2_m2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, -2, t1_cos_theta_12_3) * a01_12_m2
+    + ls_2_2_0_0_2_0_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 0, t1_cos_theta_12_3) * a01_12_0
+    + ls_2_2_0_0_2_2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 2, t1_cos_theta_12_3) * a01_12_p2
+)) * sqrt(3.0) * ls_X_3940_1(minv_12_3^2)
+% vertex 12_3_4: LS coupling, L = 1, S = 1
+a05_12_3_4_0 = ls_0_2_0_2_2_0_0 * a05_12_3_0 * hep.blatt_weisskopf(1, hep.breakup_momentum(m0, minv_12_3, m4), 3.0)
+c05_X_3940_1_l1_l0 = (0.13375014295364962 - 0.04961261344347765 * im) * a05_12_3_4_0
+# c06_X_3940_1_l1_l2: [[[1, 2], 3], 4], weight 0.1767494469201216 - 0.25095544375280776i
+# vertex 12_3: LS coupling, L = 2, S = 1
+a06_12_3_0 = ((
+    ls_2_2_0_4_2_m2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, -2, t1_cos_theta_12_3) * a01_12_m2
+    + ls_2_2_0_4_2_0_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 0, t1_cos_theta_12_3) * a01_12_0
+    + ls_2_2_0_4_2_2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 2, t1_cos_theta_12_3) * a01_12_p2
+)) * sqrt(3.0) * ls_X_3940_1(minv_12_3^2) * hep.blatt_weisskopf(2, hep.breakup_momentum(minv_12_3, minv_12, m3), 3.0)
+% vertex 12_3_4: LS coupling, L = 1, S = 1
+a06_12_3_4_0 = ls_0_2_0_2_2_0_0 * a06_12_3_0 * hep.blatt_weisskopf(1, hep.breakup_momentum(m0, minv_12_3, m4), 3.0)
+c06_X_3940_1_l1_l2 = (0.1767494469201216 - 0.25095544375280776 * im) * a06_12_3_4_0
+# c07_X_3993_l1_l0: [[[1, 2], 3], 4], weight 0.11311689207634776 + 0.058610160222914355i
+# vertex 12_3: LS coupling, L = 0, S = 1
+a07_12_3_0 = ((
+    ls_2_2_0_0_2_m2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, -2, t1_cos_theta_12_3) * a01_12_m2
+    + ls_2_2_0_0_2_0_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 0, t1_cos_theta_12_3) * a01_12_0
+    + ls_2_2_0_0_2_2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 2, t1_cos_theta_12_3) * a01_12_p2
+)) * sqrt(3.0) * ls_X_3993(minv_12_3^2)
+% vertex 12_3_4: LS coupling, L = 1, S = 1
+a07_12_3_4_0 = ls_0_2_0_2_2_0_0 * a07_12_3_0 * hep.blatt_weisskopf(1, hep.breakup_momentum(m0, minv_12_3, m4), 3.0)
+c07_X_3993_l1_l0 = (0.11311689207634776 + 0.058610160222914355 * im) * a07_12_3_4_0
+# c08_X_3993_l1_l2: [[[1, 2], 3], 4], weight -0.12220446316404435 - 0.037460445949112506i
+# vertex 12_3: LS coupling, L = 2, S = 1
+a08_12_3_0 = ((
+    ls_2_2_0_4_2_m2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, -2, t1_cos_theta_12_3) * a01_12_m2
+    + ls_2_2_0_4_2_0_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 0, t1_cos_theta_12_3) * a01_12_0
+    + ls_2_2_0_4_2_2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 2, t1_cos_theta_12_3) * a01_12_p2
+)) * sqrt(3.0) * ls_X_3993(minv_12_3^2) * hep.blatt_weisskopf(2, hep.breakup_momentum(minv_12_3, minv_12, m3), 3.0)
+% vertex 12_3_4: LS coupling, L = 1, S = 1
+a08_12_3_4_0 = ls_0_2_0_2_2_0_0 * a08_12_3_0 * hep.blatt_weisskopf(1, hep.breakup_momentum(m0, minv_12_3, m4), 3.0)
+c08_X_3993_l1_l2 = (-0.12220446316404435 - 0.037460445949112506 * im) * a08_12_3_4_0
+# c09_Psi_4040_l1_l1: [[[1, 2], 3], 4], weight -0.025518820441784378 + 0.09494812637584671i
+# vertex 12_3: LS coupling, L = 1, S = 1
+a09_12_3_0 = ((
+    ls_2_2_0_2_2_m2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, -2, t1_cos_theta_12_3) * a01_12_m2
+    + ls_2_2_0_2_2_2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 2, t1_cos_theta_12_3) * a01_12_p2
+)) * sqrt(3.0) * ls_Psi_4040(minv_12_3^2) * hep.blatt_weisskopf(1, hep.breakup_momentum(minv_12_3, minv_12, m3), 3.0)
+% vertex 12_3_4: LS coupling, L = 1, S = 1
+a09_12_3_4_0 = ls_0_2_0_2_2_0_0 * a09_12_3_0 * hep.blatt_weisskopf(1, hep.breakup_momentum(m0, minv_12_3, m4), 3.0)
+c09_Psi_4040_l1_l1 = (-0.025518820441784378 + 0.09494812637584671 * im) * a09_12_3_4_0
+# c10_X_4300_l1_l0: [[[1, 2], 3], 4], weight 0.021459742321468064 + 0.008721545981870306i
+# vertex 12_3: LS coupling, L = 0, S = 1
+a10_12_3_0 = ((
+    ls_2_2_0_0_2_m2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, -2, t1_cos_theta_12_3) * a01_12_m2
+    + ls_2_2_0_0_2_0_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 0, t1_cos_theta_12_3) * a01_12_0
+    + ls_2_2_0_0_2_2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 2, t1_cos_theta_12_3) * a01_12_p2
+)) * sqrt(3.0) * ls_X_4300(minv_12_3^2)
+% vertex 12_3_4: LS coupling, L = 1, S = 1
+a10_12_3_4_0 = ls_0_2_0_2_2_0_0 * a10_12_3_0 * hep.blatt_weisskopf(1, hep.breakup_momentum(m0, minv_12_3, m4), 3.0)
+c10_X_4300_l1_l0 = (0.021459742321468064 + 0.008721545981870306 * im) * a10_12_3_4_0
+# c11_X_4300_l1_l2: [[[1, 2], 3], 4], weight 0.04457769688591634 + 0.01413524102881604i
+# vertex 12_3: LS coupling, L = 2, S = 1
+a11_12_3_0 = ((
+    ls_2_2_0_4_2_m2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, -2, t1_cos_theta_12_3) * a01_12_m2
+    + ls_2_2_0_4_2_0_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 0, t1_cos_theta_12_3) * a01_12_0
+    + ls_2_2_0_4_2_2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 2, t1_cos_theta_12_3) * a01_12_p2
+)) * sqrt(3.0) * ls_X_4300(minv_12_3^2) * hep.blatt_weisskopf(2, hep.breakup_momentum(minv_12_3, minv_12, m3), 3.0)
+% vertex 12_3_4: LS coupling, L = 1, S = 1
+a11_12_3_4_0 = ls_0_2_0_2_2_0_0 * a11_12_3_0 * hep.blatt_weisskopf(1, hep.breakup_momentum(m0, minv_12_3, m4), 3.0)
+c11_X_4300_l1_l2 = (0.04457769688591634 + 0.01413524102881604 * im) * a11_12_3_4_0
+# c12_NR_0_SPp_l0_l1: [[[1, 2], 3], 4], weight -0.20348743585639592 + 0.06780037305088235i
+# vertex 12_3: LS coupling, L = 1, S = 1
+a12_12_3_0 = ls_0_2_0_2_2_0_0 * a01_12_0 * sqrt(1.0) * ls_NR_0_SPp(minv_12_3^2) * hep.blatt_weisskopf(1, hep.breakup_momentum(minv_12_3, minv_12, m3), 3.0)
+% vertex 12_3_4: LS coupling, L = 0, S = 0
+a12_12_3_4_0 = ls_0_0_0_0_0_0_0 * a12_12_3_0
+c12_NR_0_SPp_l0_l1 = (-0.20348743585639592 + 0.06780037305088235 * im) * a12_12_3_4_0
+# c13_NR_1_PSp_l1_l0: [[[1, 2], 3], 4], weight 0.24754106467242393 + 0.012744229872991595i
+# vertex 12_3: LS coupling, L = 0, S = 1
+a13_12_3_0 = ((
+    ls_2_2_0_0_2_m2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, -2, t1_cos_theta_12_3) * a01_12_m2
+    + ls_2_2_0_0_2_0_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 0, t1_cos_theta_12_3) * a01_12_0
+    + ls_2_2_0_0_2_2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 2, t1_cos_theta_12_3) * a01_12_p2
+)) * sqrt(3.0) * ls_NR_1_PSp(minv_12_3^2)
+% vertex 12_3_4: LS coupling, L = 1, S = 1
+a13_12_3_4_0 = ls_0_2_0_2_2_0_0 * a13_12_3_0 * hep.blatt_weisskopf(1, hep.breakup_momentum(m0, minv_12_3, m4), 3.0)
+c13_NR_1_PSp_l1_l0 = (0.24754106467242393 + 0.012744229872991595 * im) * a13_12_3_4_0
+# c14_NR_0_SPm_l0_l1: [[[1, 2], 3], 4], weight -0.06105297853824829 - 0.00033682493310431506i
+# vertex 12_3: LS coupling, L = 1, S = 1
+a14_12_3_0 = ls_0_2_0_2_2_0_0 * a01_12_0 * sqrt(1.0) * ls_NR_0_SPm(minv_12_3^2) * hep.blatt_weisskopf(1, hep.breakup_momentum(minv_12_3, minv_12, m3), 3.0)
+% vertex 12_3_4: LS coupling, L = 0, S = 0
+a14_12_3_4_0 = ls_0_0_0_0_0_0_0 * a14_12_3_0
+c14_NR_0_SPm_l0_l1 = (-0.06105297853824829 - 0.00033682493310431506 * im) * a14_12_3_4_0
+# c15_NR_1_PPm_l1_l1: [[[1, 2], 3], 4], weight -0.27105481959409794 + 0.10529561959141219i
+# vertex 12_3: LS coupling, L = 1, S = 1
+a15_12_3_0 = ((
+    ls_2_2_0_2_2_m2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, -2, t1_cos_theta_12_3) * a01_12_m2
+    + ls_2_2_0_2_2_2_0 * cis(0 * t1_phi_12_3 / 2) * wd.wignerd_doublearg(2, 0, 2, t1_cos_theta_12_3) * a01_12_p2
+)) * sqrt(3.0) * ls_NR_1_PPm(minv_12_3^2) * hep.blatt_weisskopf(1, hep.breakup_momentum(minv_12_3, minv_12, m3), 3.0)
+% vertex 12_3_4: LS coupling, L = 1, S = 1
+a15_12_3_4_0 = ls_0_2_0_2_2_0_0 * a15_12_3_0 * hep.blatt_weisskopf(1, hep.breakup_momentum(m0, minv_12_3, m4), 3.0)
+c15_NR_1_PPm_l1_l1 = (-0.27105481959409794 + 0.10529561959141219 * im) * a15_12_3_4_0
+
+amplitude = (
+    c01_X_3872_l1_l0
+    + c02_X_3872_l1_l2
+    + c03_X_3915_0_l0_l1
+    + c04_chi_c2_3930_l2_l2
+    + c05_X_3940_1_l1_l0
+    + c06_X_3940_1_l1_l2
+    + c07_X_3993_l1_l0
+    + c08_X_3993_l1_l2
+    + c09_Psi_4040_l1_l1
+    + c10_X_4300_l1_l0
+    + c11_X_4300_l1_l2
+    + c12_NR_0_SPp_l0_l1
+    + c13_NR_1_PSp_l1_l0
+    + c14_NR_0_SPm_l0_l1
+    + c15_NR_1_PPm_l1_l1
+)
+intensity = abs2(amplitude)
+
+% The intensity as a function of the four-momenta in the parent rest frame
+intensity_of_momenta = functionof(intensity, p1, p2, p3, p4)
+amplitude_of_momenta = functionof(amplitude, p1, p2, p3, p4)
+% Amplitude on the fixed D* mass shell of the reference coordinates.
+amplitude_at_fixed_mass = functionof(amplitude, p1, p2, p3, p4, minv_12)
