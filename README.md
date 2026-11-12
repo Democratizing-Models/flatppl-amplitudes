@@ -29,8 +29,7 @@ sizes must be fixed before compilation.
 lineshape, including the closed-channel continuation. Values, gradients, and
 `vmap` pass checks on CPU and GH200 in float32 and float64.
 
-The library follows [the PR 234 proposal](https://github.com/flatppl/flatppl-design/pull/234)
-and the [existing LHCb implementations](https://github.com/Democratizing-Models/statsmodel-rosetta-stone/tree/lhcb-amplitude-models/src/physics/hadron/amplitude-serialization).
-It uses ordinary FlatPPL modules. Each helper in `src/` can also be loaded directly.
+For complete decay examples, see the [LHCb amplitude models](https://github.com/Democratizing-Models/statsmodel-rosetta-stone/tree/lhcb-amplitude-models/src/physics/hadron/amplitude-serialization).
+Each helper module in `src/` can also be loaded directly.
 
 MIT license. See [LICENSE](LICENSE) and [third-party notices](THIRD-PARTY-NOTICES.txt).
