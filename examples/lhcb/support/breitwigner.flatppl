@@ -1,0 +1,10 @@
+%%%
+# Mass-dependent Breit–Wigner
+
+The standard-module formula, given breakup momenta p, p0 and barrier factors F, F0.
+%%%
+flatppl_compat = "0.1"
+
+resonance_breitwigner(sigma, m, width, p, p0, F, F0) = (
+    1 / complex(m ^ 2 - sigma, -m * width * m / sqrt(sigma) * p / p0 * (F / F0) ^ 2)
+)

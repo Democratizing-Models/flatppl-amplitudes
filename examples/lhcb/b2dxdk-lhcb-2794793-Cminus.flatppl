@@ -1,0 +1,100 @@
+%%%
+# B+ → D0 π+ D− K+, C = − (LHCb, arXiv:2406.03156)
+
+Kinematics, amplitude model, and observable. All masses are in GeV.
+The observable is the unnormalised decay rate in the reference coordinates.
+%%%
+flatppl_compat = "0.1"
+
+# Kinematics
+hep = standard_module("particle-physics", "0.1")
+amp = load_module("../../main.flatppl")
+kin = load_module("support/kinematics.flatppl")
+
+# ----------------------------------------------------------------------------
+# Masses
+# ----------------------------------------------------------------------------
+
+m0 = 5.27934  % B+
+m1 = 1.86483  % D0
+m2 = 0.13957039  % pi+
+m3 = 1.86965  % D-
+m4 = 0.493677  % K+
+s0 = m0^2
+ms1 = m1^2
+ms2 = m2^2
+ms3 = m3^2
+ms4 = m4^2
+
+# ----------------------------------------------------------------------------
+# Decay coordinates of the reference topology [[[1, 2], 3], 4] and the four-momenta
+# ----------------------------------------------------------------------------
+
+# The coordinates of a node are the invariant mass m_<node> of the line and the
+# helicity angles cos_theta_<node>, phi_<node> of its first child in its helicity
+# frame, as the variables of the JSON file.
+cos_theta_12_3_4 = elementof(interval(-1.0, 1.0))
+phi_12_3_4 = elementof(interval(-pi, pi))
+m_12_3 = elementof(interval(m_12 + m3, m0 - m4))
+cos_theta_12_3 = elementof(interval(-1.0, 1.0))
+phi_12_3 = elementof(interval(-pi, pi))
+m_12 = 2.01026  % fixed mass of a narrow lineshape, see below
+cos_theta_12 = elementof(interval(-1.0, 1.0))
+phi_12 = elementof(interval(-pi, pi))
+
+q_12_3_4 = hep.breakup_momentum(m0, m_12_3, m4)
+e_12_3_in_12_3_4 = kin.momentum(q_12_3_4, cos_theta_12_3_4, phi_12_3_4, m_12_3)
+e_4_in_12_3_4 = kin.opposite(e_12_3_in_12_3_4, m4)
+q_12_3 = hep.breakup_momentum(m_12_3, m_12, m3)
+e_12_in_12_3 = kin.momentum(q_12_3, cos_theta_12_3, phi_12_3, m_12)
+e_3_in_12_3 = kin.opposite(e_12_in_12_3, m3)
+q_12 = hep.breakup_momentum(m_12, m1, m2)
+e_1_in_12 = kin.momentum(q_12, cos_theta_12, phi_12, m1)
+e_2_in_12 = kin.opposite(e_1_in_12, m2)
+e1_12 = e_1_in_12
+e2_12 = e_2_in_12
+e1_12_3 = kin.from_frame(e1_12, e_12_in_12_3, 1.0)
+e2_12_3 = kin.from_frame(e2_12, e_12_in_12_3, 1.0)
+e3_12_3 = e_3_in_12_3
+e1_12_3_4 = kin.from_frame(e1_12_3, e_12_3_in_12_3_4, 1.0)
+e2_12_3_4 = kin.from_frame(e2_12_3, e_12_3_in_12_3_4, 1.0)
+e3_12_3_4 = kin.from_frame(e3_12_3, e_12_3_in_12_3_4, 1.0)
+e4_12_3_4 = e_4_in_12_3_4
+
+% Four-momenta in the rest frame of the parent
+e1 = e1_12_3_4
+e2 = e2_12_3_4
+e3 = e3_12_3_4
+e4 = e4_12_3_4
+
+# Amplitude model
+model = load_module("models/b2dxdk-lhcb-2794793-Cminus.flatppl")
+amplitude = model.amplitude_at_fixed_mass(e1, e2, e3, e4, m_12)
+
+# Observable
+intensity_event = abs2(amplitude)
+
+# ----------------------------------------------------------------------------
+# Decay rate, decay distribution and generated events
+# ----------------------------------------------------------------------------
+
+# Phase-space density in the decay coordinates: dΦ ∝ Π q dm dΩ (the breakup
+# momenta of all vertices)
+phase_space_density = q_12_3_4 * q_12_3 * q_12
+rate = phase_space_density * intensity_event
+rate_fn = functionof(rate, cos_theta_12_3_4, phi_12_3_4, m_12_3, cos_theta_12_3, phi_12_3, cos_theta_12, phi_12)
+decay_space = cartprod(cos_theta_12_3_4 = interval(-1.0, 1.0), phi_12_3_4 = interval(-pi, pi), m_12_3 = interval(m_12 + m3, m0 - m4), cos_theta_12_3 = interval(-1.0, 1.0), phi_12_3 = interval(-pi, pi), cos_theta_12 = interval(-1.0, 1.0), phi_12 = interval(-pi, pi))
+# The amplitude module's narrow lineshape, exp(-((m - m_peak)/w)^n / 2) with w = 1e-6 GeV, is
+# the way the JSON file states that these lines have a fixed mass. The masses
+# are fixed above (as in CASCADEDECAYS), the rate is the density w.r.t. the
+# remaining coordinates, and the lineshapes are 1 at their peaks.
+decay_rate = weighted(fn(rate_fn(_)), Lebesgue(support = decay_space))
+decay_distribution = normalize(decay_rate)
+
+momenta_fn = functionof(record(D0 = e1, pip = e2, Dm = e3, Kp = e4), cos_theta_12_3_4, phi_12_3_4, m_12_3, cos_theta_12_3, phi_12_3, cos_theta_12, phi_12)
+event_distribution = pushfwd(fn(momenta_fn(_)), decay_distribution)
+n_events = 1000
+events ~ iid(event_distribution, n_events)
+
+inputs = (cos_theta_12_3_4, phi_12_3_4, m_12_3, cos_theta_12_3, phi_12_3, cos_theta_12, phi_12)
+outputs = rate

@@ -1,0 +1,31 @@
+%%%
+# Reference decay coordinates
+
+Construct four-momenta with the source models’ helicity convention.
+%%%
+flatppl_compat = "0.1"
+amp = load_module("../../../main.flatppl")
+
+# ----------------------------------------------------------------------------
+# Four-vectors [E, px, py, pz] and the frames of the decay cascade
+# ----------------------------------------------------------------------------
+
+% Invariant mass squared
+mass2 = amp.mass_squared
+abs3(p) = sqrt(p[2]^2 + p[3]^2 + p[4]^2)
+% Momentum of magnitude q in the direction (cos θ, φ), and the momentum opposite to p
+momentum(q, cos_t, phi, m) = [sqrt(q^2 + m^2), q * sqrt(max(1 - cos_t^2, 0.0)) * cos(phi),
+    q * sqrt(max(1 - cos_t^2, 0.0)) * sin(phi), q * cos_t]
+opposite(p, m) = [sqrt(abs3(p)^2 + m^2), -p[2], -p[3], -p[4]]
+% Active rotations about z and y and a boost along z
+rot_z(p, a) = [p[1], p[2] * cos(a) - p[3] * sin(a), p[2] * sin(a) + p[3] * cos(a), p[4]]
+rot_y(p, a) = [p[1], p[4] * sin(a) + p[2] * cos(a), p[3], p[4] * cos(a) - p[2] * sin(a)]
+boost_z(p, g, bg) = [g * p[1] + bg * p[4], p[2], p[3], g * p[4] + bg * p[1]]
+# Angles of the momentum P of a line in the frame of its parent, sgn = -1 for the
+# second child of a vertex, whose frame is reached along -z (Jacob-Wick convention)
+phi_of(P, sgn) = atan2(sgn * P[3], sgn * P[2])
+theta_of(P, sgn) = atan2(sqrt(P[2]^2 + P[3]^2), sgn * P[4])
+second_turn(sgn) = ifelse(sgn < 0, pi, 0.0)
+% Momentum p in the helicity frame of the line with momentum P, and back
+from_frame(p, P, sgn) = rot_z(rot_y(rot_y(boost_z(p, P[1] / sqrt(mass2(P)),
+    abs3(P) / sqrt(mass2(P))), second_turn(sgn)), theta_of(P, sgn)), phi_of(P, sgn))

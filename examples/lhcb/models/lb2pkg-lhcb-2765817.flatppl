@@ -1,0 +1,1362 @@
+%%%
+# Λb0 → p K− γ (LHCb, arXiv:2403.03710): amplitude model
+
+Helicity amplitudes and published couplings. Masses are in GeV.
+%%%
+flatppl_compat = "0.1"
+amp = load_module("../../../main.flatppl")
+hep = standard_module("particle-physics", "0.1")
+bw = load_module("../support/breitwigner.flatppl")
+wd = load_module("../support/wigner.flatppl")
+
+# ----------------------------------------------------------------------------
+# Masses
+# ----------------------------------------------------------------------------
+
+m0 = 5.62  % Lb
+m1 = 0.938  % p
+m2 = 0.493  % K
+m3 = 0.0  % g
+s0 = m0^2
+ms1 = m1^2
+ms2 = m2^2
+ms3 = m3^2
+
+# ----------------------------------------------------------------------------
+# Lineshapes of the resonances, as functions of the mass squared s
+# ----------------------------------------------------------------------------
+
+% L1405_Flatte (MultichannelBreitWigner)
+ls_L1405_Flatte(s) = amp.resonance_multichannel_breitwigner(s, 1.405, [0.3504277764790773, 0.3504277764790773], [0.938, 1.197], [0.493, 0.14], [0, 0], [0.0, 0.0])
+% L1520_BW (BreitWigner)
+ls_L1520_BW(s) = bw.resonance_breitwigner(s, 1.519, 0.016, hep.breakup_momentum(sqrt(s), 0.938, 0.493), hep.breakup_momentum(1.519, 0.938, 0.493), hep.blatt_weisskopf(2, hep.breakup_momentum(sqrt(s), 0.938, 0.493), 1.5), hep.blatt_weisskopf(2, hep.breakup_momentum(1.519, 0.938, 0.493), 1.5))
+% L1600_BW (BreitWigner)
+ls_L1600_BW(s) = bw.resonance_breitwigner(s, 1.6, 0.2, hep.breakup_momentum(sqrt(s), 0.938, 0.493), hep.breakup_momentum(1.6, 0.938, 0.493), hep.blatt_weisskopf(1, hep.breakup_momentum(sqrt(s), 0.938, 0.493), 1.5), hep.blatt_weisskopf(1, hep.breakup_momentum(1.6, 0.938, 0.493), 1.5))
+% L1680_BW (BreitWigner)
+ls_L1680_BW(s) = bw.resonance_breitwigner(s, 1.674, 0.03, hep.breakup_momentum(sqrt(s), 0.938, 0.493), hep.breakup_momentum(1.674, 0.938, 0.493), hep.blatt_weisskopf(0, hep.breakup_momentum(sqrt(s), 0.938, 0.493), 1.5), hep.blatt_weisskopf(0, hep.breakup_momentum(1.674, 0.938, 0.493), 1.5))
+% L1690_BW (BreitWigner)
+ls_L1690_BW(s) = bw.resonance_breitwigner(s, 1.69, 0.07, hep.breakup_momentum(sqrt(s), 0.938, 0.493), hep.breakup_momentum(1.69, 0.938, 0.493), hep.blatt_weisskopf(2, hep.breakup_momentum(sqrt(s), 0.938, 0.493), 1.5), hep.blatt_weisskopf(2, hep.breakup_momentum(1.69, 0.938, 0.493), 1.5))
+% L1800_BW (BreitWigner)
+ls_L1800_BW(s) = bw.resonance_breitwigner(s, 1.8, 0.2, hep.breakup_momentum(sqrt(s), 0.938, 0.493), hep.breakup_momentum(1.8, 0.938, 0.493), hep.blatt_weisskopf(0, hep.breakup_momentum(sqrt(s), 0.938, 0.493), 1.5), hep.blatt_weisskopf(0, hep.breakup_momentum(1.8, 0.938, 0.493), 1.5))
+% L1810_BW (BreitWigner)
+ls_L1810_BW(s) = bw.resonance_breitwigner(s, 1.79, 0.11, hep.breakup_momentum(sqrt(s), 0.938, 0.493), hep.breakup_momentum(1.79, 0.938, 0.493), hep.blatt_weisskopf(1, hep.breakup_momentum(sqrt(s), 0.938, 0.493), 1.5), hep.blatt_weisskopf(1, hep.breakup_momentum(1.79, 0.938, 0.493), 1.5))
+% L1820_BW (BreitWigner)
+ls_L1820_BW(s) = bw.resonance_breitwigner(s, 1.82, 0.08, hep.breakup_momentum(sqrt(s), 0.938, 0.493), hep.breakup_momentum(1.82, 0.938, 0.493), hep.blatt_weisskopf(3, hep.breakup_momentum(sqrt(s), 0.938, 0.493), 1.5), hep.blatt_weisskopf(3, hep.breakup_momentum(1.82, 0.938, 0.493), 1.5))
+% L1830_BW (BreitWigner)
+ls_L1830_BW(s) = bw.resonance_breitwigner(s, 1.825, 0.09, hep.breakup_momentum(sqrt(s), 0.938, 0.493), hep.breakup_momentum(1.825, 0.938, 0.493), hep.blatt_weisskopf(2, hep.breakup_momentum(sqrt(s), 0.938, 0.493), 1.5), hep.blatt_weisskopf(2, hep.breakup_momentum(1.825, 0.938, 0.493), 1.5))
+% L1890_BW (BreitWigner)
+ls_L1890_BW(s) = bw.resonance_breitwigner(s, 1.89, 0.12, hep.breakup_momentum(sqrt(s), 0.938, 0.493), hep.breakup_momentum(1.89, 0.938, 0.493), hep.blatt_weisskopf(1, hep.breakup_momentum(sqrt(s), 0.938, 0.493), 1.5), hep.blatt_weisskopf(1, hep.breakup_momentum(1.89, 0.938, 0.493), 1.5))
+% L2100_BW (BreitWigner)
+ls_L2100_BW(s) = bw.resonance_breitwigner(s, 2.1, 0.2, hep.breakup_momentum(sqrt(s), 0.938, 0.493), hep.breakup_momentum(2.1, 0.938, 0.493), hep.blatt_weisskopf(4, hep.breakup_momentum(sqrt(s), 0.938, 0.493), 1.5), hep.blatt_weisskopf(4, hep.breakup_momentum(2.1, 0.938, 0.493), 1.5))
+% L2110_BW (BreitWigner)
+ls_L2110_BW(s) = bw.resonance_breitwigner(s, 2.09, 0.25, hep.breakup_momentum(sqrt(s), 0.938, 0.493), hep.breakup_momentum(2.09, 0.938, 0.493), hep.blatt_weisskopf(3, hep.breakup_momentum(sqrt(s), 0.938, 0.493), 1.5), hep.blatt_weisskopf(3, hep.breakup_momentum(2.09, 0.938, 0.493), 1.5))
+% L2350_BW (BreitWigner)
+ls_L2350_BW(s) = bw.resonance_breitwigner(s, 2.35, 0.15, hep.breakup_momentum(sqrt(s), 0.938, 0.493), hep.breakup_momentum(2.35, 0.938, 0.493), hep.blatt_weisskopf(5, hep.breakup_momentum(sqrt(s), 0.938, 0.493), 1.5), hep.blatt_weisskopf(5, hep.breakup_momentum(2.35, 0.938, 0.493), 1.5))
+% LNR30_NR (Polynomial)
+ls_LNR30_NR(s) = polynomial(coefficients = [1.0], x = s)
+
+ls_1_3_2_0_1_m3_m2 = amp.ls_coupling(1, 3, 2, 0, 1, -3, -2)
+ls_3_1_0_4_1_m1_0 = amp.ls_coupling(3, 1, 0, 4, 1, -1, 0)
+ls_1_3_2_2_1_m3_m2 = amp.ls_coupling(1, 3, 2, 2, 1, -3, -2)
+ls_1_3_2_2_3_m3_m2 = amp.ls_coupling(1, 3, 2, 2, 3, -3, -2)
+ls_1_3_2_4_3_m3_m2 = amp.ls_coupling(1, 3, 2, 4, 3, -3, -2)
+ls_1_3_2_4_5_m3_m2 = amp.ls_coupling(1, 3, 2, 4, 5, -3, -2)
+ls_1_3_2_6_5_m3_m2 = amp.ls_coupling(1, 3, 2, 6, 5, -3, -2)
+ls_1_5_2_2_3_m3_m2 = amp.ls_coupling(1, 5, 2, 2, 3, -3, -2)
+ls_5_1_0_6_1_m1_0 = amp.ls_coupling(5, 1, 0, 6, 1, -1, 0)
+ls_1_5_2_4_3_m3_m2 = amp.ls_coupling(1, 5, 2, 4, 3, -3, -2)
+ls_1_5_2_4_5_m3_m2 = amp.ls_coupling(1, 5, 2, 4, 5, -3, -2)
+ls_1_5_2_6_5_m3_m2 = amp.ls_coupling(1, 5, 2, 6, 5, -3, -2)
+ls_1_5_2_6_7_m3_m2 = amp.ls_coupling(1, 5, 2, 6, 7, -3, -2)
+ls_1_5_2_8_7_m3_m2 = amp.ls_coupling(1, 5, 2, 8, 7, -3, -2)
+ls_5_1_0_4_1_m1_0 = amp.ls_coupling(5, 1, 0, 4, 1, -1, 0)
+ls_3_1_0_2_1_m1_0 = amp.ls_coupling(3, 1, 0, 2, 1, -1, 0)
+ls_1_7_2_4_5_m3_m2 = amp.ls_coupling(1, 7, 2, 4, 5, -3, -2)
+ls_7_1_0_8_1_m1_0 = amp.ls_coupling(7, 1, 0, 8, 1, -1, 0)
+ls_1_7_2_6_5_m3_m2 = amp.ls_coupling(1, 7, 2, 6, 5, -3, -2)
+ls_1_7_2_6_7_m3_m2 = amp.ls_coupling(1, 7, 2, 6, 7, -3, -2)
+ls_1_7_2_8_7_m3_m2 = amp.ls_coupling(1, 7, 2, 8, 7, -3, -2)
+ls_1_7_2_8_9_m3_m2 = amp.ls_coupling(1, 7, 2, 8, 9, -3, -2)
+ls_1_7_2_10_9_m3_m2 = amp.ls_coupling(1, 7, 2, 10, 9, -3, -2)
+ls_1_9_2_6_7_m3_m2 = amp.ls_coupling(1, 9, 2, 6, 7, -3, -2)
+ls_9_1_0_10_1_m1_0 = amp.ls_coupling(9, 1, 0, 10, 1, -1, 0)
+ls_1_9_2_8_7_m3_m2 = amp.ls_coupling(1, 9, 2, 8, 7, -3, -2)
+ls_1_9_2_8_9_m3_m2 = amp.ls_coupling(1, 9, 2, 8, 9, -3, -2)
+ls_1_9_2_10_9_m3_m2 = amp.ls_coupling(1, 9, 2, 10, 9, -3, -2)
+ls_1_9_2_10_11_m3_m2 = amp.ls_coupling(1, 9, 2, 10, 11, -3, -2)
+ls_1_9_2_12_11_m3_m2 = amp.ls_coupling(1, 9, 2, 12, 11, -3, -2)
+ls_1_1_2_0_1_m1_m2 = amp.ls_coupling(1, 1, 2, 0, 1, -1, -2)
+ls_1_1_0_0_1_m1_0 = amp.ls_coupling(1, 1, 0, 0, 1, -1, 0)
+ls_1_1_2_2_1_m1_m2 = amp.ls_coupling(1, 1, 2, 2, 1, -1, -2)
+ls_1_1_2_2_3_m1_m2 = amp.ls_coupling(1, 1, 2, 2, 3, -1, -2)
+ls_1_1_2_4_3_m1_m2 = amp.ls_coupling(1, 1, 2, 4, 3, -1, -2)
+ls_1_3_2_0_1_m1_m2 = amp.ls_coupling(1, 3, 2, 0, 1, -1, -2)
+ls_1_3_2_2_1_m1_m2 = amp.ls_coupling(1, 3, 2, 2, 1, -1, -2)
+ls_1_3_2_2_3_m1_m2 = amp.ls_coupling(1, 3, 2, 2, 3, -1, -2)
+ls_1_3_2_4_3_m1_m2 = amp.ls_coupling(1, 3, 2, 4, 3, -1, -2)
+ls_1_3_2_4_5_m1_m2 = amp.ls_coupling(1, 3, 2, 4, 5, -1, -2)
+ls_1_3_2_6_5_m1_m2 = amp.ls_coupling(1, 3, 2, 6, 5, -1, -2)
+ls_1_1_0_2_1_m1_0 = amp.ls_coupling(1, 1, 0, 2, 1, -1, 0)
+ls_1_5_2_2_3_m1_m2 = amp.ls_coupling(1, 5, 2, 2, 3, -1, -2)
+ls_1_5_2_4_3_m1_m2 = amp.ls_coupling(1, 5, 2, 4, 3, -1, -2)
+ls_1_5_2_4_5_m1_m2 = amp.ls_coupling(1, 5, 2, 4, 5, -1, -2)
+ls_1_5_2_6_5_m1_m2 = amp.ls_coupling(1, 5, 2, 6, 5, -1, -2)
+ls_1_5_2_6_7_m1_m2 = amp.ls_coupling(1, 5, 2, 6, 7, -1, -2)
+ls_1_5_2_8_7_m1_m2 = amp.ls_coupling(1, 5, 2, 8, 7, -1, -2)
+ls_1_7_2_4_5_m1_m2 = amp.ls_coupling(1, 7, 2, 4, 5, -1, -2)
+ls_1_7_2_6_5_m1_m2 = amp.ls_coupling(1, 7, 2, 6, 5, -1, -2)
+ls_1_7_2_6_7_m1_m2 = amp.ls_coupling(1, 7, 2, 6, 7, -1, -2)
+ls_1_7_2_8_7_m1_m2 = amp.ls_coupling(1, 7, 2, 8, 7, -1, -2)
+ls_1_7_2_8_9_m1_m2 = amp.ls_coupling(1, 7, 2, 8, 9, -1, -2)
+ls_1_7_2_10_9_m1_m2 = amp.ls_coupling(1, 7, 2, 10, 9, -1, -2)
+ls_1_9_2_6_7_m1_m2 = amp.ls_coupling(1, 9, 2, 6, 7, -1, -2)
+ls_1_9_2_8_7_m1_m2 = amp.ls_coupling(1, 9, 2, 8, 7, -1, -2)
+ls_1_9_2_8_9_m1_m2 = amp.ls_coupling(1, 9, 2, 8, 9, -1, -2)
+ls_1_9_2_10_9_m1_m2 = amp.ls_coupling(1, 9, 2, 10, 9, -1, -2)
+ls_1_9_2_10_11_m1_m2 = amp.ls_coupling(1, 9, 2, 10, 11, -1, -2)
+ls_1_9_2_12_11_m1_m2 = amp.ls_coupling(1, 9, 2, 12, 11, -1, -2)
+ls_1_1_2_0_1_m1_0 = amp.ls_coupling(1, 1, 2, 0, 1, -1, 0)
+ls_1_1_2_2_1_m1_0 = amp.ls_coupling(1, 1, 2, 2, 1, -1, 0)
+ls_1_1_2_2_3_m1_0 = amp.ls_coupling(1, 1, 2, 2, 3, -1, 0)
+ls_1_1_2_4_3_m1_0 = amp.ls_coupling(1, 1, 2, 4, 3, -1, 0)
+ls_1_3_2_0_1_m1_0 = amp.ls_coupling(1, 3, 2, 0, 1, -1, 0)
+ls_1_3_2_2_1_m1_0 = amp.ls_coupling(1, 3, 2, 2, 1, -1, 0)
+ls_1_3_2_2_3_m1_0 = amp.ls_coupling(1, 3, 2, 2, 3, -1, 0)
+ls_1_3_2_4_3_m1_0 = amp.ls_coupling(1, 3, 2, 4, 3, -1, 0)
+ls_1_3_2_4_5_m1_0 = amp.ls_coupling(1, 3, 2, 4, 5, -1, 0)
+ls_1_3_2_6_5_m1_0 = amp.ls_coupling(1, 3, 2, 6, 5, -1, 0)
+ls_1_5_2_2_3_m1_0 = amp.ls_coupling(1, 5, 2, 2, 3, -1, 0)
+ls_1_5_2_4_3_m1_0 = amp.ls_coupling(1, 5, 2, 4, 3, -1, 0)
+ls_1_5_2_4_5_m1_0 = amp.ls_coupling(1, 5, 2, 4, 5, -1, 0)
+ls_1_5_2_6_5_m1_0 = amp.ls_coupling(1, 5, 2, 6, 5, -1, 0)
+ls_1_5_2_6_7_m1_0 = amp.ls_coupling(1, 5, 2, 6, 7, -1, 0)
+ls_1_5_2_8_7_m1_0 = amp.ls_coupling(1, 5, 2, 8, 7, -1, 0)
+ls_1_7_2_4_5_m1_0 = amp.ls_coupling(1, 7, 2, 4, 5, -1, 0)
+ls_1_7_2_6_5_m1_0 = amp.ls_coupling(1, 7, 2, 6, 5, -1, 0)
+ls_1_7_2_6_7_m1_0 = amp.ls_coupling(1, 7, 2, 6, 7, -1, 0)
+ls_1_7_2_8_7_m1_0 = amp.ls_coupling(1, 7, 2, 8, 7, -1, 0)
+ls_1_7_2_8_9_m1_0 = amp.ls_coupling(1, 7, 2, 8, 9, -1, 0)
+ls_1_7_2_10_9_m1_0 = amp.ls_coupling(1, 7, 2, 10, 9, -1, 0)
+ls_1_9_2_6_7_m1_0 = amp.ls_coupling(1, 9, 2, 6, 7, -1, 0)
+ls_1_9_2_8_7_m1_0 = amp.ls_coupling(1, 9, 2, 8, 7, -1, 0)
+ls_1_9_2_8_9_m1_0 = amp.ls_coupling(1, 9, 2, 8, 9, -1, 0)
+ls_1_9_2_10_9_m1_0 = amp.ls_coupling(1, 9, 2, 10, 9, -1, 0)
+ls_1_9_2_10_11_m1_0 = amp.ls_coupling(1, 9, 2, 10, 11, -1, 0)
+ls_1_9_2_12_11_m1_0 = amp.ls_coupling(1, 9, 2, 12, 11, -1, 0)
+ls_1_1_2_0_1_1_0 = amp.ls_coupling(1, 1, 2, 0, 1, 1, 0)
+ls_1_1_2_2_1_1_0 = amp.ls_coupling(1, 1, 2, 2, 1, 1, 0)
+ls_1_1_2_2_3_1_0 = amp.ls_coupling(1, 1, 2, 2, 3, 1, 0)
+ls_1_1_2_4_3_1_0 = amp.ls_coupling(1, 1, 2, 4, 3, 1, 0)
+ls_1_3_2_0_1_1_0 = amp.ls_coupling(1, 3, 2, 0, 1, 1, 0)
+ls_1_3_2_2_1_1_0 = amp.ls_coupling(1, 3, 2, 2, 1, 1, 0)
+ls_1_3_2_2_3_1_0 = amp.ls_coupling(1, 3, 2, 2, 3, 1, 0)
+ls_1_3_2_4_3_1_0 = amp.ls_coupling(1, 3, 2, 4, 3, 1, 0)
+ls_1_3_2_4_5_1_0 = amp.ls_coupling(1, 3, 2, 4, 5, 1, 0)
+ls_1_3_2_6_5_1_0 = amp.ls_coupling(1, 3, 2, 6, 5, 1, 0)
+ls_1_5_2_2_3_1_0 = amp.ls_coupling(1, 5, 2, 2, 3, 1, 0)
+ls_1_5_2_4_3_1_0 = amp.ls_coupling(1, 5, 2, 4, 3, 1, 0)
+ls_1_5_2_4_5_1_0 = amp.ls_coupling(1, 5, 2, 4, 5, 1, 0)
+ls_1_5_2_6_5_1_0 = amp.ls_coupling(1, 5, 2, 6, 5, 1, 0)
+ls_1_5_2_6_7_1_0 = amp.ls_coupling(1, 5, 2, 6, 7, 1, 0)
+ls_1_5_2_8_7_1_0 = amp.ls_coupling(1, 5, 2, 8, 7, 1, 0)
+ls_1_7_2_4_5_1_0 = amp.ls_coupling(1, 7, 2, 4, 5, 1, 0)
+ls_1_7_2_6_5_1_0 = amp.ls_coupling(1, 7, 2, 6, 5, 1, 0)
+ls_1_7_2_6_7_1_0 = amp.ls_coupling(1, 7, 2, 6, 7, 1, 0)
+ls_1_7_2_8_7_1_0 = amp.ls_coupling(1, 7, 2, 8, 7, 1, 0)
+ls_1_7_2_8_9_1_0 = amp.ls_coupling(1, 7, 2, 8, 9, 1, 0)
+ls_1_7_2_10_9_1_0 = amp.ls_coupling(1, 7, 2, 10, 9, 1, 0)
+ls_1_9_2_6_7_1_0 = amp.ls_coupling(1, 9, 2, 6, 7, 1, 0)
+ls_1_9_2_8_7_1_0 = amp.ls_coupling(1, 9, 2, 8, 7, 1, 0)
+ls_1_9_2_8_9_1_0 = amp.ls_coupling(1, 9, 2, 8, 9, 1, 0)
+ls_1_9_2_10_9_1_0 = amp.ls_coupling(1, 9, 2, 10, 9, 1, 0)
+ls_1_9_2_10_11_1_0 = amp.ls_coupling(1, 9, 2, 10, 11, 1, 0)
+ls_1_9_2_12_11_1_0 = amp.ls_coupling(1, 9, 2, 12, 11, 1, 0)
+ls_1_1_2_0_1_1_2 = amp.ls_coupling(1, 1, 2, 0, 1, 1, 2)
+ls_1_1_2_2_1_1_2 = amp.ls_coupling(1, 1, 2, 2, 1, 1, 2)
+ls_1_1_2_2_3_1_2 = amp.ls_coupling(1, 1, 2, 2, 3, 1, 2)
+ls_1_1_2_4_3_1_2 = amp.ls_coupling(1, 1, 2, 4, 3, 1, 2)
+ls_1_3_2_0_1_1_2 = amp.ls_coupling(1, 3, 2, 0, 1, 1, 2)
+ls_1_3_2_2_1_1_2 = amp.ls_coupling(1, 3, 2, 2, 1, 1, 2)
+ls_1_3_2_2_3_1_2 = amp.ls_coupling(1, 3, 2, 2, 3, 1, 2)
+ls_1_3_2_4_3_1_2 = amp.ls_coupling(1, 3, 2, 4, 3, 1, 2)
+ls_1_3_2_4_5_1_2 = amp.ls_coupling(1, 3, 2, 4, 5, 1, 2)
+ls_1_3_2_6_5_1_2 = amp.ls_coupling(1, 3, 2, 6, 5, 1, 2)
+ls_1_5_2_2_3_1_2 = amp.ls_coupling(1, 5, 2, 2, 3, 1, 2)
+ls_1_5_2_4_3_1_2 = amp.ls_coupling(1, 5, 2, 4, 3, 1, 2)
+ls_1_5_2_4_5_1_2 = amp.ls_coupling(1, 5, 2, 4, 5, 1, 2)
+ls_1_5_2_6_5_1_2 = amp.ls_coupling(1, 5, 2, 6, 5, 1, 2)
+ls_1_5_2_6_7_1_2 = amp.ls_coupling(1, 5, 2, 6, 7, 1, 2)
+ls_1_5_2_8_7_1_2 = amp.ls_coupling(1, 5, 2, 8, 7, 1, 2)
+ls_1_7_2_4_5_1_2 = amp.ls_coupling(1, 7, 2, 4, 5, 1, 2)
+ls_1_7_2_6_5_1_2 = amp.ls_coupling(1, 7, 2, 6, 5, 1, 2)
+ls_1_7_2_6_7_1_2 = amp.ls_coupling(1, 7, 2, 6, 7, 1, 2)
+ls_1_7_2_8_7_1_2 = amp.ls_coupling(1, 7, 2, 8, 7, 1, 2)
+ls_1_7_2_8_9_1_2 = amp.ls_coupling(1, 7, 2, 8, 9, 1, 2)
+ls_1_7_2_10_9_1_2 = amp.ls_coupling(1, 7, 2, 10, 9, 1, 2)
+ls_1_9_2_6_7_1_2 = amp.ls_coupling(1, 9, 2, 6, 7, 1, 2)
+ls_1_9_2_8_7_1_2 = amp.ls_coupling(1, 9, 2, 8, 7, 1, 2)
+ls_1_9_2_8_9_1_2 = amp.ls_coupling(1, 9, 2, 8, 9, 1, 2)
+ls_1_9_2_10_9_1_2 = amp.ls_coupling(1, 9, 2, 10, 9, 1, 2)
+ls_1_9_2_10_11_1_2 = amp.ls_coupling(1, 9, 2, 10, 11, 1, 2)
+ls_1_9_2_12_11_1_2 = amp.ls_coupling(1, 9, 2, 12, 11, 1, 2)
+ls_1_3_2_0_1_3_2 = amp.ls_coupling(1, 3, 2, 0, 1, 3, 2)
+ls_1_3_2_2_1_3_2 = amp.ls_coupling(1, 3, 2, 2, 1, 3, 2)
+ls_1_3_2_2_3_3_2 = amp.ls_coupling(1, 3, 2, 2, 3, 3, 2)
+ls_1_3_2_4_3_3_2 = amp.ls_coupling(1, 3, 2, 4, 3, 3, 2)
+ls_1_3_2_4_5_3_2 = amp.ls_coupling(1, 3, 2, 4, 5, 3, 2)
+ls_1_3_2_6_5_3_2 = amp.ls_coupling(1, 3, 2, 6, 5, 3, 2)
+ls_1_5_2_2_3_3_2 = amp.ls_coupling(1, 5, 2, 2, 3, 3, 2)
+ls_1_5_2_4_3_3_2 = amp.ls_coupling(1, 5, 2, 4, 3, 3, 2)
+ls_1_5_2_4_5_3_2 = amp.ls_coupling(1, 5, 2, 4, 5, 3, 2)
+ls_1_5_2_6_5_3_2 = amp.ls_coupling(1, 5, 2, 6, 5, 3, 2)
+ls_1_5_2_6_7_3_2 = amp.ls_coupling(1, 5, 2, 6, 7, 3, 2)
+ls_1_5_2_8_7_3_2 = amp.ls_coupling(1, 5, 2, 8, 7, 3, 2)
+ls_1_7_2_4_5_3_2 = amp.ls_coupling(1, 7, 2, 4, 5, 3, 2)
+ls_1_7_2_6_5_3_2 = amp.ls_coupling(1, 7, 2, 6, 5, 3, 2)
+ls_1_7_2_6_7_3_2 = amp.ls_coupling(1, 7, 2, 6, 7, 3, 2)
+ls_1_7_2_8_7_3_2 = amp.ls_coupling(1, 7, 2, 8, 7, 3, 2)
+ls_1_7_2_8_9_3_2 = amp.ls_coupling(1, 7, 2, 8, 9, 3, 2)
+ls_1_7_2_10_9_3_2 = amp.ls_coupling(1, 7, 2, 10, 9, 3, 2)
+ls_1_9_2_6_7_3_2 = amp.ls_coupling(1, 9, 2, 6, 7, 3, 2)
+ls_1_9_2_8_7_3_2 = amp.ls_coupling(1, 9, 2, 8, 7, 3, 2)
+ls_1_9_2_8_9_3_2 = amp.ls_coupling(1, 9, 2, 8, 9, 3, 2)
+ls_1_9_2_10_9_3_2 = amp.ls_coupling(1, 9, 2, 10, 9, 3, 2)
+ls_1_9_2_10_11_3_2 = amp.ls_coupling(1, 9, 2, 10, 11, 3, 2)
+ls_1_9_2_12_11_3_2 = amp.ls_coupling(1, 9, 2, 12, 11, 3, 2)
+ls_3_1_0_4_1_1_0 = amp.ls_coupling(3, 1, 0, 4, 1, 1, 0)
+ls_5_1_0_6_1_1_0 = amp.ls_coupling(5, 1, 0, 6, 1, 1, 0)
+ls_5_1_0_4_1_1_0 = amp.ls_coupling(5, 1, 0, 4, 1, 1, 0)
+ls_3_1_0_2_1_1_0 = amp.ls_coupling(3, 1, 0, 2, 1, 1, 0)
+ls_7_1_0_8_1_1_0 = amp.ls_coupling(7, 1, 0, 8, 1, 1, 0)
+ls_9_1_0_10_1_1_0 = amp.ls_coupling(9, 1, 0, 10, 1, 1, 0)
+ls_1_1_0_0_1_1_0 = amp.ls_coupling(1, 1, 0, 0, 1, 1, 0)
+ls_1_1_0_2_1_1_0 = amp.ls_coupling(1, 1, 0, 2, 1, 1, 0)
+
+
+# ----------------------------------------------------------------------------
+# Invariants and helicity angles of the three chains
+# ----------------------------------------------------------------------------
+
+# The amplitude depends on the three pair-mass invariants.
+sigma1 = elementof(posreals)  % m²(23)
+sigma2 = elementof(posreals)  % m²(31)
+sigma3 = elementof(posreals)  % m²(12)
+cos_theta3 = amp.dalitz_cos_theta(3, [sigma1, sigma2, sigma3], m0, [m1, m2, m3])  % chain (12)3
+q3 = hep.breakup_momentum(m0, sqrt(sigma3), m3)  % momentum of 3 in the parent frame
+p3 = hep.breakup_momentum(sqrt(sigma3), m1, m2)  % momentum in the (12) frame
+
+# ----------------------------------------------------------------------------
+# Decay chains: weight × sqrt(2J+1) × lineshape × form factors
+# ----------------------------------------------------------------------------
+
+% c01_L1405: L1405_Flatte, J = 1/2, chain (12)3, production: LS coupling, L = 0, S = 1/2, decay: LS coupling, L = 0, S = 1/2
+c01_L1405 = (2.2615419999999995 - 1.7992479999999997 * im) * sqrt(2.0) * ls_L1405_Flatte(sigma3)
+% c02_L1405: L1405_Flatte, J = 1/2, chain (12)3, production: LS coupling, L = 1, S = 1/2, decay: LS coupling, L = 0, S = 1/2
+c02_L1405 = (-1.8715784466594079 - 1.0439686414131668 * im) * sqrt(2.0) * ls_L1405_Flatte(sigma3) * hep.blatt_weisskopf(1, q3, 5.0)
+% c03_L1405: L1405_Flatte, J = 1/2, chain (12)3, production: LS coupling, L = 1, S = 3/2, decay: LS coupling, L = 0, S = 1/2
+c03_L1405 = (1.3234058111554519 + 0.7381973056893572 * im) * sqrt(2.0) * ls_L1405_Flatte(sigma3) * hep.blatt_weisskopf(1, q3, 5.0)
+% c04_L1405: L1405_Flatte, J = 1/2, chain (12)3, production: LS coupling, L = 2, S = 3/2, decay: LS coupling, L = 0, S = 1/2
+c04_L1405 = (-1.6131550895688382 + 1.283401355622205 * im) * sqrt(2.0) * ls_L1405_Flatte(sigma3) * hep.blatt_weisskopf(2, q3, 5.0)
+% c05_L1520: L1520_BW, J = 3/2, chain (12)3, production: LS coupling, L = 0, S = 1/2, decay: LS coupling, L = 2, S = 1/2
+c05_L1520 = (4.108357043622831 - 0.0668483592242114 * im) * sqrt(4.0) * ls_L1520_BW(sigma3) * hep.blatt_weisskopf(2, p3, 1.5)
+% c06_L1520: L1520_BW, J = 3/2, chain (12)3, production: LS coupling, L = 1, S = 1/2, decay: LS coupling, L = 2, S = 1/2
+c06_L1520 = (5.529490890260219 + 0.8175133786512758 * im) * sqrt(4.0) * ls_L1520_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c07_L1520: L1520_BW, J = 3/2, chain (12)3, production: LS coupling, L = 1, S = 3/2, decay: LS coupling, L = 2, S = 1/2
+c07_L1520 = (-1.669745451910645 + 21.202140697865232 * im) * sqrt(4.0) * ls_L1520_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c08_L1520: L1520_BW, J = 3/2, chain (12)3, production: LS coupling, L = 2, S = 3/2, decay: LS coupling, L = 2, S = 1/2
+c08_L1520 = (-5.803165988479272 + 10.325839240068499 * im) * sqrt(4.0) * ls_L1520_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c09_L1520: L1520_BW, J = 3/2, chain (12)3, production: LS coupling, L = 2, S = 5/2, decay: LS coupling, L = 2, S = 1/2
+c09_L1520 = (5.0240140735133085 - 3.4922186723465236 * im) * sqrt(4.0) * ls_L1520_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c10_L1520: L1520_BW, J = 3/2, chain (12)3, production: LS coupling, L = 3, S = 5/2, decay: LS coupling, L = 2, S = 1/2
+c10_L1520 = (4.749762166036306 - 6.557080951190571 * im) * sqrt(4.0) * ls_L1520_BW(sigma3) * hep.blatt_weisskopf(3, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c11_L1600: L1600_BW, J = 1/2, chain (12)3, production: LS coupling, L = 0, S = 1/2, decay: LS coupling, L = 1, S = 1/2
+c11_L1600 = (-4.984604534495612 - 7.275774343593705 * im) * sqrt(2.0) * ls_L1600_BW(sigma3) * hep.blatt_weisskopf(1, p3, 1.5)
+% c12_L1600: L1600_BW, J = 1/2, chain (12)3, production: LS coupling, L = 1, S = 1/2, decay: LS coupling, L = 1, S = 1/2
+c12_L1600 = (5.195985372142845 - 0.4417798231845672 * im) * sqrt(2.0) * ls_L1600_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(1, p3, 1.5)
+% c13_L1600: L1600_BW, J = 1/2, chain (12)3, production: LS coupling, L = 1, S = 3/2, decay: LS coupling, L = 1, S = 1/2
+c13_L1600 = (-3.6741164915883107 + 0.3123855087652013 * im) * sqrt(2.0) * ls_L1600_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(1, p3, 1.5)
+% c14_L1600: L1600_BW, J = 1/2, chain (12)3, production: LS coupling, L = 2, S = 3/2, decay: LS coupling, L = 1, S = 1/2
+c14_L1600 = (3.5567875127680906 + 5.1916622777038715 * im) * sqrt(2.0) * ls_L1600_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(1, p3, 1.5)
+% c15_L1670: L1680_BW, J = 1/2, chain (12)3, production: LS coupling, L = 0, S = 1/2, decay: LS coupling, L = 0, S = 1/2
+c15_L1670 = (-0.16420699999999996 + 0.07874799999999998 * im) * sqrt(2.0) * ls_L1680_BW(sigma3)
+% c16_L1670: L1680_BW, J = 1/2, chain (12)3, production: LS coupling, L = 1, S = 1/2, decay: LS coupling, L = 0, S = 1/2
+c16_L1670 = (0.3371436476130202 + 0.2063535379997733 * im) * sqrt(2.0) * ls_L1680_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0)
+% c17_L1670: L1680_BW, J = 1/2, chain (12)3, production: LS coupling, L = 1, S = 3/2, decay: LS coupling, L = 0, S = 1/2
+c17_L1670 = (-0.23839655946113422 - 0.14591398604147554 * im) * sqrt(2.0) * ls_L1680_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0)
+% c18_L1670: L1680_BW, J = 1/2, chain (12)3, production: LS coupling, L = 2, S = 3/2, decay: LS coupling, L = 0, S = 1/2
+c18_L1670 = (0.1171887985742462 - 0.05619969617692755 * im) * sqrt(2.0) * ls_L1680_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0)
+% c19_L1690: L1690_BW, J = 3/2, chain (12)3, production: LS coupling, L = 0, S = 1/2, decay: LS coupling, L = 2, S = 1/2
+c19_L1690 = (-1.2515408516146889 - 0.20807601551425958 * im) * sqrt(4.0) * ls_L1690_BW(sigma3) * hep.blatt_weisskopf(2, p3, 1.5)
+% c20_L1690: L1690_BW, J = 3/2, chain (12)3, production: LS coupling, L = 1, S = 1/2, decay: LS coupling, L = 2, S = 1/2
+c20_L1690 = (6.390591891759433 + 5.314838910034677 * im) * sqrt(4.0) * ls_L1690_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c21_L1690: L1690_BW, J = 3/2, chain (12)3, production: LS coupling, L = 1, S = 3/2, decay: LS coupling, L = 2, S = 1/2
+c21_L1690 = (4.392938701500898 + 1.1832477556172771 * im) * sqrt(4.0) * ls_L1690_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c22_L1690: L1690_BW, J = 3/2, chain (12)3, production: LS coupling, L = 2, S = 3/2, decay: LS coupling, L = 2, S = 1/2
+c22_L1690 = (8.02152561159109 + 6.075105479215116 * im) * sqrt(4.0) * ls_L1690_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c23_L1690: L1690_BW, J = 3/2, chain (12)3, production: LS coupling, L = 2, S = 5/2, decay: LS coupling, L = 2, S = 1/2
+c23_L1690 = (-3.615370170843966 - 2.1815697682335045 * im) * sqrt(4.0) * ls_L1690_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c24_L1690: L1690_BW, J = 3/2, chain (12)3, production: LS coupling, L = 3, S = 5/2, decay: LS coupling, L = 2, S = 1/2
+c24_L1690 = (3.351576416899477 + 3.6239307230788382 * im) * sqrt(4.0) * ls_L1690_BW(sigma3) * hep.blatt_weisskopf(3, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c25_L1800: L1800_BW, J = 1/2, chain (12)3, production: LS coupling, L = 0, S = 1/2, decay: LS coupling, L = 0, S = 1/2
+c25_L1800 = 0.9999999999999999 * sqrt(2.0) * ls_L1800_BW(sigma3)
+% c26_L1800: L1800_BW, J = 1/2, chain (12)3, production: LS coupling, L = 1, S = 1/2, decay: LS coupling, L = 0, S = 1/2
+c26_L1800 = (0.32174415383329497 - 4.420345983044671 * im) * sqrt(2.0) * ls_L1800_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0)
+% c27_L1800: L1800_BW, J = 1/2, chain (12)3, production: LS coupling, L = 1, S = 3/2, decay: LS coupling, L = 0, S = 1/2
+c27_L1800 = (-0.22750747298265048 + 3.1256566198016014 * im) * sqrt(2.0) * ls_L1800_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0)
+% c28_L1800: L1800_BW, J = 1/2, chain (12)3, production: LS coupling, L = 2, S = 3/2, decay: LS coupling, L = 0, S = 1/2
+c28_L1800 = -0.7138719815230252 * sqrt(2.0) * ls_L1800_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0)
+% c29_L1810: L1810_BW, J = 1/2, chain (12)3, production: LS coupling, L = 0, S = 1/2, decay: LS coupling, L = 1, S = 1/2
+c29_L1810 = (1.2329512295731921 + 0.5797348113863545 * im) * sqrt(2.0) * ls_L1810_BW(sigma3) * hep.blatt_weisskopf(1, p3, 1.5)
+% c30_L1810: L1810_BW, J = 1/2, chain (12)3, production: LS coupling, L = 1, S = 1/2, decay: LS coupling, L = 1, S = 1/2
+c30_L1810 = (-0.15041712217563452 + 0.31809866486267147 * im) * sqrt(2.0) * ls_L1810_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(1, p3, 1.5)
+% c31_L1810: L1810_BW, J = 1/2, chain (12)3, production: LS coupling, L = 1, S = 3/2, decay: LS coupling, L = 1, S = 1/2
+c31_L1810 = (0.10636096709695654 - 0.22492972301078187 * im) * sqrt(2.0) * ls_L1810_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(1, p3, 1.5)
+% c32_L1810: L1810_BW, J = 1/2, chain (12)3, production: LS coupling, L = 2, S = 3/2, decay: LS coupling, L = 1, S = 1/2
+c32_L1810 = (-0.8801479601319633 - 0.4138463869619736 * im) * sqrt(2.0) * ls_L1810_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(1, p3, 1.5)
+% c33_L1820: L1820_BW, J = 5/2, chain (12)3, production: LS coupling, L = 1, S = 3/2, decay: LS coupling, L = 3, S = 1/2
+c33_L1820 = (7.590027925605289 + 1.351485280203232 * im) * sqrt(6.0) * ls_L1820_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(3, p3, 1.5)
+% c34_L1820: L1820_BW, J = 5/2, chain (12)3, production: LS coupling, L = 2, S = 3/2, decay: LS coupling, L = 3, S = 1/2
+c34_L1820 = (12.6978984716254 + 33.13909642765735 * im) * sqrt(6.0) * ls_L1820_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(3, p3, 1.5)
+% c35_L1820: L1820_BW, J = 5/2, chain (12)3, production: LS coupling, L = 2, S = 5/2, decay: LS coupling, L = 3, S = 1/2
+c35_L1820 = (4.086834167925889 + 24.975212258662644 * im) * sqrt(6.0) * ls_L1820_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(3, p3, 1.5)
+% c36_L1820: L1820_BW, J = 5/2, chain (12)3, production: LS coupling, L = 3, S = 5/2, decay: LS coupling, L = 3, S = 1/2
+c36_L1820 = (-9.182639071211478 + 32.96932660214078 * im) * sqrt(6.0) * ls_L1820_BW(sigma3) * hep.blatt_weisskopf(3, q3, 5.0) * hep.blatt_weisskopf(3, p3, 1.5)
+% c37_L1820: L1820_BW, J = 5/2, chain (12)3, production: LS coupling, L = 3, S = 7/2, decay: LS coupling, L = 3, S = 1/2
+c37_L1820 = (8.508305899110448 - 6.222783113391748 * im) * sqrt(6.0) * ls_L1820_BW(sigma3) * hep.blatt_weisskopf(3, q3, 5.0) * hep.blatt_weisskopf(3, p3, 1.5)
+% c38_L1820: L1820_BW, J = 5/2, chain (12)3, production: LS coupling, L = 4, S = 7/2, decay: LS coupling, L = 3, S = 1/2
+c38_L1820 = (9.94392149899061 + 22.674983152315246 * im) * sqrt(6.0) * ls_L1820_BW(sigma3) * hep.blatt_weisskopf(4, q3, 5.0) * hep.blatt_weisskopf(3, p3, 1.5)
+% c39_L1830: L1830_BW, J = 5/2, chain (12)3, production: LS coupling, L = 1, S = 3/2, decay: LS coupling, L = 2, S = 1/2
+c39_L1830 = (-1.0036485528418424 + 1.0430833903661603 * im) * sqrt(6.0) * ls_L1830_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c40_L1830: L1830_BW, J = 5/2, chain (12)3, production: LS coupling, L = 2, S = 3/2, decay: LS coupling, L = 2, S = 1/2
+c40_L1830 = (-1.8458695010259276 - 0.7346836306540477 * im) * sqrt(6.0) * ls_L1830_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c41_L1830: L1830_BW, J = 5/2, chain (12)3, production: LS coupling, L = 2, S = 5/2, decay: LS coupling, L = 2, S = 1/2
+c41_L1830 = (1.6142828743499704 + 1.2089369146899427 * im) * sqrt(6.0) * ls_L1830_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c42_L1830: L1830_BW, J = 5/2, chain (12)3, production: LS coupling, L = 3, S = 5/2, decay: LS coupling, L = 2, S = 1/2
+c42_L1830 = (-1.454215075121507 - 0.9561291141558163 * im) * sqrt(6.0) * ls_L1830_BW(sigma3) * hep.blatt_weisskopf(3, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c43_L1830: L1830_BW, J = 5/2, chain (12)3, production: LS coupling, L = 3, S = 7/2, decay: LS coupling, L = 2, S = 1/2
+c43_L1830 = (-0.5284079103486713 + 1.100915689156118 * im) * sqrt(6.0) * ls_L1830_BW(sigma3) * hep.blatt_weisskopf(3, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c44_L1830: L1830_BW, J = 5/2, chain (12)3, production: LS coupling, L = 4, S = 7/2, decay: LS coupling, L = 2, S = 1/2
+c44_L1830 = (-1.9512990733056674 - 0.9063591893327532 * im) * sqrt(6.0) * ls_L1830_BW(sigma3) * hep.blatt_weisskopf(4, q3, 5.0) * hep.blatt_weisskopf(2, p3, 1.5)
+% c45_L1890: L1890_BW, J = 3/2, chain (12)3, production: LS coupling, L = 0, S = 1/2, decay: LS coupling, L = 1, S = 1/2
+c45_L1890 = (-0.8056899642094871 + 1.594995260820461 * im) * sqrt(4.0) * ls_L1890_BW(sigma3) * hep.blatt_weisskopf(1, p3, 1.5)
+% c46_L1890: L1890_BW, J = 3/2, chain (12)3, production: LS coupling, L = 1, S = 1/2, decay: LS coupling, L = 1, S = 1/2
+c46_L1890 = (-1.1187921784182446 - 0.19731651443448214 * im) * sqrt(4.0) * ls_L1890_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(1, p3, 1.5)
+% c47_L1890: L1890_BW, J = 3/2, chain (12)3, production: LS coupling, L = 1, S = 3/2, decay: LS coupling, L = 1, S = 1/2
+c47_L1890 = (1.254387267694874 - 0.02961475092130131 * im) * sqrt(4.0) * ls_L1890_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(1, p3, 1.5)
+% c48_L1890: L1890_BW, J = 3/2, chain (12)3, production: LS coupling, L = 2, S = 3/2, decay: LS coupling, L = 1, S = 1/2
+c48_L1890 = (-0.44068377083734417 - 3.386298247036518 * im) * sqrt(4.0) * ls_L1890_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(1, p3, 1.5)
+% c49_L1890: L1890_BW, J = 3/2, chain (12)3, production: LS coupling, L = 2, S = 5/2, decay: LS coupling, L = 1, S = 1/2
+c49_L1890 = (-0.4595157065063295 + 2.3292545983400124 * im) * sqrt(4.0) * ls_L1890_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(1, p3, 1.5)
+% c50_L1890: L1890_BW, J = 3/2, chain (12)3, production: LS coupling, L = 3, S = 5/2, decay: LS coupling, L = 1, S = 1/2
+c50_L1890 = (-1.2730779559824494 - 0.13950620539243158 * im) * sqrt(4.0) * ls_L1890_BW(sigma3) * hep.blatt_weisskopf(3, q3, 5.0) * hep.blatt_weisskopf(1, p3, 1.5)
+% c51_L2100: L2100_BW, J = 7/2, chain (12)3, production: LS coupling, L = 2, S = 5/2, decay: LS coupling, L = 4, S = 1/2
+c51_L2100 = (49.218173237760695 - 29.272299895852452 * im) * sqrt(8.0) * ls_L2100_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(4, p3, 1.5)
+% c52_L2100: L2100_BW, J = 7/2, chain (12)3, production: LS coupling, L = 3, S = 5/2, decay: LS coupling, L = 4, S = 1/2
+c52_L2100 = (51.79177222101752 + 112.49297256009743 * im) * sqrt(8.0) * ls_L2100_BW(sigma3) * hep.blatt_weisskopf(3, q3, 5.0) * hep.blatt_weisskopf(4, p3, 1.5)
+% c53_L2100: L2100_BW, J = 7/2, chain (12)3, production: LS coupling, L = 3, S = 7/2, decay: LS coupling, L = 4, S = 1/2
+c53_L2100 = (14.467132844964842 + 76.34331465657102 * im) * sqrt(8.0) * ls_L2100_BW(sigma3) * hep.blatt_weisskopf(3, q3, 5.0) * hep.blatt_weisskopf(4, p3, 1.5)
+% c54_L2100: L2100_BW, J = 7/2, chain (12)3, production: LS coupling, L = 4, S = 7/2, decay: LS coupling, L = 4, S = 1/2
+c54_L2100 = (-59.296784189872376 + 160.73881774317323 * im) * sqrt(8.0) * ls_L2100_BW(sigma3) * hep.blatt_weisskopf(4, q3, 5.0) * hep.blatt_weisskopf(4, p3, 1.5)
+% c55_L2100: L2100_BW, J = 7/2, chain (12)3, production: LS coupling, L = 4, S = 9/2, decay: LS coupling, L = 4, S = 1/2
+c55_L2100 = (54.38718320352659 - 53.55523743422298 * im) * sqrt(8.0) * ls_L2100_BW(sigma3) * hep.blatt_weisskopf(4, q3, 5.0) * hep.blatt_weisskopf(4, p3, 1.5)
+% c56_L2100: L2100_BW, J = 7/2, chain (12)3, production: LS coupling, L = 5, S = 9/2, decay: LS coupling, L = 4, S = 1/2
+c56_L2100 = (44.59238847485171 + 88.989649321906 * im) * sqrt(8.0) * ls_L2100_BW(sigma3) * hep.blatt_weisskopf(5, q3, 5.0) * hep.blatt_weisskopf(4, p3, 1.5)
+% c57_L2110: L2110_BW, J = 5/2, chain (12)3, production: LS coupling, L = 1, S = 3/2, decay: LS coupling, L = 3, S = 1/2
+c57_L2110 = (7.0777507748244615 - 6.718928308295796 * im) * sqrt(6.0) * ls_L2110_BW(sigma3) * hep.blatt_weisskopf(1, q3, 5.0) * hep.blatt_weisskopf(3, p3, 1.5)
+% c58_L2110: L2110_BW, J = 5/2, chain (12)3, production: LS coupling, L = 2, S = 3/2, decay: LS coupling, L = 3, S = 1/2
+c58_L2110 = (20.666121772608257 + 20.610990545268972 * im) * sqrt(6.0) * ls_L2110_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(3, p3, 1.5)
+% c59_L2110: L2110_BW, J = 5/2, chain (12)3, production: LS coupling, L = 2, S = 5/2, decay: LS coupling, L = 3, S = 1/2
+c59_L2110 = (1.0221059150313465 + 10.97293097970227 * im) * sqrt(6.0) * ls_L2110_BW(sigma3) * hep.blatt_weisskopf(2, q3, 5.0) * hep.blatt_weisskopf(3, p3, 1.5)
+% c60_L2110: L2110_BW, J = 5/2, chain (12)3, production: LS coupling, L = 3, S = 5/2, decay: LS coupling, L = 3, S = 1/2
+c60_L2110 = (-0.8039914494040608 + 32.728514478798054 * im) * sqrt(6.0) * ls_L2110_BW(sigma3) * hep.blatt_weisskopf(3, q3, 5.0) * hep.blatt_weisskopf(3, p3, 1.5)
+% c61_L2110: L2110_BW, J = 5/2, chain (12)3, production: LS coupling, L = 3, S = 7/2, decay: LS coupling, L = 3, S = 1/2
+c61_L2110 = (6.207189601628342 - 13.040156799647997 * im) * sqrt(6.0) * ls_L2110_BW(sigma3) * hep.blatt_weisskopf(3, q3, 5.0) * hep.blatt_weisskopf(3, p3, 1.5)
+% c62_L2110: L2110_BW, J = 5/2, chain (12)3, production: LS coupling, L = 4, S = 7/2, decay: LS coupling, L = 3, S = 1/2
+c62_L2110 = (17.508583975005255 + 15.177934637395214 * im) * sqrt(6.0) * ls_L2110_BW(sigma3) * hep.blatt_weisskopf(4, q3, 5.0) * hep.blatt_weisskopf(3, p3, 1.5)
+% c63_L2350: L2350_BW, J = 9/2, chain (12)3, production: LS coupling, L = 3, S = 7/2, decay: LS coupling, L = 5, S = 1/2
+c63_L2350 = (8.633355975060676 + 32.74590935567872 * im) * sqrt(10.0) * ls_L2350_BW(sigma3) * hep.blatt_weisskopf(3, q3, 5.0) * hep.blatt_weisskopf(5, p3, 1.5)
+% c64_L2350: L2350_BW, J = 9/2, chain (12)3, production: LS coupling, L = 4, S = 7/2, decay: LS coupling, L = 5, S = 1/2
+c64_L2350 = (-26.4986029240209 + 36.770502872109034 * im) * sqrt(10.0) * ls_L2350_BW(sigma3) * hep.blatt_weisskopf(4, q3, 5.0) * hep.blatt_weisskopf(5, p3, 1.5)
+% c65_L2350: L2350_BW, J = 9/2, chain (12)3, production: LS coupling, L = 4, S = 9/2, decay: LS coupling, L = 5, S = 1/2
+c65_L2350 = (-26.681900472924337 + 115.3793814748836 * im) * sqrt(10.0) * ls_L2350_BW(sigma3) * hep.blatt_weisskopf(4, q3, 5.0) * hep.blatt_weisskopf(5, p3, 1.5)
+% c66_L2350: L2350_BW, J = 9/2, chain (12)3, production: LS coupling, L = 5, S = 9/2, decay: LS coupling, L = 5, S = 1/2
+c66_L2350 = (-56.25554547348509 + 16.55083422280756 * im) * sqrt(10.0) * ls_L2350_BW(sigma3) * hep.blatt_weisskopf(5, q3, 5.0) * hep.blatt_weisskopf(5, p3, 1.5)
+% c67_L2350: L2350_BW, J = 9/2, chain (12)3, production: LS coupling, L = 5, S = 11/2, decay: LS coupling, L = 5, S = 1/2
+c67_L2350 = (15.75763657303104 + 28.47907714973581 * im) * sqrt(10.0) * ls_L2350_BW(sigma3) * hep.blatt_weisskopf(5, q3, 5.0) * hep.blatt_weisskopf(5, p3, 1.5)
+% c68_L2350: L2350_BW, J = 9/2, chain (12)3, production: LS coupling, L = 6, S = 11/2, decay: LS coupling, L = 5, S = 1/2
+c68_L2350 = (-21.36666536366439 + 18.419929714546964 * im) * sqrt(10.0) * ls_L2350_BW(sigma3) * hep.blatt_weisskopf(6, q3, 5.0) * hep.blatt_weisskopf(5, p3, 1.5)
+% c69_LNR3O: LNR30_NR, J = 3/2, chain (12)3, production: LS coupling, L = 0, S = 1/2, decay: LS coupling, L = 2, S = 1/2
+c69_LNR3O = (0.2014761778704208 + 0.1373786839543982 * im) * sqrt(4.0) * ls_LNR30_NR(sigma3) * p3^2
+% c70_LNR3O: LNR30_NR, J = 3/2, chain (12)3, production: LS coupling, L = 1, S = 1/2, decay: LS coupling, L = 2, S = 1/2
+c70_LNR3O = (-0.912800424869022 + 0.009663096700249658 * im) * sqrt(4.0) * ls_LNR30_NR(sigma3) * q3^1 * p3^2
+% c71_LNR3O: LNR30_NR, J = 3/2, chain (12)3, production: LS coupling, L = 1, S = 3/2, decay: LS coupling, L = 2, S = 1/2
+c71_LNR3O = (0.7796215552309834 - 0.004829994231255104 * im) * sqrt(4.0) * ls_LNR30_NR(sigma3) * q3^1 * p3^2
+% c72_LNR3O: LNR30_NR, J = 3/2, chain (12)3, production: LS coupling, L = 2, S = 3/2, decay: LS coupling, L = 2, S = 1/2
+c72_LNR3O = (-0.3239760701193479 - 0.11244089269832912 * im) * sqrt(4.0) * ls_LNR30_NR(sigma3) * q3^2 * p3^2
+% c73_LNR3O: LNR30_NR, J = 3/2, chain (12)3, production: LS coupling, L = 2, S = 5/2, decay: LS coupling, L = 2, S = 1/2
+c73_LNR3O = (0.1587446676919606 + 0.07208653021070943 * im) * sqrt(4.0) * ls_LNR30_NR(sigma3) * q3^2 * p3^2
+% c74_LNR3O: LNR30_NR, J = 3/2, chain (12)3, production: LS coupling, L = 3, S = 5/2, decay: LS coupling, L = 2, S = 1/2
+c74_LNR3O = (-0.31776619398253025 + 0.0029782945639327254 * im) * sqrt(4.0) * ls_LNR30_NR(sigma3) * q3^3 * p3^2
+
+# ----------------------------------------------------------------------------
+# Wigner d-functions of the helicity angles
+# ----------------------------------------------------------------------------
+
+d3_1_m1_m1 = wd.wignerd_doublearg(1, -1, -1, cos_theta3)
+d3_1_m1_p1 = wd.wignerd_doublearg(1, -1, 1, cos_theta3)
+d3_1_p1_m1 = wd.wignerd_doublearg(1, 1, -1, cos_theta3)
+d3_1_p1_p1 = wd.wignerd_doublearg(1, 1, 1, cos_theta3)
+d3_3_m1_m1 = wd.wignerd_doublearg(3, -1, -1, cos_theta3)
+d3_3_m1_p1 = wd.wignerd_doublearg(3, -1, 1, cos_theta3)
+d3_3_m3_m1 = wd.wignerd_doublearg(3, -3, -1, cos_theta3)
+d3_3_m3_p1 = wd.wignerd_doublearg(3, -3, 1, cos_theta3)
+d3_3_p1_m1 = wd.wignerd_doublearg(3, 1, -1, cos_theta3)
+d3_3_p1_p1 = wd.wignerd_doublearg(3, 1, 1, cos_theta3)
+d3_3_p3_m1 = wd.wignerd_doublearg(3, 3, -1, cos_theta3)
+d3_3_p3_p1 = wd.wignerd_doublearg(3, 3, 1, cos_theta3)
+d3_5_m1_m1 = wd.wignerd_doublearg(5, -1, -1, cos_theta3)
+d3_5_m1_p1 = wd.wignerd_doublearg(5, -1, 1, cos_theta3)
+d3_5_m3_m1 = wd.wignerd_doublearg(5, -3, -1, cos_theta3)
+d3_5_m3_p1 = wd.wignerd_doublearg(5, -3, 1, cos_theta3)
+d3_5_p1_m1 = wd.wignerd_doublearg(5, 1, -1, cos_theta3)
+d3_5_p1_p1 = wd.wignerd_doublearg(5, 1, 1, cos_theta3)
+d3_5_p3_m1 = wd.wignerd_doublearg(5, 3, -1, cos_theta3)
+d3_5_p3_p1 = wd.wignerd_doublearg(5, 3, 1, cos_theta3)
+d3_7_m1_m1 = wd.wignerd_doublearg(7, -1, -1, cos_theta3)
+d3_7_m1_p1 = wd.wignerd_doublearg(7, -1, 1, cos_theta3)
+d3_7_m3_m1 = wd.wignerd_doublearg(7, -3, -1, cos_theta3)
+d3_7_m3_p1 = wd.wignerd_doublearg(7, -3, 1, cos_theta3)
+d3_7_p1_m1 = wd.wignerd_doublearg(7, 1, -1, cos_theta3)
+d3_7_p1_p1 = wd.wignerd_doublearg(7, 1, 1, cos_theta3)
+d3_7_p3_m1 = wd.wignerd_doublearg(7, 3, -1, cos_theta3)
+d3_7_p3_p1 = wd.wignerd_doublearg(7, 3, 1, cos_theta3)
+d3_9_m1_m1 = wd.wignerd_doublearg(9, -1, -1, cos_theta3)
+d3_9_m1_p1 = wd.wignerd_doublearg(9, -1, 1, cos_theta3)
+d3_9_m3_m1 = wd.wignerd_doublearg(9, -3, -1, cos_theta3)
+d3_9_m3_p1 = wd.wignerd_doublearg(9, -3, 1, cos_theta3)
+d3_9_p1_m1 = wd.wignerd_doublearg(9, 1, -1, cos_theta3)
+d3_9_p1_p1 = wd.wignerd_doublearg(9, 1, 1, cos_theta3)
+d3_9_p3_m1 = wd.wignerd_doublearg(9, 3, -1, cos_theta3)
+d3_9_p3_p1 = wd.wignerd_doublearg(9, 3, 1, cos_theta3)
+
+# ----------------------------------------------------------------------------
+# Amplitudes of each chain group in its own frames
+# ----------------------------------------------------------------------------
+
+% A<k>_<particle>_<2λ>...: chains with spectator k, p1 = +1/2, m1 = -1/2, p2 = +1, ...
+A3_p_m1_g_m2_Lb_m1 = (
+    ls_1_3_2_0_1_m3_m2 * ls_3_1_0_4_1_m1_0 * c05_L1520 * d3_3_m3_m1
+    + ls_1_3_2_2_1_m3_m2 * ls_3_1_0_4_1_m1_0 * c06_L1520 * d3_3_m3_m1
+    + ls_1_3_2_2_3_m3_m2 * ls_3_1_0_4_1_m1_0 * c07_L1520 * d3_3_m3_m1
+    + ls_1_3_2_4_3_m3_m2 * ls_3_1_0_4_1_m1_0 * c08_L1520 * d3_3_m3_m1
+    + ls_1_3_2_4_5_m3_m2 * ls_3_1_0_4_1_m1_0 * c09_L1520 * d3_3_m3_m1
+    + ls_1_3_2_6_5_m3_m2 * ls_3_1_0_4_1_m1_0 * c10_L1520 * d3_3_m3_m1
+    + ls_1_3_2_0_1_m3_m2 * ls_3_1_0_4_1_m1_0 * c19_L1690 * d3_3_m3_m1
+    + ls_1_3_2_2_1_m3_m2 * ls_3_1_0_4_1_m1_0 * c20_L1690 * d3_3_m3_m1
+    + ls_1_3_2_2_3_m3_m2 * ls_3_1_0_4_1_m1_0 * c21_L1690 * d3_3_m3_m1
+    + ls_1_3_2_4_3_m3_m2 * ls_3_1_0_4_1_m1_0 * c22_L1690 * d3_3_m3_m1
+    + ls_1_3_2_4_5_m3_m2 * ls_3_1_0_4_1_m1_0 * c23_L1690 * d3_3_m3_m1
+    + ls_1_3_2_6_5_m3_m2 * ls_3_1_0_4_1_m1_0 * c24_L1690 * d3_3_m3_m1
+    + ls_1_5_2_2_3_m3_m2 * ls_5_1_0_6_1_m1_0 * c33_L1820 * d3_5_m3_m1
+    + ls_1_5_2_4_3_m3_m2 * ls_5_1_0_6_1_m1_0 * c34_L1820 * d3_5_m3_m1
+    + ls_1_5_2_4_5_m3_m2 * ls_5_1_0_6_1_m1_0 * c35_L1820 * d3_5_m3_m1
+    + ls_1_5_2_6_5_m3_m2 * ls_5_1_0_6_1_m1_0 * c36_L1820 * d3_5_m3_m1
+    + ls_1_5_2_6_7_m3_m2 * ls_5_1_0_6_1_m1_0 * c37_L1820 * d3_5_m3_m1
+    + ls_1_5_2_8_7_m3_m2 * ls_5_1_0_6_1_m1_0 * c38_L1820 * d3_5_m3_m1
+    + ls_1_5_2_2_3_m3_m2 * ls_5_1_0_4_1_m1_0 * c39_L1830 * d3_5_m3_m1
+    + ls_1_5_2_4_3_m3_m2 * ls_5_1_0_4_1_m1_0 * c40_L1830 * d3_5_m3_m1
+    + ls_1_5_2_4_5_m3_m2 * ls_5_1_0_4_1_m1_0 * c41_L1830 * d3_5_m3_m1
+    + ls_1_5_2_6_5_m3_m2 * ls_5_1_0_4_1_m1_0 * c42_L1830 * d3_5_m3_m1
+    + ls_1_5_2_6_7_m3_m2 * ls_5_1_0_4_1_m1_0 * c43_L1830 * d3_5_m3_m1
+    + ls_1_5_2_8_7_m3_m2 * ls_5_1_0_4_1_m1_0 * c44_L1830 * d3_5_m3_m1
+    + ls_1_3_2_0_1_m3_m2 * ls_3_1_0_2_1_m1_0 * c45_L1890 * d3_3_m3_m1
+    + ls_1_3_2_2_1_m3_m2 * ls_3_1_0_2_1_m1_0 * c46_L1890 * d3_3_m3_m1
+    + ls_1_3_2_2_3_m3_m2 * ls_3_1_0_2_1_m1_0 * c47_L1890 * d3_3_m3_m1
+    + ls_1_3_2_4_3_m3_m2 * ls_3_1_0_2_1_m1_0 * c48_L1890 * d3_3_m3_m1
+    + ls_1_3_2_4_5_m3_m2 * ls_3_1_0_2_1_m1_0 * c49_L1890 * d3_3_m3_m1
+    + ls_1_3_2_6_5_m3_m2 * ls_3_1_0_2_1_m1_0 * c50_L1890 * d3_3_m3_m1
+    + ls_1_7_2_4_5_m3_m2 * ls_7_1_0_8_1_m1_0 * c51_L2100 * d3_7_m3_m1
+    + ls_1_7_2_6_5_m3_m2 * ls_7_1_0_8_1_m1_0 * c52_L2100 * d3_7_m3_m1
+    + ls_1_7_2_6_7_m3_m2 * ls_7_1_0_8_1_m1_0 * c53_L2100 * d3_7_m3_m1
+    + ls_1_7_2_8_7_m3_m2 * ls_7_1_0_8_1_m1_0 * c54_L2100 * d3_7_m3_m1
+    + ls_1_7_2_8_9_m3_m2 * ls_7_1_0_8_1_m1_0 * c55_L2100 * d3_7_m3_m1
+    + ls_1_7_2_10_9_m3_m2 * ls_7_1_0_8_1_m1_0 * c56_L2100 * d3_7_m3_m1
+    + ls_1_5_2_2_3_m3_m2 * ls_5_1_0_6_1_m1_0 * c57_L2110 * d3_5_m3_m1
+    + ls_1_5_2_4_3_m3_m2 * ls_5_1_0_6_1_m1_0 * c58_L2110 * d3_5_m3_m1
+    + ls_1_5_2_4_5_m3_m2 * ls_5_1_0_6_1_m1_0 * c59_L2110 * d3_5_m3_m1
+    + ls_1_5_2_6_5_m3_m2 * ls_5_1_0_6_1_m1_0 * c60_L2110 * d3_5_m3_m1
+    + ls_1_5_2_6_7_m3_m2 * ls_5_1_0_6_1_m1_0 * c61_L2110 * d3_5_m3_m1
+    + ls_1_5_2_8_7_m3_m2 * ls_5_1_0_6_1_m1_0 * c62_L2110 * d3_5_m3_m1
+    + ls_1_9_2_6_7_m3_m2 * ls_9_1_0_10_1_m1_0 * c63_L2350 * d3_9_m3_m1
+    + ls_1_9_2_8_7_m3_m2 * ls_9_1_0_10_1_m1_0 * c64_L2350 * d3_9_m3_m1
+    + ls_1_9_2_8_9_m3_m2 * ls_9_1_0_10_1_m1_0 * c65_L2350 * d3_9_m3_m1
+    + ls_1_9_2_10_9_m3_m2 * ls_9_1_0_10_1_m1_0 * c66_L2350 * d3_9_m3_m1
+    + ls_1_9_2_10_11_m3_m2 * ls_9_1_0_10_1_m1_0 * c67_L2350 * d3_9_m3_m1
+    + ls_1_9_2_12_11_m3_m2 * ls_9_1_0_10_1_m1_0 * c68_L2350 * d3_9_m3_m1
+    + ls_1_3_2_0_1_m3_m2 * ls_3_1_0_4_1_m1_0 * c69_LNR3O * d3_3_m3_m1
+    + ls_1_3_2_2_1_m3_m2 * ls_3_1_0_4_1_m1_0 * c70_LNR3O * d3_3_m3_m1
+    + ls_1_3_2_2_3_m3_m2 * ls_3_1_0_4_1_m1_0 * c71_LNR3O * d3_3_m3_m1
+    + ls_1_3_2_4_3_m3_m2 * ls_3_1_0_4_1_m1_0 * c72_LNR3O * d3_3_m3_m1
+    + ls_1_3_2_4_5_m3_m2 * ls_3_1_0_4_1_m1_0 * c73_LNR3O * d3_3_m3_m1
+    + ls_1_3_2_6_5_m3_m2 * ls_3_1_0_4_1_m1_0 * c74_LNR3O * d3_3_m3_m1
+)
+A3_p_m1_g_m2_Lb_p1 = (
+    ls_1_1_2_0_1_m1_m2 * ls_1_1_0_0_1_m1_0 * c01_L1405 * d3_1_m1_m1
+    + ls_1_1_2_2_1_m1_m2 * ls_1_1_0_0_1_m1_0 * c02_L1405 * d3_1_m1_m1
+    + ls_1_1_2_2_3_m1_m2 * ls_1_1_0_0_1_m1_0 * c03_L1405 * d3_1_m1_m1
+    + ls_1_1_2_4_3_m1_m2 * ls_1_1_0_0_1_m1_0 * c04_L1405 * d3_1_m1_m1
+    + ls_1_3_2_0_1_m1_m2 * ls_3_1_0_4_1_m1_0 * c05_L1520 * d3_3_m1_m1
+    + ls_1_3_2_2_1_m1_m2 * ls_3_1_0_4_1_m1_0 * c06_L1520 * d3_3_m1_m1
+    + ls_1_3_2_2_3_m1_m2 * ls_3_1_0_4_1_m1_0 * c07_L1520 * d3_3_m1_m1
+    + ls_1_3_2_4_3_m1_m2 * ls_3_1_0_4_1_m1_0 * c08_L1520 * d3_3_m1_m1
+    + ls_1_3_2_4_5_m1_m2 * ls_3_1_0_4_1_m1_0 * c09_L1520 * d3_3_m1_m1
+    + ls_1_3_2_6_5_m1_m2 * ls_3_1_0_4_1_m1_0 * c10_L1520 * d3_3_m1_m1
+    + ls_1_1_2_0_1_m1_m2 * ls_1_1_0_2_1_m1_0 * c11_L1600 * d3_1_m1_m1
+    + ls_1_1_2_2_1_m1_m2 * ls_1_1_0_2_1_m1_0 * c12_L1600 * d3_1_m1_m1
+    + ls_1_1_2_2_3_m1_m2 * ls_1_1_0_2_1_m1_0 * c13_L1600 * d3_1_m1_m1
+    + ls_1_1_2_4_3_m1_m2 * ls_1_1_0_2_1_m1_0 * c14_L1600 * d3_1_m1_m1
+    + ls_1_1_2_0_1_m1_m2 * ls_1_1_0_0_1_m1_0 * c15_L1670 * d3_1_m1_m1
+    + ls_1_1_2_2_1_m1_m2 * ls_1_1_0_0_1_m1_0 * c16_L1670 * d3_1_m1_m1
+    + ls_1_1_2_2_3_m1_m2 * ls_1_1_0_0_1_m1_0 * c17_L1670 * d3_1_m1_m1
+    + ls_1_1_2_4_3_m1_m2 * ls_1_1_0_0_1_m1_0 * c18_L1670 * d3_1_m1_m1
+    + ls_1_3_2_0_1_m1_m2 * ls_3_1_0_4_1_m1_0 * c19_L1690 * d3_3_m1_m1
+    + ls_1_3_2_2_1_m1_m2 * ls_3_1_0_4_1_m1_0 * c20_L1690 * d3_3_m1_m1
+    + ls_1_3_2_2_3_m1_m2 * ls_3_1_0_4_1_m1_0 * c21_L1690 * d3_3_m1_m1
+    + ls_1_3_2_4_3_m1_m2 * ls_3_1_0_4_1_m1_0 * c22_L1690 * d3_3_m1_m1
+    + ls_1_3_2_4_5_m1_m2 * ls_3_1_0_4_1_m1_0 * c23_L1690 * d3_3_m1_m1
+    + ls_1_3_2_6_5_m1_m2 * ls_3_1_0_4_1_m1_0 * c24_L1690 * d3_3_m1_m1
+    + ls_1_1_2_0_1_m1_m2 * ls_1_1_0_0_1_m1_0 * c25_L1800 * d3_1_m1_m1
+    + ls_1_1_2_2_1_m1_m2 * ls_1_1_0_0_1_m1_0 * c26_L1800 * d3_1_m1_m1
+    + ls_1_1_2_2_3_m1_m2 * ls_1_1_0_0_1_m1_0 * c27_L1800 * d3_1_m1_m1
+    + ls_1_1_2_4_3_m1_m2 * ls_1_1_0_0_1_m1_0 * c28_L1800 * d3_1_m1_m1
+    + ls_1_1_2_0_1_m1_m2 * ls_1_1_0_2_1_m1_0 * c29_L1810 * d3_1_m1_m1
+    + ls_1_1_2_2_1_m1_m2 * ls_1_1_0_2_1_m1_0 * c30_L1810 * d3_1_m1_m1
+    + ls_1_1_2_2_3_m1_m2 * ls_1_1_0_2_1_m1_0 * c31_L1810 * d3_1_m1_m1
+    + ls_1_1_2_4_3_m1_m2 * ls_1_1_0_2_1_m1_0 * c32_L1810 * d3_1_m1_m1
+    + ls_1_5_2_2_3_m1_m2 * ls_5_1_0_6_1_m1_0 * c33_L1820 * d3_5_m1_m1
+    + ls_1_5_2_4_3_m1_m2 * ls_5_1_0_6_1_m1_0 * c34_L1820 * d3_5_m1_m1
+    + ls_1_5_2_4_5_m1_m2 * ls_5_1_0_6_1_m1_0 * c35_L1820 * d3_5_m1_m1
+    + ls_1_5_2_6_5_m1_m2 * ls_5_1_0_6_1_m1_0 * c36_L1820 * d3_5_m1_m1
+    + ls_1_5_2_6_7_m1_m2 * ls_5_1_0_6_1_m1_0 * c37_L1820 * d3_5_m1_m1
+    + ls_1_5_2_8_7_m1_m2 * ls_5_1_0_6_1_m1_0 * c38_L1820 * d3_5_m1_m1
+    + ls_1_5_2_2_3_m1_m2 * ls_5_1_0_4_1_m1_0 * c39_L1830 * d3_5_m1_m1
+    + ls_1_5_2_4_3_m1_m2 * ls_5_1_0_4_1_m1_0 * c40_L1830 * d3_5_m1_m1
+    + ls_1_5_2_4_5_m1_m2 * ls_5_1_0_4_1_m1_0 * c41_L1830 * d3_5_m1_m1
+    + ls_1_5_2_6_5_m1_m2 * ls_5_1_0_4_1_m1_0 * c42_L1830 * d3_5_m1_m1
+    + ls_1_5_2_6_7_m1_m2 * ls_5_1_0_4_1_m1_0 * c43_L1830 * d3_5_m1_m1
+    + ls_1_5_2_8_7_m1_m2 * ls_5_1_0_4_1_m1_0 * c44_L1830 * d3_5_m1_m1
+    + ls_1_3_2_0_1_m1_m2 * ls_3_1_0_2_1_m1_0 * c45_L1890 * d3_3_m1_m1
+    + ls_1_3_2_2_1_m1_m2 * ls_3_1_0_2_1_m1_0 * c46_L1890 * d3_3_m1_m1
+    + ls_1_3_2_2_3_m1_m2 * ls_3_1_0_2_1_m1_0 * c47_L1890 * d3_3_m1_m1
+    + ls_1_3_2_4_3_m1_m2 * ls_3_1_0_2_1_m1_0 * c48_L1890 * d3_3_m1_m1
+    + ls_1_3_2_4_5_m1_m2 * ls_3_1_0_2_1_m1_0 * c49_L1890 * d3_3_m1_m1
+    + ls_1_3_2_6_5_m1_m2 * ls_3_1_0_2_1_m1_0 * c50_L1890 * d3_3_m1_m1
+    + ls_1_7_2_4_5_m1_m2 * ls_7_1_0_8_1_m1_0 * c51_L2100 * d3_7_m1_m1
+    + ls_1_7_2_6_5_m1_m2 * ls_7_1_0_8_1_m1_0 * c52_L2100 * d3_7_m1_m1
+    + ls_1_7_2_6_7_m1_m2 * ls_7_1_0_8_1_m1_0 * c53_L2100 * d3_7_m1_m1
+    + ls_1_7_2_8_7_m1_m2 * ls_7_1_0_8_1_m1_0 * c54_L2100 * d3_7_m1_m1
+    + ls_1_7_2_8_9_m1_m2 * ls_7_1_0_8_1_m1_0 * c55_L2100 * d3_7_m1_m1
+    + ls_1_7_2_10_9_m1_m2 * ls_7_1_0_8_1_m1_0 * c56_L2100 * d3_7_m1_m1
+    + ls_1_5_2_2_3_m1_m2 * ls_5_1_0_6_1_m1_0 * c57_L2110 * d3_5_m1_m1
+    + ls_1_5_2_4_3_m1_m2 * ls_5_1_0_6_1_m1_0 * c58_L2110 * d3_5_m1_m1
+    + ls_1_5_2_4_5_m1_m2 * ls_5_1_0_6_1_m1_0 * c59_L2110 * d3_5_m1_m1
+    + ls_1_5_2_6_5_m1_m2 * ls_5_1_0_6_1_m1_0 * c60_L2110 * d3_5_m1_m1
+    + ls_1_5_2_6_7_m1_m2 * ls_5_1_0_6_1_m1_0 * c61_L2110 * d3_5_m1_m1
+    + ls_1_5_2_8_7_m1_m2 * ls_5_1_0_6_1_m1_0 * c62_L2110 * d3_5_m1_m1
+    + ls_1_9_2_6_7_m1_m2 * ls_9_1_0_10_1_m1_0 * c63_L2350 * d3_9_m1_m1
+    + ls_1_9_2_8_7_m1_m2 * ls_9_1_0_10_1_m1_0 * c64_L2350 * d3_9_m1_m1
+    + ls_1_9_2_8_9_m1_m2 * ls_9_1_0_10_1_m1_0 * c65_L2350 * d3_9_m1_m1
+    + ls_1_9_2_10_9_m1_m2 * ls_9_1_0_10_1_m1_0 * c66_L2350 * d3_9_m1_m1
+    + ls_1_9_2_10_11_m1_m2 * ls_9_1_0_10_1_m1_0 * c67_L2350 * d3_9_m1_m1
+    + ls_1_9_2_12_11_m1_m2 * ls_9_1_0_10_1_m1_0 * c68_L2350 * d3_9_m1_m1
+    + ls_1_3_2_0_1_m1_m2 * ls_3_1_0_4_1_m1_0 * c69_LNR3O * d3_3_m1_m1
+    + ls_1_3_2_2_1_m1_m2 * ls_3_1_0_4_1_m1_0 * c70_LNR3O * d3_3_m1_m1
+    + ls_1_3_2_2_3_m1_m2 * ls_3_1_0_4_1_m1_0 * c71_LNR3O * d3_3_m1_m1
+    + ls_1_3_2_4_3_m1_m2 * ls_3_1_0_4_1_m1_0 * c72_LNR3O * d3_3_m1_m1
+    + ls_1_3_2_4_5_m1_m2 * ls_3_1_0_4_1_m1_0 * c73_LNR3O * d3_3_m1_m1
+    + ls_1_3_2_6_5_m1_m2 * ls_3_1_0_4_1_m1_0 * c74_LNR3O * d3_3_m1_m1
+)
+A3_p_m1_g_0_Lb_m1 = (
+    -ls_1_1_2_0_1_m1_0 * ls_1_1_0_0_1_m1_0 * c01_L1405 * d3_1_m1_m1
+    - ls_1_1_2_2_1_m1_0 * ls_1_1_0_0_1_m1_0 * c02_L1405 * d3_1_m1_m1
+    - ls_1_1_2_2_3_m1_0 * ls_1_1_0_0_1_m1_0 * c03_L1405 * d3_1_m1_m1
+    - ls_1_1_2_4_3_m1_0 * ls_1_1_0_0_1_m1_0 * c04_L1405 * d3_1_m1_m1
+    - ls_1_3_2_0_1_m1_0 * ls_3_1_0_4_1_m1_0 * c05_L1520 * d3_3_m1_m1
+    - ls_1_3_2_2_1_m1_0 * ls_3_1_0_4_1_m1_0 * c06_L1520 * d3_3_m1_m1
+    - ls_1_3_2_2_3_m1_0 * ls_3_1_0_4_1_m1_0 * c07_L1520 * d3_3_m1_m1
+    - ls_1_3_2_4_3_m1_0 * ls_3_1_0_4_1_m1_0 * c08_L1520 * d3_3_m1_m1
+    - ls_1_3_2_4_5_m1_0 * ls_3_1_0_4_1_m1_0 * c09_L1520 * d3_3_m1_m1
+    - ls_1_3_2_6_5_m1_0 * ls_3_1_0_4_1_m1_0 * c10_L1520 * d3_3_m1_m1
+    - ls_1_1_2_0_1_m1_0 * ls_1_1_0_2_1_m1_0 * c11_L1600 * d3_1_m1_m1
+    - ls_1_1_2_2_1_m1_0 * ls_1_1_0_2_1_m1_0 * c12_L1600 * d3_1_m1_m1
+    - ls_1_1_2_2_3_m1_0 * ls_1_1_0_2_1_m1_0 * c13_L1600 * d3_1_m1_m1
+    - ls_1_1_2_4_3_m1_0 * ls_1_1_0_2_1_m1_0 * c14_L1600 * d3_1_m1_m1
+    - ls_1_1_2_0_1_m1_0 * ls_1_1_0_0_1_m1_0 * c15_L1670 * d3_1_m1_m1
+    - ls_1_1_2_2_1_m1_0 * ls_1_1_0_0_1_m1_0 * c16_L1670 * d3_1_m1_m1
+    - ls_1_1_2_2_3_m1_0 * ls_1_1_0_0_1_m1_0 * c17_L1670 * d3_1_m1_m1
+    - ls_1_1_2_4_3_m1_0 * ls_1_1_0_0_1_m1_0 * c18_L1670 * d3_1_m1_m1
+    - ls_1_3_2_0_1_m1_0 * ls_3_1_0_4_1_m1_0 * c19_L1690 * d3_3_m1_m1
+    - ls_1_3_2_2_1_m1_0 * ls_3_1_0_4_1_m1_0 * c20_L1690 * d3_3_m1_m1
+    - ls_1_3_2_2_3_m1_0 * ls_3_1_0_4_1_m1_0 * c21_L1690 * d3_3_m1_m1
+    - ls_1_3_2_4_3_m1_0 * ls_3_1_0_4_1_m1_0 * c22_L1690 * d3_3_m1_m1
+    - ls_1_3_2_4_5_m1_0 * ls_3_1_0_4_1_m1_0 * c23_L1690 * d3_3_m1_m1
+    - ls_1_3_2_6_5_m1_0 * ls_3_1_0_4_1_m1_0 * c24_L1690 * d3_3_m1_m1
+    - ls_1_1_2_0_1_m1_0 * ls_1_1_0_0_1_m1_0 * c25_L1800 * d3_1_m1_m1
+    - ls_1_1_2_2_1_m1_0 * ls_1_1_0_0_1_m1_0 * c26_L1800 * d3_1_m1_m1
+    - ls_1_1_2_2_3_m1_0 * ls_1_1_0_0_1_m1_0 * c27_L1800 * d3_1_m1_m1
+    - ls_1_1_2_4_3_m1_0 * ls_1_1_0_0_1_m1_0 * c28_L1800 * d3_1_m1_m1
+    - ls_1_1_2_0_1_m1_0 * ls_1_1_0_2_1_m1_0 * c29_L1810 * d3_1_m1_m1
+    - ls_1_1_2_2_1_m1_0 * ls_1_1_0_2_1_m1_0 * c30_L1810 * d3_1_m1_m1
+    - ls_1_1_2_2_3_m1_0 * ls_1_1_0_2_1_m1_0 * c31_L1810 * d3_1_m1_m1
+    - ls_1_1_2_4_3_m1_0 * ls_1_1_0_2_1_m1_0 * c32_L1810 * d3_1_m1_m1
+    - ls_1_5_2_2_3_m1_0 * ls_5_1_0_6_1_m1_0 * c33_L1820 * d3_5_m1_m1
+    - ls_1_5_2_4_3_m1_0 * ls_5_1_0_6_1_m1_0 * c34_L1820 * d3_5_m1_m1
+    - ls_1_5_2_4_5_m1_0 * ls_5_1_0_6_1_m1_0 * c35_L1820 * d3_5_m1_m1
+    - ls_1_5_2_6_5_m1_0 * ls_5_1_0_6_1_m1_0 * c36_L1820 * d3_5_m1_m1
+    - ls_1_5_2_6_7_m1_0 * ls_5_1_0_6_1_m1_0 * c37_L1820 * d3_5_m1_m1
+    - ls_1_5_2_8_7_m1_0 * ls_5_1_0_6_1_m1_0 * c38_L1820 * d3_5_m1_m1
+    - ls_1_5_2_2_3_m1_0 * ls_5_1_0_4_1_m1_0 * c39_L1830 * d3_5_m1_m1
+    - ls_1_5_2_4_3_m1_0 * ls_5_1_0_4_1_m1_0 * c40_L1830 * d3_5_m1_m1
+    - ls_1_5_2_4_5_m1_0 * ls_5_1_0_4_1_m1_0 * c41_L1830 * d3_5_m1_m1
+    - ls_1_5_2_6_5_m1_0 * ls_5_1_0_4_1_m1_0 * c42_L1830 * d3_5_m1_m1
+    - ls_1_5_2_6_7_m1_0 * ls_5_1_0_4_1_m1_0 * c43_L1830 * d3_5_m1_m1
+    - ls_1_5_2_8_7_m1_0 * ls_5_1_0_4_1_m1_0 * c44_L1830 * d3_5_m1_m1
+    - ls_1_3_2_0_1_m1_0 * ls_3_1_0_2_1_m1_0 * c45_L1890 * d3_3_m1_m1
+    - ls_1_3_2_2_1_m1_0 * ls_3_1_0_2_1_m1_0 * c46_L1890 * d3_3_m1_m1
+    - ls_1_3_2_2_3_m1_0 * ls_3_1_0_2_1_m1_0 * c47_L1890 * d3_3_m1_m1
+    - ls_1_3_2_4_3_m1_0 * ls_3_1_0_2_1_m1_0 * c48_L1890 * d3_3_m1_m1
+    - ls_1_3_2_4_5_m1_0 * ls_3_1_0_2_1_m1_0 * c49_L1890 * d3_3_m1_m1
+    - ls_1_3_2_6_5_m1_0 * ls_3_1_0_2_1_m1_0 * c50_L1890 * d3_3_m1_m1
+    - ls_1_7_2_4_5_m1_0 * ls_7_1_0_8_1_m1_0 * c51_L2100 * d3_7_m1_m1
+    - ls_1_7_2_6_5_m1_0 * ls_7_1_0_8_1_m1_0 * c52_L2100 * d3_7_m1_m1
+    - ls_1_7_2_6_7_m1_0 * ls_7_1_0_8_1_m1_0 * c53_L2100 * d3_7_m1_m1
+    - ls_1_7_2_8_7_m1_0 * ls_7_1_0_8_1_m1_0 * c54_L2100 * d3_7_m1_m1
+    - ls_1_7_2_8_9_m1_0 * ls_7_1_0_8_1_m1_0 * c55_L2100 * d3_7_m1_m1
+    - ls_1_7_2_10_9_m1_0 * ls_7_1_0_8_1_m1_0 * c56_L2100 * d3_7_m1_m1
+    - ls_1_5_2_2_3_m1_0 * ls_5_1_0_6_1_m1_0 * c57_L2110 * d3_5_m1_m1
+    - ls_1_5_2_4_3_m1_0 * ls_5_1_0_6_1_m1_0 * c58_L2110 * d3_5_m1_m1
+    - ls_1_5_2_4_5_m1_0 * ls_5_1_0_6_1_m1_0 * c59_L2110 * d3_5_m1_m1
+    - ls_1_5_2_6_5_m1_0 * ls_5_1_0_6_1_m1_0 * c60_L2110 * d3_5_m1_m1
+    - ls_1_5_2_6_7_m1_0 * ls_5_1_0_6_1_m1_0 * c61_L2110 * d3_5_m1_m1
+    - ls_1_5_2_8_7_m1_0 * ls_5_1_0_6_1_m1_0 * c62_L2110 * d3_5_m1_m1
+    - ls_1_9_2_6_7_m1_0 * ls_9_1_0_10_1_m1_0 * c63_L2350 * d3_9_m1_m1
+    - ls_1_9_2_8_7_m1_0 * ls_9_1_0_10_1_m1_0 * c64_L2350 * d3_9_m1_m1
+    - ls_1_9_2_8_9_m1_0 * ls_9_1_0_10_1_m1_0 * c65_L2350 * d3_9_m1_m1
+    - ls_1_9_2_10_9_m1_0 * ls_9_1_0_10_1_m1_0 * c66_L2350 * d3_9_m1_m1
+    - ls_1_9_2_10_11_m1_0 * ls_9_1_0_10_1_m1_0 * c67_L2350 * d3_9_m1_m1
+    - ls_1_9_2_12_11_m1_0 * ls_9_1_0_10_1_m1_0 * c68_L2350 * d3_9_m1_m1
+    - ls_1_3_2_0_1_m1_0 * ls_3_1_0_4_1_m1_0 * c69_LNR3O * d3_3_m1_m1
+    - ls_1_3_2_2_1_m1_0 * ls_3_1_0_4_1_m1_0 * c70_LNR3O * d3_3_m1_m1
+    - ls_1_3_2_2_3_m1_0 * ls_3_1_0_4_1_m1_0 * c71_LNR3O * d3_3_m1_m1
+    - ls_1_3_2_4_3_m1_0 * ls_3_1_0_4_1_m1_0 * c72_LNR3O * d3_3_m1_m1
+    - ls_1_3_2_4_5_m1_0 * ls_3_1_0_4_1_m1_0 * c73_LNR3O * d3_3_m1_m1
+    - ls_1_3_2_6_5_m1_0 * ls_3_1_0_4_1_m1_0 * c74_LNR3O * d3_3_m1_m1
+)
+A3_p_m1_g_0_Lb_p1 = (
+    -ls_1_1_2_0_1_1_0 * ls_1_1_0_0_1_m1_0 * c01_L1405 * d3_1_p1_m1
+    - ls_1_1_2_2_1_1_0 * ls_1_1_0_0_1_m1_0 * c02_L1405 * d3_1_p1_m1
+    - ls_1_1_2_2_3_1_0 * ls_1_1_0_0_1_m1_0 * c03_L1405 * d3_1_p1_m1
+    - ls_1_1_2_4_3_1_0 * ls_1_1_0_0_1_m1_0 * c04_L1405 * d3_1_p1_m1
+    - ls_1_3_2_0_1_1_0 * ls_3_1_0_4_1_m1_0 * c05_L1520 * d3_3_p1_m1
+    - ls_1_3_2_2_1_1_0 * ls_3_1_0_4_1_m1_0 * c06_L1520 * d3_3_p1_m1
+    - ls_1_3_2_2_3_1_0 * ls_3_1_0_4_1_m1_0 * c07_L1520 * d3_3_p1_m1
+    - ls_1_3_2_4_3_1_0 * ls_3_1_0_4_1_m1_0 * c08_L1520 * d3_3_p1_m1
+    - ls_1_3_2_4_5_1_0 * ls_3_1_0_4_1_m1_0 * c09_L1520 * d3_3_p1_m1
+    - ls_1_3_2_6_5_1_0 * ls_3_1_0_4_1_m1_0 * c10_L1520 * d3_3_p1_m1
+    - ls_1_1_2_0_1_1_0 * ls_1_1_0_2_1_m1_0 * c11_L1600 * d3_1_p1_m1
+    - ls_1_1_2_2_1_1_0 * ls_1_1_0_2_1_m1_0 * c12_L1600 * d3_1_p1_m1
+    - ls_1_1_2_2_3_1_0 * ls_1_1_0_2_1_m1_0 * c13_L1600 * d3_1_p1_m1
+    - ls_1_1_2_4_3_1_0 * ls_1_1_0_2_1_m1_0 * c14_L1600 * d3_1_p1_m1
+    - ls_1_1_2_0_1_1_0 * ls_1_1_0_0_1_m1_0 * c15_L1670 * d3_1_p1_m1
+    - ls_1_1_2_2_1_1_0 * ls_1_1_0_0_1_m1_0 * c16_L1670 * d3_1_p1_m1
+    - ls_1_1_2_2_3_1_0 * ls_1_1_0_0_1_m1_0 * c17_L1670 * d3_1_p1_m1
+    - ls_1_1_2_4_3_1_0 * ls_1_1_0_0_1_m1_0 * c18_L1670 * d3_1_p1_m1
+    - ls_1_3_2_0_1_1_0 * ls_3_1_0_4_1_m1_0 * c19_L1690 * d3_3_p1_m1
+    - ls_1_3_2_2_1_1_0 * ls_3_1_0_4_1_m1_0 * c20_L1690 * d3_3_p1_m1
+    - ls_1_3_2_2_3_1_0 * ls_3_1_0_4_1_m1_0 * c21_L1690 * d3_3_p1_m1
+    - ls_1_3_2_4_3_1_0 * ls_3_1_0_4_1_m1_0 * c22_L1690 * d3_3_p1_m1
+    - ls_1_3_2_4_5_1_0 * ls_3_1_0_4_1_m1_0 * c23_L1690 * d3_3_p1_m1
+    - ls_1_3_2_6_5_1_0 * ls_3_1_0_4_1_m1_0 * c24_L1690 * d3_3_p1_m1
+    - ls_1_1_2_0_1_1_0 * ls_1_1_0_0_1_m1_0 * c25_L1800 * d3_1_p1_m1
+    - ls_1_1_2_2_1_1_0 * ls_1_1_0_0_1_m1_0 * c26_L1800 * d3_1_p1_m1
+    - ls_1_1_2_2_3_1_0 * ls_1_1_0_0_1_m1_0 * c27_L1800 * d3_1_p1_m1
+    - ls_1_1_2_4_3_1_0 * ls_1_1_0_0_1_m1_0 * c28_L1800 * d3_1_p1_m1
+    - ls_1_1_2_0_1_1_0 * ls_1_1_0_2_1_m1_0 * c29_L1810 * d3_1_p1_m1
+    - ls_1_1_2_2_1_1_0 * ls_1_1_0_2_1_m1_0 * c30_L1810 * d3_1_p1_m1
+    - ls_1_1_2_2_3_1_0 * ls_1_1_0_2_1_m1_0 * c31_L1810 * d3_1_p1_m1
+    - ls_1_1_2_4_3_1_0 * ls_1_1_0_2_1_m1_0 * c32_L1810 * d3_1_p1_m1
+    - ls_1_5_2_2_3_1_0 * ls_5_1_0_6_1_m1_0 * c33_L1820 * d3_5_p1_m1
+    - ls_1_5_2_4_3_1_0 * ls_5_1_0_6_1_m1_0 * c34_L1820 * d3_5_p1_m1
+    - ls_1_5_2_4_5_1_0 * ls_5_1_0_6_1_m1_0 * c35_L1820 * d3_5_p1_m1
+    - ls_1_5_2_6_5_1_0 * ls_5_1_0_6_1_m1_0 * c36_L1820 * d3_5_p1_m1
+    - ls_1_5_2_6_7_1_0 * ls_5_1_0_6_1_m1_0 * c37_L1820 * d3_5_p1_m1
+    - ls_1_5_2_8_7_1_0 * ls_5_1_0_6_1_m1_0 * c38_L1820 * d3_5_p1_m1
+    - ls_1_5_2_2_3_1_0 * ls_5_1_0_4_1_m1_0 * c39_L1830 * d3_5_p1_m1
+    - ls_1_5_2_4_3_1_0 * ls_5_1_0_4_1_m1_0 * c40_L1830 * d3_5_p1_m1
+    - ls_1_5_2_4_5_1_0 * ls_5_1_0_4_1_m1_0 * c41_L1830 * d3_5_p1_m1
+    - ls_1_5_2_6_5_1_0 * ls_5_1_0_4_1_m1_0 * c42_L1830 * d3_5_p1_m1
+    - ls_1_5_2_6_7_1_0 * ls_5_1_0_4_1_m1_0 * c43_L1830 * d3_5_p1_m1
+    - ls_1_5_2_8_7_1_0 * ls_5_1_0_4_1_m1_0 * c44_L1830 * d3_5_p1_m1
+    - ls_1_3_2_0_1_1_0 * ls_3_1_0_2_1_m1_0 * c45_L1890 * d3_3_p1_m1
+    - ls_1_3_2_2_1_1_0 * ls_3_1_0_2_1_m1_0 * c46_L1890 * d3_3_p1_m1
+    - ls_1_3_2_2_3_1_0 * ls_3_1_0_2_1_m1_0 * c47_L1890 * d3_3_p1_m1
+    - ls_1_3_2_4_3_1_0 * ls_3_1_0_2_1_m1_0 * c48_L1890 * d3_3_p1_m1
+    - ls_1_3_2_4_5_1_0 * ls_3_1_0_2_1_m1_0 * c49_L1890 * d3_3_p1_m1
+    - ls_1_3_2_6_5_1_0 * ls_3_1_0_2_1_m1_0 * c50_L1890 * d3_3_p1_m1
+    - ls_1_7_2_4_5_1_0 * ls_7_1_0_8_1_m1_0 * c51_L2100 * d3_7_p1_m1
+    - ls_1_7_2_6_5_1_0 * ls_7_1_0_8_1_m1_0 * c52_L2100 * d3_7_p1_m1
+    - ls_1_7_2_6_7_1_0 * ls_7_1_0_8_1_m1_0 * c53_L2100 * d3_7_p1_m1
+    - ls_1_7_2_8_7_1_0 * ls_7_1_0_8_1_m1_0 * c54_L2100 * d3_7_p1_m1
+    - ls_1_7_2_8_9_1_0 * ls_7_1_0_8_1_m1_0 * c55_L2100 * d3_7_p1_m1
+    - ls_1_7_2_10_9_1_0 * ls_7_1_0_8_1_m1_0 * c56_L2100 * d3_7_p1_m1
+    - ls_1_5_2_2_3_1_0 * ls_5_1_0_6_1_m1_0 * c57_L2110 * d3_5_p1_m1
+    - ls_1_5_2_4_3_1_0 * ls_5_1_0_6_1_m1_0 * c58_L2110 * d3_5_p1_m1
+    - ls_1_5_2_4_5_1_0 * ls_5_1_0_6_1_m1_0 * c59_L2110 * d3_5_p1_m1
+    - ls_1_5_2_6_5_1_0 * ls_5_1_0_6_1_m1_0 * c60_L2110 * d3_5_p1_m1
+    - ls_1_5_2_6_7_1_0 * ls_5_1_0_6_1_m1_0 * c61_L2110 * d3_5_p1_m1
+    - ls_1_5_2_8_7_1_0 * ls_5_1_0_6_1_m1_0 * c62_L2110 * d3_5_p1_m1
+    - ls_1_9_2_6_7_1_0 * ls_9_1_0_10_1_m1_0 * c63_L2350 * d3_9_p1_m1
+    - ls_1_9_2_8_7_1_0 * ls_9_1_0_10_1_m1_0 * c64_L2350 * d3_9_p1_m1
+    - ls_1_9_2_8_9_1_0 * ls_9_1_0_10_1_m1_0 * c65_L2350 * d3_9_p1_m1
+    - ls_1_9_2_10_9_1_0 * ls_9_1_0_10_1_m1_0 * c66_L2350 * d3_9_p1_m1
+    - ls_1_9_2_10_11_1_0 * ls_9_1_0_10_1_m1_0 * c67_L2350 * d3_9_p1_m1
+    - ls_1_9_2_12_11_1_0 * ls_9_1_0_10_1_m1_0 * c68_L2350 * d3_9_p1_m1
+    - ls_1_3_2_0_1_1_0 * ls_3_1_0_4_1_m1_0 * c69_LNR3O * d3_3_p1_m1
+    - ls_1_3_2_2_1_1_0 * ls_3_1_0_4_1_m1_0 * c70_LNR3O * d3_3_p1_m1
+    - ls_1_3_2_2_3_1_0 * ls_3_1_0_4_1_m1_0 * c71_LNR3O * d3_3_p1_m1
+    - ls_1_3_2_4_3_1_0 * ls_3_1_0_4_1_m1_0 * c72_LNR3O * d3_3_p1_m1
+    - ls_1_3_2_4_5_1_0 * ls_3_1_0_4_1_m1_0 * c73_LNR3O * d3_3_p1_m1
+    - ls_1_3_2_6_5_1_0 * ls_3_1_0_4_1_m1_0 * c74_LNR3O * d3_3_p1_m1
+)
+A3_p_m1_g_p2_Lb_m1 = (
+    ls_1_1_2_0_1_1_2 * ls_1_1_0_0_1_m1_0 * c01_L1405 * d3_1_p1_m1
+    + ls_1_1_2_2_1_1_2 * ls_1_1_0_0_1_m1_0 * c02_L1405 * d3_1_p1_m1
+    + ls_1_1_2_2_3_1_2 * ls_1_1_0_0_1_m1_0 * c03_L1405 * d3_1_p1_m1
+    + ls_1_1_2_4_3_1_2 * ls_1_1_0_0_1_m1_0 * c04_L1405 * d3_1_p1_m1
+    + ls_1_3_2_0_1_1_2 * ls_3_1_0_4_1_m1_0 * c05_L1520 * d3_3_p1_m1
+    + ls_1_3_2_2_1_1_2 * ls_3_1_0_4_1_m1_0 * c06_L1520 * d3_3_p1_m1
+    + ls_1_3_2_2_3_1_2 * ls_3_1_0_4_1_m1_0 * c07_L1520 * d3_3_p1_m1
+    + ls_1_3_2_4_3_1_2 * ls_3_1_0_4_1_m1_0 * c08_L1520 * d3_3_p1_m1
+    + ls_1_3_2_4_5_1_2 * ls_3_1_0_4_1_m1_0 * c09_L1520 * d3_3_p1_m1
+    + ls_1_3_2_6_5_1_2 * ls_3_1_0_4_1_m1_0 * c10_L1520 * d3_3_p1_m1
+    + ls_1_1_2_0_1_1_2 * ls_1_1_0_2_1_m1_0 * c11_L1600 * d3_1_p1_m1
+    + ls_1_1_2_2_1_1_2 * ls_1_1_0_2_1_m1_0 * c12_L1600 * d3_1_p1_m1
+    + ls_1_1_2_2_3_1_2 * ls_1_1_0_2_1_m1_0 * c13_L1600 * d3_1_p1_m1
+    + ls_1_1_2_4_3_1_2 * ls_1_1_0_2_1_m1_0 * c14_L1600 * d3_1_p1_m1
+    + ls_1_1_2_0_1_1_2 * ls_1_1_0_0_1_m1_0 * c15_L1670 * d3_1_p1_m1
+    + ls_1_1_2_2_1_1_2 * ls_1_1_0_0_1_m1_0 * c16_L1670 * d3_1_p1_m1
+    + ls_1_1_2_2_3_1_2 * ls_1_1_0_0_1_m1_0 * c17_L1670 * d3_1_p1_m1
+    + ls_1_1_2_4_3_1_2 * ls_1_1_0_0_1_m1_0 * c18_L1670 * d3_1_p1_m1
+    + ls_1_3_2_0_1_1_2 * ls_3_1_0_4_1_m1_0 * c19_L1690 * d3_3_p1_m1
+    + ls_1_3_2_2_1_1_2 * ls_3_1_0_4_1_m1_0 * c20_L1690 * d3_3_p1_m1
+    + ls_1_3_2_2_3_1_2 * ls_3_1_0_4_1_m1_0 * c21_L1690 * d3_3_p1_m1
+    + ls_1_3_2_4_3_1_2 * ls_3_1_0_4_1_m1_0 * c22_L1690 * d3_3_p1_m1
+    + ls_1_3_2_4_5_1_2 * ls_3_1_0_4_1_m1_0 * c23_L1690 * d3_3_p1_m1
+    + ls_1_3_2_6_5_1_2 * ls_3_1_0_4_1_m1_0 * c24_L1690 * d3_3_p1_m1
+    + ls_1_1_2_0_1_1_2 * ls_1_1_0_0_1_m1_0 * c25_L1800 * d3_1_p1_m1
+    + ls_1_1_2_2_1_1_2 * ls_1_1_0_0_1_m1_0 * c26_L1800 * d3_1_p1_m1
+    + ls_1_1_2_2_3_1_2 * ls_1_1_0_0_1_m1_0 * c27_L1800 * d3_1_p1_m1
+    + ls_1_1_2_4_3_1_2 * ls_1_1_0_0_1_m1_0 * c28_L1800 * d3_1_p1_m1
+    + ls_1_1_2_0_1_1_2 * ls_1_1_0_2_1_m1_0 * c29_L1810 * d3_1_p1_m1
+    + ls_1_1_2_2_1_1_2 * ls_1_1_0_2_1_m1_0 * c30_L1810 * d3_1_p1_m1
+    + ls_1_1_2_2_3_1_2 * ls_1_1_0_2_1_m1_0 * c31_L1810 * d3_1_p1_m1
+    + ls_1_1_2_4_3_1_2 * ls_1_1_0_2_1_m1_0 * c32_L1810 * d3_1_p1_m1
+    + ls_1_5_2_2_3_1_2 * ls_5_1_0_6_1_m1_0 * c33_L1820 * d3_5_p1_m1
+    + ls_1_5_2_4_3_1_2 * ls_5_1_0_6_1_m1_0 * c34_L1820 * d3_5_p1_m1
+    + ls_1_5_2_4_5_1_2 * ls_5_1_0_6_1_m1_0 * c35_L1820 * d3_5_p1_m1
+    + ls_1_5_2_6_5_1_2 * ls_5_1_0_6_1_m1_0 * c36_L1820 * d3_5_p1_m1
+    + ls_1_5_2_6_7_1_2 * ls_5_1_0_6_1_m1_0 * c37_L1820 * d3_5_p1_m1
+    + ls_1_5_2_8_7_1_2 * ls_5_1_0_6_1_m1_0 * c38_L1820 * d3_5_p1_m1
+    + ls_1_5_2_2_3_1_2 * ls_5_1_0_4_1_m1_0 * c39_L1830 * d3_5_p1_m1
+    + ls_1_5_2_4_3_1_2 * ls_5_1_0_4_1_m1_0 * c40_L1830 * d3_5_p1_m1
+    + ls_1_5_2_4_5_1_2 * ls_5_1_0_4_1_m1_0 * c41_L1830 * d3_5_p1_m1
+    + ls_1_5_2_6_5_1_2 * ls_5_1_0_4_1_m1_0 * c42_L1830 * d3_5_p1_m1
+    + ls_1_5_2_6_7_1_2 * ls_5_1_0_4_1_m1_0 * c43_L1830 * d3_5_p1_m1
+    + ls_1_5_2_8_7_1_2 * ls_5_1_0_4_1_m1_0 * c44_L1830 * d3_5_p1_m1
+    + ls_1_3_2_0_1_1_2 * ls_3_1_0_2_1_m1_0 * c45_L1890 * d3_3_p1_m1
+    + ls_1_3_2_2_1_1_2 * ls_3_1_0_2_1_m1_0 * c46_L1890 * d3_3_p1_m1
+    + ls_1_3_2_2_3_1_2 * ls_3_1_0_2_1_m1_0 * c47_L1890 * d3_3_p1_m1
+    + ls_1_3_2_4_3_1_2 * ls_3_1_0_2_1_m1_0 * c48_L1890 * d3_3_p1_m1
+    + ls_1_3_2_4_5_1_2 * ls_3_1_0_2_1_m1_0 * c49_L1890 * d3_3_p1_m1
+    + ls_1_3_2_6_5_1_2 * ls_3_1_0_2_1_m1_0 * c50_L1890 * d3_3_p1_m1
+    + ls_1_7_2_4_5_1_2 * ls_7_1_0_8_1_m1_0 * c51_L2100 * d3_7_p1_m1
+    + ls_1_7_2_6_5_1_2 * ls_7_1_0_8_1_m1_0 * c52_L2100 * d3_7_p1_m1
+    + ls_1_7_2_6_7_1_2 * ls_7_1_0_8_1_m1_0 * c53_L2100 * d3_7_p1_m1
+    + ls_1_7_2_8_7_1_2 * ls_7_1_0_8_1_m1_0 * c54_L2100 * d3_7_p1_m1
+    + ls_1_7_2_8_9_1_2 * ls_7_1_0_8_1_m1_0 * c55_L2100 * d3_7_p1_m1
+    + ls_1_7_2_10_9_1_2 * ls_7_1_0_8_1_m1_0 * c56_L2100 * d3_7_p1_m1
+    + ls_1_5_2_2_3_1_2 * ls_5_1_0_6_1_m1_0 * c57_L2110 * d3_5_p1_m1
+    + ls_1_5_2_4_3_1_2 * ls_5_1_0_6_1_m1_0 * c58_L2110 * d3_5_p1_m1
+    + ls_1_5_2_4_5_1_2 * ls_5_1_0_6_1_m1_0 * c59_L2110 * d3_5_p1_m1
+    + ls_1_5_2_6_5_1_2 * ls_5_1_0_6_1_m1_0 * c60_L2110 * d3_5_p1_m1
+    + ls_1_5_2_6_7_1_2 * ls_5_1_0_6_1_m1_0 * c61_L2110 * d3_5_p1_m1
+    + ls_1_5_2_8_7_1_2 * ls_5_1_0_6_1_m1_0 * c62_L2110 * d3_5_p1_m1
+    + ls_1_9_2_6_7_1_2 * ls_9_1_0_10_1_m1_0 * c63_L2350 * d3_9_p1_m1
+    + ls_1_9_2_8_7_1_2 * ls_9_1_0_10_1_m1_0 * c64_L2350 * d3_9_p1_m1
+    + ls_1_9_2_8_9_1_2 * ls_9_1_0_10_1_m1_0 * c65_L2350 * d3_9_p1_m1
+    + ls_1_9_2_10_9_1_2 * ls_9_1_0_10_1_m1_0 * c66_L2350 * d3_9_p1_m1
+    + ls_1_9_2_10_11_1_2 * ls_9_1_0_10_1_m1_0 * c67_L2350 * d3_9_p1_m1
+    + ls_1_9_2_12_11_1_2 * ls_9_1_0_10_1_m1_0 * c68_L2350 * d3_9_p1_m1
+    + ls_1_3_2_0_1_1_2 * ls_3_1_0_4_1_m1_0 * c69_LNR3O * d3_3_p1_m1
+    + ls_1_3_2_2_1_1_2 * ls_3_1_0_4_1_m1_0 * c70_LNR3O * d3_3_p1_m1
+    + ls_1_3_2_2_3_1_2 * ls_3_1_0_4_1_m1_0 * c71_LNR3O * d3_3_p1_m1
+    + ls_1_3_2_4_3_1_2 * ls_3_1_0_4_1_m1_0 * c72_LNR3O * d3_3_p1_m1
+    + ls_1_3_2_4_5_1_2 * ls_3_1_0_4_1_m1_0 * c73_LNR3O * d3_3_p1_m1
+    + ls_1_3_2_6_5_1_2 * ls_3_1_0_4_1_m1_0 * c74_LNR3O * d3_3_p1_m1
+)
+A3_p_m1_g_p2_Lb_p1 = (
+    ls_1_3_2_0_1_3_2 * ls_3_1_0_4_1_m1_0 * c05_L1520 * d3_3_p3_m1
+    + ls_1_3_2_2_1_3_2 * ls_3_1_0_4_1_m1_0 * c06_L1520 * d3_3_p3_m1
+    + ls_1_3_2_2_3_3_2 * ls_3_1_0_4_1_m1_0 * c07_L1520 * d3_3_p3_m1
+    + ls_1_3_2_4_3_3_2 * ls_3_1_0_4_1_m1_0 * c08_L1520 * d3_3_p3_m1
+    + ls_1_3_2_4_5_3_2 * ls_3_1_0_4_1_m1_0 * c09_L1520 * d3_3_p3_m1
+    + ls_1_3_2_6_5_3_2 * ls_3_1_0_4_1_m1_0 * c10_L1520 * d3_3_p3_m1
+    + ls_1_3_2_0_1_3_2 * ls_3_1_0_4_1_m1_0 * c19_L1690 * d3_3_p3_m1
+    + ls_1_3_2_2_1_3_2 * ls_3_1_0_4_1_m1_0 * c20_L1690 * d3_3_p3_m1
+    + ls_1_3_2_2_3_3_2 * ls_3_1_0_4_1_m1_0 * c21_L1690 * d3_3_p3_m1
+    + ls_1_3_2_4_3_3_2 * ls_3_1_0_4_1_m1_0 * c22_L1690 * d3_3_p3_m1
+    + ls_1_3_2_4_5_3_2 * ls_3_1_0_4_1_m1_0 * c23_L1690 * d3_3_p3_m1
+    + ls_1_3_2_6_5_3_2 * ls_3_1_0_4_1_m1_0 * c24_L1690 * d3_3_p3_m1
+    + ls_1_5_2_2_3_3_2 * ls_5_1_0_6_1_m1_0 * c33_L1820 * d3_5_p3_m1
+    + ls_1_5_2_4_3_3_2 * ls_5_1_0_6_1_m1_0 * c34_L1820 * d3_5_p3_m1
+    + ls_1_5_2_4_5_3_2 * ls_5_1_0_6_1_m1_0 * c35_L1820 * d3_5_p3_m1
+    + ls_1_5_2_6_5_3_2 * ls_5_1_0_6_1_m1_0 * c36_L1820 * d3_5_p3_m1
+    + ls_1_5_2_6_7_3_2 * ls_5_1_0_6_1_m1_0 * c37_L1820 * d3_5_p3_m1
+    + ls_1_5_2_8_7_3_2 * ls_5_1_0_6_1_m1_0 * c38_L1820 * d3_5_p3_m1
+    + ls_1_5_2_2_3_3_2 * ls_5_1_0_4_1_m1_0 * c39_L1830 * d3_5_p3_m1
+    + ls_1_5_2_4_3_3_2 * ls_5_1_0_4_1_m1_0 * c40_L1830 * d3_5_p3_m1
+    + ls_1_5_2_4_5_3_2 * ls_5_1_0_4_1_m1_0 * c41_L1830 * d3_5_p3_m1
+    + ls_1_5_2_6_5_3_2 * ls_5_1_0_4_1_m1_0 * c42_L1830 * d3_5_p3_m1
+    + ls_1_5_2_6_7_3_2 * ls_5_1_0_4_1_m1_0 * c43_L1830 * d3_5_p3_m1
+    + ls_1_5_2_8_7_3_2 * ls_5_1_0_4_1_m1_0 * c44_L1830 * d3_5_p3_m1
+    + ls_1_3_2_0_1_3_2 * ls_3_1_0_2_1_m1_0 * c45_L1890 * d3_3_p3_m1
+    + ls_1_3_2_2_1_3_2 * ls_3_1_0_2_1_m1_0 * c46_L1890 * d3_3_p3_m1
+    + ls_1_3_2_2_3_3_2 * ls_3_1_0_2_1_m1_0 * c47_L1890 * d3_3_p3_m1
+    + ls_1_3_2_4_3_3_2 * ls_3_1_0_2_1_m1_0 * c48_L1890 * d3_3_p3_m1
+    + ls_1_3_2_4_5_3_2 * ls_3_1_0_2_1_m1_0 * c49_L1890 * d3_3_p3_m1
+    + ls_1_3_2_6_5_3_2 * ls_3_1_0_2_1_m1_0 * c50_L1890 * d3_3_p3_m1
+    + ls_1_7_2_4_5_3_2 * ls_7_1_0_8_1_m1_0 * c51_L2100 * d3_7_p3_m1
+    + ls_1_7_2_6_5_3_2 * ls_7_1_0_8_1_m1_0 * c52_L2100 * d3_7_p3_m1
+    + ls_1_7_2_6_7_3_2 * ls_7_1_0_8_1_m1_0 * c53_L2100 * d3_7_p3_m1
+    + ls_1_7_2_8_7_3_2 * ls_7_1_0_8_1_m1_0 * c54_L2100 * d3_7_p3_m1
+    + ls_1_7_2_8_9_3_2 * ls_7_1_0_8_1_m1_0 * c55_L2100 * d3_7_p3_m1
+    + ls_1_7_2_10_9_3_2 * ls_7_1_0_8_1_m1_0 * c56_L2100 * d3_7_p3_m1
+    + ls_1_5_2_2_3_3_2 * ls_5_1_0_6_1_m1_0 * c57_L2110 * d3_5_p3_m1
+    + ls_1_5_2_4_3_3_2 * ls_5_1_0_6_1_m1_0 * c58_L2110 * d3_5_p3_m1
+    + ls_1_5_2_4_5_3_2 * ls_5_1_0_6_1_m1_0 * c59_L2110 * d3_5_p3_m1
+    + ls_1_5_2_6_5_3_2 * ls_5_1_0_6_1_m1_0 * c60_L2110 * d3_5_p3_m1
+    + ls_1_5_2_6_7_3_2 * ls_5_1_0_6_1_m1_0 * c61_L2110 * d3_5_p3_m1
+    + ls_1_5_2_8_7_3_2 * ls_5_1_0_6_1_m1_0 * c62_L2110 * d3_5_p3_m1
+    + ls_1_9_2_6_7_3_2 * ls_9_1_0_10_1_m1_0 * c63_L2350 * d3_9_p3_m1
+    + ls_1_9_2_8_7_3_2 * ls_9_1_0_10_1_m1_0 * c64_L2350 * d3_9_p3_m1
+    + ls_1_9_2_8_9_3_2 * ls_9_1_0_10_1_m1_0 * c65_L2350 * d3_9_p3_m1
+    + ls_1_9_2_10_9_3_2 * ls_9_1_0_10_1_m1_0 * c66_L2350 * d3_9_p3_m1
+    + ls_1_9_2_10_11_3_2 * ls_9_1_0_10_1_m1_0 * c67_L2350 * d3_9_p3_m1
+    + ls_1_9_2_12_11_3_2 * ls_9_1_0_10_1_m1_0 * c68_L2350 * d3_9_p3_m1
+    + ls_1_3_2_0_1_3_2 * ls_3_1_0_4_1_m1_0 * c69_LNR3O * d3_3_p3_m1
+    + ls_1_3_2_2_1_3_2 * ls_3_1_0_4_1_m1_0 * c70_LNR3O * d3_3_p3_m1
+    + ls_1_3_2_2_3_3_2 * ls_3_1_0_4_1_m1_0 * c71_LNR3O * d3_3_p3_m1
+    + ls_1_3_2_4_3_3_2 * ls_3_1_0_4_1_m1_0 * c72_LNR3O * d3_3_p3_m1
+    + ls_1_3_2_4_5_3_2 * ls_3_1_0_4_1_m1_0 * c73_LNR3O * d3_3_p3_m1
+    + ls_1_3_2_6_5_3_2 * ls_3_1_0_4_1_m1_0 * c74_LNR3O * d3_3_p3_m1
+)
+A3_p_p1_g_m2_Lb_m1 = (
+    ls_1_3_2_0_1_m3_m2 * ls_3_1_0_4_1_1_0 * c05_L1520 * d3_3_m3_p1
+    + ls_1_3_2_2_1_m3_m2 * ls_3_1_0_4_1_1_0 * c06_L1520 * d3_3_m3_p1
+    + ls_1_3_2_2_3_m3_m2 * ls_3_1_0_4_1_1_0 * c07_L1520 * d3_3_m3_p1
+    + ls_1_3_2_4_3_m3_m2 * ls_3_1_0_4_1_1_0 * c08_L1520 * d3_3_m3_p1
+    + ls_1_3_2_4_5_m3_m2 * ls_3_1_0_4_1_1_0 * c09_L1520 * d3_3_m3_p1
+    + ls_1_3_2_6_5_m3_m2 * ls_3_1_0_4_1_1_0 * c10_L1520 * d3_3_m3_p1
+    + ls_1_3_2_0_1_m3_m2 * ls_3_1_0_4_1_1_0 * c19_L1690 * d3_3_m3_p1
+    + ls_1_3_2_2_1_m3_m2 * ls_3_1_0_4_1_1_0 * c20_L1690 * d3_3_m3_p1
+    + ls_1_3_2_2_3_m3_m2 * ls_3_1_0_4_1_1_0 * c21_L1690 * d3_3_m3_p1
+    + ls_1_3_2_4_3_m3_m2 * ls_3_1_0_4_1_1_0 * c22_L1690 * d3_3_m3_p1
+    + ls_1_3_2_4_5_m3_m2 * ls_3_1_0_4_1_1_0 * c23_L1690 * d3_3_m3_p1
+    + ls_1_3_2_6_5_m3_m2 * ls_3_1_0_4_1_1_0 * c24_L1690 * d3_3_m3_p1
+    + ls_1_5_2_2_3_m3_m2 * ls_5_1_0_6_1_1_0 * c33_L1820 * d3_5_m3_p1
+    + ls_1_5_2_4_3_m3_m2 * ls_5_1_0_6_1_1_0 * c34_L1820 * d3_5_m3_p1
+    + ls_1_5_2_4_5_m3_m2 * ls_5_1_0_6_1_1_0 * c35_L1820 * d3_5_m3_p1
+    + ls_1_5_2_6_5_m3_m2 * ls_5_1_0_6_1_1_0 * c36_L1820 * d3_5_m3_p1
+    + ls_1_5_2_6_7_m3_m2 * ls_5_1_0_6_1_1_0 * c37_L1820 * d3_5_m3_p1
+    + ls_1_5_2_8_7_m3_m2 * ls_5_1_0_6_1_1_0 * c38_L1820 * d3_5_m3_p1
+    + ls_1_5_2_2_3_m3_m2 * ls_5_1_0_4_1_1_0 * c39_L1830 * d3_5_m3_p1
+    + ls_1_5_2_4_3_m3_m2 * ls_5_1_0_4_1_1_0 * c40_L1830 * d3_5_m3_p1
+    + ls_1_5_2_4_5_m3_m2 * ls_5_1_0_4_1_1_0 * c41_L1830 * d3_5_m3_p1
+    + ls_1_5_2_6_5_m3_m2 * ls_5_1_0_4_1_1_0 * c42_L1830 * d3_5_m3_p1
+    + ls_1_5_2_6_7_m3_m2 * ls_5_1_0_4_1_1_0 * c43_L1830 * d3_5_m3_p1
+    + ls_1_5_2_8_7_m3_m2 * ls_5_1_0_4_1_1_0 * c44_L1830 * d3_5_m3_p1
+    + ls_1_3_2_0_1_m3_m2 * ls_3_1_0_2_1_1_0 * c45_L1890 * d3_3_m3_p1
+    + ls_1_3_2_2_1_m3_m2 * ls_3_1_0_2_1_1_0 * c46_L1890 * d3_3_m3_p1
+    + ls_1_3_2_2_3_m3_m2 * ls_3_1_0_2_1_1_0 * c47_L1890 * d3_3_m3_p1
+    + ls_1_3_2_4_3_m3_m2 * ls_3_1_0_2_1_1_0 * c48_L1890 * d3_3_m3_p1
+    + ls_1_3_2_4_5_m3_m2 * ls_3_1_0_2_1_1_0 * c49_L1890 * d3_3_m3_p1
+    + ls_1_3_2_6_5_m3_m2 * ls_3_1_0_2_1_1_0 * c50_L1890 * d3_3_m3_p1
+    + ls_1_7_2_4_5_m3_m2 * ls_7_1_0_8_1_1_0 * c51_L2100 * d3_7_m3_p1
+    + ls_1_7_2_6_5_m3_m2 * ls_7_1_0_8_1_1_0 * c52_L2100 * d3_7_m3_p1
+    + ls_1_7_2_6_7_m3_m2 * ls_7_1_0_8_1_1_0 * c53_L2100 * d3_7_m3_p1
+    + ls_1_7_2_8_7_m3_m2 * ls_7_1_0_8_1_1_0 * c54_L2100 * d3_7_m3_p1
+    + ls_1_7_2_8_9_m3_m2 * ls_7_1_0_8_1_1_0 * c55_L2100 * d3_7_m3_p1
+    + ls_1_7_2_10_9_m3_m2 * ls_7_1_0_8_1_1_0 * c56_L2100 * d3_7_m3_p1
+    + ls_1_5_2_2_3_m3_m2 * ls_5_1_0_6_1_1_0 * c57_L2110 * d3_5_m3_p1
+    + ls_1_5_2_4_3_m3_m2 * ls_5_1_0_6_1_1_0 * c58_L2110 * d3_5_m3_p1
+    + ls_1_5_2_4_5_m3_m2 * ls_5_1_0_6_1_1_0 * c59_L2110 * d3_5_m3_p1
+    + ls_1_5_2_6_5_m3_m2 * ls_5_1_0_6_1_1_0 * c60_L2110 * d3_5_m3_p1
+    + ls_1_5_2_6_7_m3_m2 * ls_5_1_0_6_1_1_0 * c61_L2110 * d3_5_m3_p1
+    + ls_1_5_2_8_7_m3_m2 * ls_5_1_0_6_1_1_0 * c62_L2110 * d3_5_m3_p1
+    + ls_1_9_2_6_7_m3_m2 * ls_9_1_0_10_1_1_0 * c63_L2350 * d3_9_m3_p1
+    + ls_1_9_2_8_7_m3_m2 * ls_9_1_0_10_1_1_0 * c64_L2350 * d3_9_m3_p1
+    + ls_1_9_2_8_9_m3_m2 * ls_9_1_0_10_1_1_0 * c65_L2350 * d3_9_m3_p1
+    + ls_1_9_2_10_9_m3_m2 * ls_9_1_0_10_1_1_0 * c66_L2350 * d3_9_m3_p1
+    + ls_1_9_2_10_11_m3_m2 * ls_9_1_0_10_1_1_0 * c67_L2350 * d3_9_m3_p1
+    + ls_1_9_2_12_11_m3_m2 * ls_9_1_0_10_1_1_0 * c68_L2350 * d3_9_m3_p1
+    + ls_1_3_2_0_1_m3_m2 * ls_3_1_0_4_1_1_0 * c69_LNR3O * d3_3_m3_p1
+    + ls_1_3_2_2_1_m3_m2 * ls_3_1_0_4_1_1_0 * c70_LNR3O * d3_3_m3_p1
+    + ls_1_3_2_2_3_m3_m2 * ls_3_1_0_4_1_1_0 * c71_LNR3O * d3_3_m3_p1
+    + ls_1_3_2_4_3_m3_m2 * ls_3_1_0_4_1_1_0 * c72_LNR3O * d3_3_m3_p1
+    + ls_1_3_2_4_5_m3_m2 * ls_3_1_0_4_1_1_0 * c73_LNR3O * d3_3_m3_p1
+    + ls_1_3_2_6_5_m3_m2 * ls_3_1_0_4_1_1_0 * c74_LNR3O * d3_3_m3_p1
+)
+A3_p_p1_g_m2_Lb_p1 = (
+    ls_1_1_2_0_1_m1_m2 * ls_1_1_0_0_1_1_0 * c01_L1405 * d3_1_m1_p1
+    + ls_1_1_2_2_1_m1_m2 * ls_1_1_0_0_1_1_0 * c02_L1405 * d3_1_m1_p1
+    + ls_1_1_2_2_3_m1_m2 * ls_1_1_0_0_1_1_0 * c03_L1405 * d3_1_m1_p1
+    + ls_1_1_2_4_3_m1_m2 * ls_1_1_0_0_1_1_0 * c04_L1405 * d3_1_m1_p1
+    + ls_1_3_2_0_1_m1_m2 * ls_3_1_0_4_1_1_0 * c05_L1520 * d3_3_m1_p1
+    + ls_1_3_2_2_1_m1_m2 * ls_3_1_0_4_1_1_0 * c06_L1520 * d3_3_m1_p1
+    + ls_1_3_2_2_3_m1_m2 * ls_3_1_0_4_1_1_0 * c07_L1520 * d3_3_m1_p1
+    + ls_1_3_2_4_3_m1_m2 * ls_3_1_0_4_1_1_0 * c08_L1520 * d3_3_m1_p1
+    + ls_1_3_2_4_5_m1_m2 * ls_3_1_0_4_1_1_0 * c09_L1520 * d3_3_m1_p1
+    + ls_1_3_2_6_5_m1_m2 * ls_3_1_0_4_1_1_0 * c10_L1520 * d3_3_m1_p1
+    + ls_1_1_2_0_1_m1_m2 * ls_1_1_0_2_1_1_0 * c11_L1600 * d3_1_m1_p1
+    + ls_1_1_2_2_1_m1_m2 * ls_1_1_0_2_1_1_0 * c12_L1600 * d3_1_m1_p1
+    + ls_1_1_2_2_3_m1_m2 * ls_1_1_0_2_1_1_0 * c13_L1600 * d3_1_m1_p1
+    + ls_1_1_2_4_3_m1_m2 * ls_1_1_0_2_1_1_0 * c14_L1600 * d3_1_m1_p1
+    + ls_1_1_2_0_1_m1_m2 * ls_1_1_0_0_1_1_0 * c15_L1670 * d3_1_m1_p1
+    + ls_1_1_2_2_1_m1_m2 * ls_1_1_0_0_1_1_0 * c16_L1670 * d3_1_m1_p1
+    + ls_1_1_2_2_3_m1_m2 * ls_1_1_0_0_1_1_0 * c17_L1670 * d3_1_m1_p1
+    + ls_1_1_2_4_3_m1_m2 * ls_1_1_0_0_1_1_0 * c18_L1670 * d3_1_m1_p1
+    + ls_1_3_2_0_1_m1_m2 * ls_3_1_0_4_1_1_0 * c19_L1690 * d3_3_m1_p1
+    + ls_1_3_2_2_1_m1_m2 * ls_3_1_0_4_1_1_0 * c20_L1690 * d3_3_m1_p1
+    + ls_1_3_2_2_3_m1_m2 * ls_3_1_0_4_1_1_0 * c21_L1690 * d3_3_m1_p1
+    + ls_1_3_2_4_3_m1_m2 * ls_3_1_0_4_1_1_0 * c22_L1690 * d3_3_m1_p1
+    + ls_1_3_2_4_5_m1_m2 * ls_3_1_0_4_1_1_0 * c23_L1690 * d3_3_m1_p1
+    + ls_1_3_2_6_5_m1_m2 * ls_3_1_0_4_1_1_0 * c24_L1690 * d3_3_m1_p1
+    + ls_1_1_2_0_1_m1_m2 * ls_1_1_0_0_1_1_0 * c25_L1800 * d3_1_m1_p1
+    + ls_1_1_2_2_1_m1_m2 * ls_1_1_0_0_1_1_0 * c26_L1800 * d3_1_m1_p1
+    + ls_1_1_2_2_3_m1_m2 * ls_1_1_0_0_1_1_0 * c27_L1800 * d3_1_m1_p1
+    + ls_1_1_2_4_3_m1_m2 * ls_1_1_0_0_1_1_0 * c28_L1800 * d3_1_m1_p1
+    + ls_1_1_2_0_1_m1_m2 * ls_1_1_0_2_1_1_0 * c29_L1810 * d3_1_m1_p1
+    + ls_1_1_2_2_1_m1_m2 * ls_1_1_0_2_1_1_0 * c30_L1810 * d3_1_m1_p1
+    + ls_1_1_2_2_3_m1_m2 * ls_1_1_0_2_1_1_0 * c31_L1810 * d3_1_m1_p1
+    + ls_1_1_2_4_3_m1_m2 * ls_1_1_0_2_1_1_0 * c32_L1810 * d3_1_m1_p1
+    + ls_1_5_2_2_3_m1_m2 * ls_5_1_0_6_1_1_0 * c33_L1820 * d3_5_m1_p1
+    + ls_1_5_2_4_3_m1_m2 * ls_5_1_0_6_1_1_0 * c34_L1820 * d3_5_m1_p1
+    + ls_1_5_2_4_5_m1_m2 * ls_5_1_0_6_1_1_0 * c35_L1820 * d3_5_m1_p1
+    + ls_1_5_2_6_5_m1_m2 * ls_5_1_0_6_1_1_0 * c36_L1820 * d3_5_m1_p1
+    + ls_1_5_2_6_7_m1_m2 * ls_5_1_0_6_1_1_0 * c37_L1820 * d3_5_m1_p1
+    + ls_1_5_2_8_7_m1_m2 * ls_5_1_0_6_1_1_0 * c38_L1820 * d3_5_m1_p1
+    + ls_1_5_2_2_3_m1_m2 * ls_5_1_0_4_1_1_0 * c39_L1830 * d3_5_m1_p1
+    + ls_1_5_2_4_3_m1_m2 * ls_5_1_0_4_1_1_0 * c40_L1830 * d3_5_m1_p1
+    + ls_1_5_2_4_5_m1_m2 * ls_5_1_0_4_1_1_0 * c41_L1830 * d3_5_m1_p1
+    + ls_1_5_2_6_5_m1_m2 * ls_5_1_0_4_1_1_0 * c42_L1830 * d3_5_m1_p1
+    + ls_1_5_2_6_7_m1_m2 * ls_5_1_0_4_1_1_0 * c43_L1830 * d3_5_m1_p1
+    + ls_1_5_2_8_7_m1_m2 * ls_5_1_0_4_1_1_0 * c44_L1830 * d3_5_m1_p1
+    + ls_1_3_2_0_1_m1_m2 * ls_3_1_0_2_1_1_0 * c45_L1890 * d3_3_m1_p1
+    + ls_1_3_2_2_1_m1_m2 * ls_3_1_0_2_1_1_0 * c46_L1890 * d3_3_m1_p1
+    + ls_1_3_2_2_3_m1_m2 * ls_3_1_0_2_1_1_0 * c47_L1890 * d3_3_m1_p1
+    + ls_1_3_2_4_3_m1_m2 * ls_3_1_0_2_1_1_0 * c48_L1890 * d3_3_m1_p1
+    + ls_1_3_2_4_5_m1_m2 * ls_3_1_0_2_1_1_0 * c49_L1890 * d3_3_m1_p1
+    + ls_1_3_2_6_5_m1_m2 * ls_3_1_0_2_1_1_0 * c50_L1890 * d3_3_m1_p1
+    + ls_1_7_2_4_5_m1_m2 * ls_7_1_0_8_1_1_0 * c51_L2100 * d3_7_m1_p1
+    + ls_1_7_2_6_5_m1_m2 * ls_7_1_0_8_1_1_0 * c52_L2100 * d3_7_m1_p1
+    + ls_1_7_2_6_7_m1_m2 * ls_7_1_0_8_1_1_0 * c53_L2100 * d3_7_m1_p1
+    + ls_1_7_2_8_7_m1_m2 * ls_7_1_0_8_1_1_0 * c54_L2100 * d3_7_m1_p1
+    + ls_1_7_2_8_9_m1_m2 * ls_7_1_0_8_1_1_0 * c55_L2100 * d3_7_m1_p1
+    + ls_1_7_2_10_9_m1_m2 * ls_7_1_0_8_1_1_0 * c56_L2100 * d3_7_m1_p1
+    + ls_1_5_2_2_3_m1_m2 * ls_5_1_0_6_1_1_0 * c57_L2110 * d3_5_m1_p1
+    + ls_1_5_2_4_3_m1_m2 * ls_5_1_0_6_1_1_0 * c58_L2110 * d3_5_m1_p1
+    + ls_1_5_2_4_5_m1_m2 * ls_5_1_0_6_1_1_0 * c59_L2110 * d3_5_m1_p1
+    + ls_1_5_2_6_5_m1_m2 * ls_5_1_0_6_1_1_0 * c60_L2110 * d3_5_m1_p1
+    + ls_1_5_2_6_7_m1_m2 * ls_5_1_0_6_1_1_0 * c61_L2110 * d3_5_m1_p1
+    + ls_1_5_2_8_7_m1_m2 * ls_5_1_0_6_1_1_0 * c62_L2110 * d3_5_m1_p1
+    + ls_1_9_2_6_7_m1_m2 * ls_9_1_0_10_1_1_0 * c63_L2350 * d3_9_m1_p1
+    + ls_1_9_2_8_7_m1_m2 * ls_9_1_0_10_1_1_0 * c64_L2350 * d3_9_m1_p1
+    + ls_1_9_2_8_9_m1_m2 * ls_9_1_0_10_1_1_0 * c65_L2350 * d3_9_m1_p1
+    + ls_1_9_2_10_9_m1_m2 * ls_9_1_0_10_1_1_0 * c66_L2350 * d3_9_m1_p1
+    + ls_1_9_2_10_11_m1_m2 * ls_9_1_0_10_1_1_0 * c67_L2350 * d3_9_m1_p1
+    + ls_1_9_2_12_11_m1_m2 * ls_9_1_0_10_1_1_0 * c68_L2350 * d3_9_m1_p1
+    + ls_1_3_2_0_1_m1_m2 * ls_3_1_0_4_1_1_0 * c69_LNR3O * d3_3_m1_p1
+    + ls_1_3_2_2_1_m1_m2 * ls_3_1_0_4_1_1_0 * c70_LNR3O * d3_3_m1_p1
+    + ls_1_3_2_2_3_m1_m2 * ls_3_1_0_4_1_1_0 * c71_LNR3O * d3_3_m1_p1
+    + ls_1_3_2_4_3_m1_m2 * ls_3_1_0_4_1_1_0 * c72_LNR3O * d3_3_m1_p1
+    + ls_1_3_2_4_5_m1_m2 * ls_3_1_0_4_1_1_0 * c73_LNR3O * d3_3_m1_p1
+    + ls_1_3_2_6_5_m1_m2 * ls_3_1_0_4_1_1_0 * c74_LNR3O * d3_3_m1_p1
+)
+A3_p_p1_g_0_Lb_m1 = (
+    -ls_1_1_2_0_1_m1_0 * ls_1_1_0_0_1_1_0 * c01_L1405 * d3_1_m1_p1
+    - ls_1_1_2_2_1_m1_0 * ls_1_1_0_0_1_1_0 * c02_L1405 * d3_1_m1_p1
+    - ls_1_1_2_2_3_m1_0 * ls_1_1_0_0_1_1_0 * c03_L1405 * d3_1_m1_p1
+    - ls_1_1_2_4_3_m1_0 * ls_1_1_0_0_1_1_0 * c04_L1405 * d3_1_m1_p1
+    - ls_1_3_2_0_1_m1_0 * ls_3_1_0_4_1_1_0 * c05_L1520 * d3_3_m1_p1
+    - ls_1_3_2_2_1_m1_0 * ls_3_1_0_4_1_1_0 * c06_L1520 * d3_3_m1_p1
+    - ls_1_3_2_2_3_m1_0 * ls_3_1_0_4_1_1_0 * c07_L1520 * d3_3_m1_p1
+    - ls_1_3_2_4_3_m1_0 * ls_3_1_0_4_1_1_0 * c08_L1520 * d3_3_m1_p1
+    - ls_1_3_2_4_5_m1_0 * ls_3_1_0_4_1_1_0 * c09_L1520 * d3_3_m1_p1
+    - ls_1_3_2_6_5_m1_0 * ls_3_1_0_4_1_1_0 * c10_L1520 * d3_3_m1_p1
+    - ls_1_1_2_0_1_m1_0 * ls_1_1_0_2_1_1_0 * c11_L1600 * d3_1_m1_p1
+    - ls_1_1_2_2_1_m1_0 * ls_1_1_0_2_1_1_0 * c12_L1600 * d3_1_m1_p1
+    - ls_1_1_2_2_3_m1_0 * ls_1_1_0_2_1_1_0 * c13_L1600 * d3_1_m1_p1
+    - ls_1_1_2_4_3_m1_0 * ls_1_1_0_2_1_1_0 * c14_L1600 * d3_1_m1_p1
+    - ls_1_1_2_0_1_m1_0 * ls_1_1_0_0_1_1_0 * c15_L1670 * d3_1_m1_p1
+    - ls_1_1_2_2_1_m1_0 * ls_1_1_0_0_1_1_0 * c16_L1670 * d3_1_m1_p1
+    - ls_1_1_2_2_3_m1_0 * ls_1_1_0_0_1_1_0 * c17_L1670 * d3_1_m1_p1
+    - ls_1_1_2_4_3_m1_0 * ls_1_1_0_0_1_1_0 * c18_L1670 * d3_1_m1_p1
+    - ls_1_3_2_0_1_m1_0 * ls_3_1_0_4_1_1_0 * c19_L1690 * d3_3_m1_p1
+    - ls_1_3_2_2_1_m1_0 * ls_3_1_0_4_1_1_0 * c20_L1690 * d3_3_m1_p1
+    - ls_1_3_2_2_3_m1_0 * ls_3_1_0_4_1_1_0 * c21_L1690 * d3_3_m1_p1
+    - ls_1_3_2_4_3_m1_0 * ls_3_1_0_4_1_1_0 * c22_L1690 * d3_3_m1_p1
+    - ls_1_3_2_4_5_m1_0 * ls_3_1_0_4_1_1_0 * c23_L1690 * d3_3_m1_p1
+    - ls_1_3_2_6_5_m1_0 * ls_3_1_0_4_1_1_0 * c24_L1690 * d3_3_m1_p1
+    - ls_1_1_2_0_1_m1_0 * ls_1_1_0_0_1_1_0 * c25_L1800 * d3_1_m1_p1
+    - ls_1_1_2_2_1_m1_0 * ls_1_1_0_0_1_1_0 * c26_L1800 * d3_1_m1_p1
+    - ls_1_1_2_2_3_m1_0 * ls_1_1_0_0_1_1_0 * c27_L1800 * d3_1_m1_p1
+    - ls_1_1_2_4_3_m1_0 * ls_1_1_0_0_1_1_0 * c28_L1800 * d3_1_m1_p1
+    - ls_1_1_2_0_1_m1_0 * ls_1_1_0_2_1_1_0 * c29_L1810 * d3_1_m1_p1
+    - ls_1_1_2_2_1_m1_0 * ls_1_1_0_2_1_1_0 * c30_L1810 * d3_1_m1_p1
+    - ls_1_1_2_2_3_m1_0 * ls_1_1_0_2_1_1_0 * c31_L1810 * d3_1_m1_p1
+    - ls_1_1_2_4_3_m1_0 * ls_1_1_0_2_1_1_0 * c32_L1810 * d3_1_m1_p1
+    - ls_1_5_2_2_3_m1_0 * ls_5_1_0_6_1_1_0 * c33_L1820 * d3_5_m1_p1
+    - ls_1_5_2_4_3_m1_0 * ls_5_1_0_6_1_1_0 * c34_L1820 * d3_5_m1_p1
+    - ls_1_5_2_4_5_m1_0 * ls_5_1_0_6_1_1_0 * c35_L1820 * d3_5_m1_p1
+    - ls_1_5_2_6_5_m1_0 * ls_5_1_0_6_1_1_0 * c36_L1820 * d3_5_m1_p1
+    - ls_1_5_2_6_7_m1_0 * ls_5_1_0_6_1_1_0 * c37_L1820 * d3_5_m1_p1
+    - ls_1_5_2_8_7_m1_0 * ls_5_1_0_6_1_1_0 * c38_L1820 * d3_5_m1_p1
+    - ls_1_5_2_2_3_m1_0 * ls_5_1_0_4_1_1_0 * c39_L1830 * d3_5_m1_p1
+    - ls_1_5_2_4_3_m1_0 * ls_5_1_0_4_1_1_0 * c40_L1830 * d3_5_m1_p1
+    - ls_1_5_2_4_5_m1_0 * ls_5_1_0_4_1_1_0 * c41_L1830 * d3_5_m1_p1
+    - ls_1_5_2_6_5_m1_0 * ls_5_1_0_4_1_1_0 * c42_L1830 * d3_5_m1_p1
+    - ls_1_5_2_6_7_m1_0 * ls_5_1_0_4_1_1_0 * c43_L1830 * d3_5_m1_p1
+    - ls_1_5_2_8_7_m1_0 * ls_5_1_0_4_1_1_0 * c44_L1830 * d3_5_m1_p1
+    - ls_1_3_2_0_1_m1_0 * ls_3_1_0_2_1_1_0 * c45_L1890 * d3_3_m1_p1
+    - ls_1_3_2_2_1_m1_0 * ls_3_1_0_2_1_1_0 * c46_L1890 * d3_3_m1_p1
+    - ls_1_3_2_2_3_m1_0 * ls_3_1_0_2_1_1_0 * c47_L1890 * d3_3_m1_p1
+    - ls_1_3_2_4_3_m1_0 * ls_3_1_0_2_1_1_0 * c48_L1890 * d3_3_m1_p1
+    - ls_1_3_2_4_5_m1_0 * ls_3_1_0_2_1_1_0 * c49_L1890 * d3_3_m1_p1
+    - ls_1_3_2_6_5_m1_0 * ls_3_1_0_2_1_1_0 * c50_L1890 * d3_3_m1_p1
+    - ls_1_7_2_4_5_m1_0 * ls_7_1_0_8_1_1_0 * c51_L2100 * d3_7_m1_p1
+    - ls_1_7_2_6_5_m1_0 * ls_7_1_0_8_1_1_0 * c52_L2100 * d3_7_m1_p1
+    - ls_1_7_2_6_7_m1_0 * ls_7_1_0_8_1_1_0 * c53_L2100 * d3_7_m1_p1
+    - ls_1_7_2_8_7_m1_0 * ls_7_1_0_8_1_1_0 * c54_L2100 * d3_7_m1_p1
+    - ls_1_7_2_8_9_m1_0 * ls_7_1_0_8_1_1_0 * c55_L2100 * d3_7_m1_p1
+    - ls_1_7_2_10_9_m1_0 * ls_7_1_0_8_1_1_0 * c56_L2100 * d3_7_m1_p1
+    - ls_1_5_2_2_3_m1_0 * ls_5_1_0_6_1_1_0 * c57_L2110 * d3_5_m1_p1
+    - ls_1_5_2_4_3_m1_0 * ls_5_1_0_6_1_1_0 * c58_L2110 * d3_5_m1_p1
+    - ls_1_5_2_4_5_m1_0 * ls_5_1_0_6_1_1_0 * c59_L2110 * d3_5_m1_p1
+    - ls_1_5_2_6_5_m1_0 * ls_5_1_0_6_1_1_0 * c60_L2110 * d3_5_m1_p1
+    - ls_1_5_2_6_7_m1_0 * ls_5_1_0_6_1_1_0 * c61_L2110 * d3_5_m1_p1
+    - ls_1_5_2_8_7_m1_0 * ls_5_1_0_6_1_1_0 * c62_L2110 * d3_5_m1_p1
+    - ls_1_9_2_6_7_m1_0 * ls_9_1_0_10_1_1_0 * c63_L2350 * d3_9_m1_p1
+    - ls_1_9_2_8_7_m1_0 * ls_9_1_0_10_1_1_0 * c64_L2350 * d3_9_m1_p1
+    - ls_1_9_2_8_9_m1_0 * ls_9_1_0_10_1_1_0 * c65_L2350 * d3_9_m1_p1
+    - ls_1_9_2_10_9_m1_0 * ls_9_1_0_10_1_1_0 * c66_L2350 * d3_9_m1_p1
+    - ls_1_9_2_10_11_m1_0 * ls_9_1_0_10_1_1_0 * c67_L2350 * d3_9_m1_p1
+    - ls_1_9_2_12_11_m1_0 * ls_9_1_0_10_1_1_0 * c68_L2350 * d3_9_m1_p1
+    - ls_1_3_2_0_1_m1_0 * ls_3_1_0_4_1_1_0 * c69_LNR3O * d3_3_m1_p1
+    - ls_1_3_2_2_1_m1_0 * ls_3_1_0_4_1_1_0 * c70_LNR3O * d3_3_m1_p1
+    - ls_1_3_2_2_3_m1_0 * ls_3_1_0_4_1_1_0 * c71_LNR3O * d3_3_m1_p1
+    - ls_1_3_2_4_3_m1_0 * ls_3_1_0_4_1_1_0 * c72_LNR3O * d3_3_m1_p1
+    - ls_1_3_2_4_5_m1_0 * ls_3_1_0_4_1_1_0 * c73_LNR3O * d3_3_m1_p1
+    - ls_1_3_2_6_5_m1_0 * ls_3_1_0_4_1_1_0 * c74_LNR3O * d3_3_m1_p1
+)
+A3_p_p1_g_0_Lb_p1 = (
+    -ls_1_1_2_0_1_1_0 * ls_1_1_0_0_1_1_0 * c01_L1405 * d3_1_p1_p1
+    - ls_1_1_2_2_1_1_0 * ls_1_1_0_0_1_1_0 * c02_L1405 * d3_1_p1_p1
+    - ls_1_1_2_2_3_1_0 * ls_1_1_0_0_1_1_0 * c03_L1405 * d3_1_p1_p1
+    - ls_1_1_2_4_3_1_0 * ls_1_1_0_0_1_1_0 * c04_L1405 * d3_1_p1_p1
+    - ls_1_3_2_0_1_1_0 * ls_3_1_0_4_1_1_0 * c05_L1520 * d3_3_p1_p1
+    - ls_1_3_2_2_1_1_0 * ls_3_1_0_4_1_1_0 * c06_L1520 * d3_3_p1_p1
+    - ls_1_3_2_2_3_1_0 * ls_3_1_0_4_1_1_0 * c07_L1520 * d3_3_p1_p1
+    - ls_1_3_2_4_3_1_0 * ls_3_1_0_4_1_1_0 * c08_L1520 * d3_3_p1_p1
+    - ls_1_3_2_4_5_1_0 * ls_3_1_0_4_1_1_0 * c09_L1520 * d3_3_p1_p1
+    - ls_1_3_2_6_5_1_0 * ls_3_1_0_4_1_1_0 * c10_L1520 * d3_3_p1_p1
+    - ls_1_1_2_0_1_1_0 * ls_1_1_0_2_1_1_0 * c11_L1600 * d3_1_p1_p1
+    - ls_1_1_2_2_1_1_0 * ls_1_1_0_2_1_1_0 * c12_L1600 * d3_1_p1_p1
+    - ls_1_1_2_2_3_1_0 * ls_1_1_0_2_1_1_0 * c13_L1600 * d3_1_p1_p1
+    - ls_1_1_2_4_3_1_0 * ls_1_1_0_2_1_1_0 * c14_L1600 * d3_1_p1_p1
+    - ls_1_1_2_0_1_1_0 * ls_1_1_0_0_1_1_0 * c15_L1670 * d3_1_p1_p1
+    - ls_1_1_2_2_1_1_0 * ls_1_1_0_0_1_1_0 * c16_L1670 * d3_1_p1_p1
+    - ls_1_1_2_2_3_1_0 * ls_1_1_0_0_1_1_0 * c17_L1670 * d3_1_p1_p1
+    - ls_1_1_2_4_3_1_0 * ls_1_1_0_0_1_1_0 * c18_L1670 * d3_1_p1_p1
+    - ls_1_3_2_0_1_1_0 * ls_3_1_0_4_1_1_0 * c19_L1690 * d3_3_p1_p1
+    - ls_1_3_2_2_1_1_0 * ls_3_1_0_4_1_1_0 * c20_L1690 * d3_3_p1_p1
+    - ls_1_3_2_2_3_1_0 * ls_3_1_0_4_1_1_0 * c21_L1690 * d3_3_p1_p1
+    - ls_1_3_2_4_3_1_0 * ls_3_1_0_4_1_1_0 * c22_L1690 * d3_3_p1_p1
+    - ls_1_3_2_4_5_1_0 * ls_3_1_0_4_1_1_0 * c23_L1690 * d3_3_p1_p1
+    - ls_1_3_2_6_5_1_0 * ls_3_1_0_4_1_1_0 * c24_L1690 * d3_3_p1_p1
+    - ls_1_1_2_0_1_1_0 * ls_1_1_0_0_1_1_0 * c25_L1800 * d3_1_p1_p1
+    - ls_1_1_2_2_1_1_0 * ls_1_1_0_0_1_1_0 * c26_L1800 * d3_1_p1_p1
+    - ls_1_1_2_2_3_1_0 * ls_1_1_0_0_1_1_0 * c27_L1800 * d3_1_p1_p1
+    - ls_1_1_2_4_3_1_0 * ls_1_1_0_0_1_1_0 * c28_L1800 * d3_1_p1_p1
+    - ls_1_1_2_0_1_1_0 * ls_1_1_0_2_1_1_0 * c29_L1810 * d3_1_p1_p1
+    - ls_1_1_2_2_1_1_0 * ls_1_1_0_2_1_1_0 * c30_L1810 * d3_1_p1_p1
+    - ls_1_1_2_2_3_1_0 * ls_1_1_0_2_1_1_0 * c31_L1810 * d3_1_p1_p1
+    - ls_1_1_2_4_3_1_0 * ls_1_1_0_2_1_1_0 * c32_L1810 * d3_1_p1_p1
+    - ls_1_5_2_2_3_1_0 * ls_5_1_0_6_1_1_0 * c33_L1820 * d3_5_p1_p1
+    - ls_1_5_2_4_3_1_0 * ls_5_1_0_6_1_1_0 * c34_L1820 * d3_5_p1_p1
+    - ls_1_5_2_4_5_1_0 * ls_5_1_0_6_1_1_0 * c35_L1820 * d3_5_p1_p1
+    - ls_1_5_2_6_5_1_0 * ls_5_1_0_6_1_1_0 * c36_L1820 * d3_5_p1_p1
+    - ls_1_5_2_6_7_1_0 * ls_5_1_0_6_1_1_0 * c37_L1820 * d3_5_p1_p1
+    - ls_1_5_2_8_7_1_0 * ls_5_1_0_6_1_1_0 * c38_L1820 * d3_5_p1_p1
+    - ls_1_5_2_2_3_1_0 * ls_5_1_0_4_1_1_0 * c39_L1830 * d3_5_p1_p1
+    - ls_1_5_2_4_3_1_0 * ls_5_1_0_4_1_1_0 * c40_L1830 * d3_5_p1_p1
+    - ls_1_5_2_4_5_1_0 * ls_5_1_0_4_1_1_0 * c41_L1830 * d3_5_p1_p1
+    - ls_1_5_2_6_5_1_0 * ls_5_1_0_4_1_1_0 * c42_L1830 * d3_5_p1_p1
+    - ls_1_5_2_6_7_1_0 * ls_5_1_0_4_1_1_0 * c43_L1830 * d3_5_p1_p1
+    - ls_1_5_2_8_7_1_0 * ls_5_1_0_4_1_1_0 * c44_L1830 * d3_5_p1_p1
+    - ls_1_3_2_0_1_1_0 * ls_3_1_0_2_1_1_0 * c45_L1890 * d3_3_p1_p1
+    - ls_1_3_2_2_1_1_0 * ls_3_1_0_2_1_1_0 * c46_L1890 * d3_3_p1_p1
+    - ls_1_3_2_2_3_1_0 * ls_3_1_0_2_1_1_0 * c47_L1890 * d3_3_p1_p1
+    - ls_1_3_2_4_3_1_0 * ls_3_1_0_2_1_1_0 * c48_L1890 * d3_3_p1_p1
+    - ls_1_3_2_4_5_1_0 * ls_3_1_0_2_1_1_0 * c49_L1890 * d3_3_p1_p1
+    - ls_1_3_2_6_5_1_0 * ls_3_1_0_2_1_1_0 * c50_L1890 * d3_3_p1_p1
+    - ls_1_7_2_4_5_1_0 * ls_7_1_0_8_1_1_0 * c51_L2100 * d3_7_p1_p1
+    - ls_1_7_2_6_5_1_0 * ls_7_1_0_8_1_1_0 * c52_L2100 * d3_7_p1_p1
+    - ls_1_7_2_6_7_1_0 * ls_7_1_0_8_1_1_0 * c53_L2100 * d3_7_p1_p1
+    - ls_1_7_2_8_7_1_0 * ls_7_1_0_8_1_1_0 * c54_L2100 * d3_7_p1_p1
+    - ls_1_7_2_8_9_1_0 * ls_7_1_0_8_1_1_0 * c55_L2100 * d3_7_p1_p1
+    - ls_1_7_2_10_9_1_0 * ls_7_1_0_8_1_1_0 * c56_L2100 * d3_7_p1_p1
+    - ls_1_5_2_2_3_1_0 * ls_5_1_0_6_1_1_0 * c57_L2110 * d3_5_p1_p1
+    - ls_1_5_2_4_3_1_0 * ls_5_1_0_6_1_1_0 * c58_L2110 * d3_5_p1_p1
+    - ls_1_5_2_4_5_1_0 * ls_5_1_0_6_1_1_0 * c59_L2110 * d3_5_p1_p1
+    - ls_1_5_2_6_5_1_0 * ls_5_1_0_6_1_1_0 * c60_L2110 * d3_5_p1_p1
+    - ls_1_5_2_6_7_1_0 * ls_5_1_0_6_1_1_0 * c61_L2110 * d3_5_p1_p1
+    - ls_1_5_2_8_7_1_0 * ls_5_1_0_6_1_1_0 * c62_L2110 * d3_5_p1_p1
+    - ls_1_9_2_6_7_1_0 * ls_9_1_0_10_1_1_0 * c63_L2350 * d3_9_p1_p1
+    - ls_1_9_2_8_7_1_0 * ls_9_1_0_10_1_1_0 * c64_L2350 * d3_9_p1_p1
+    - ls_1_9_2_8_9_1_0 * ls_9_1_0_10_1_1_0 * c65_L2350 * d3_9_p1_p1
+    - ls_1_9_2_10_9_1_0 * ls_9_1_0_10_1_1_0 * c66_L2350 * d3_9_p1_p1
+    - ls_1_9_2_10_11_1_0 * ls_9_1_0_10_1_1_0 * c67_L2350 * d3_9_p1_p1
+    - ls_1_9_2_12_11_1_0 * ls_9_1_0_10_1_1_0 * c68_L2350 * d3_9_p1_p1
+    - ls_1_3_2_0_1_1_0 * ls_3_1_0_4_1_1_0 * c69_LNR3O * d3_3_p1_p1
+    - ls_1_3_2_2_1_1_0 * ls_3_1_0_4_1_1_0 * c70_LNR3O * d3_3_p1_p1
+    - ls_1_3_2_2_3_1_0 * ls_3_1_0_4_1_1_0 * c71_LNR3O * d3_3_p1_p1
+    - ls_1_3_2_4_3_1_0 * ls_3_1_0_4_1_1_0 * c72_LNR3O * d3_3_p1_p1
+    - ls_1_3_2_4_5_1_0 * ls_3_1_0_4_1_1_0 * c73_LNR3O * d3_3_p1_p1
+    - ls_1_3_2_6_5_1_0 * ls_3_1_0_4_1_1_0 * c74_LNR3O * d3_3_p1_p1
+)
+A3_p_p1_g_p2_Lb_m1 = (
+    ls_1_1_2_0_1_1_2 * ls_1_1_0_0_1_1_0 * c01_L1405 * d3_1_p1_p1
+    + ls_1_1_2_2_1_1_2 * ls_1_1_0_0_1_1_0 * c02_L1405 * d3_1_p1_p1
+    + ls_1_1_2_2_3_1_2 * ls_1_1_0_0_1_1_0 * c03_L1405 * d3_1_p1_p1
+    + ls_1_1_2_4_3_1_2 * ls_1_1_0_0_1_1_0 * c04_L1405 * d3_1_p1_p1
+    + ls_1_3_2_0_1_1_2 * ls_3_1_0_4_1_1_0 * c05_L1520 * d3_3_p1_p1
+    + ls_1_3_2_2_1_1_2 * ls_3_1_0_4_1_1_0 * c06_L1520 * d3_3_p1_p1
+    + ls_1_3_2_2_3_1_2 * ls_3_1_0_4_1_1_0 * c07_L1520 * d3_3_p1_p1
+    + ls_1_3_2_4_3_1_2 * ls_3_1_0_4_1_1_0 * c08_L1520 * d3_3_p1_p1
+    + ls_1_3_2_4_5_1_2 * ls_3_1_0_4_1_1_0 * c09_L1520 * d3_3_p1_p1
+    + ls_1_3_2_6_5_1_2 * ls_3_1_0_4_1_1_0 * c10_L1520 * d3_3_p1_p1
+    + ls_1_1_2_0_1_1_2 * ls_1_1_0_2_1_1_0 * c11_L1600 * d3_1_p1_p1
+    + ls_1_1_2_2_1_1_2 * ls_1_1_0_2_1_1_0 * c12_L1600 * d3_1_p1_p1
+    + ls_1_1_2_2_3_1_2 * ls_1_1_0_2_1_1_0 * c13_L1600 * d3_1_p1_p1
+    + ls_1_1_2_4_3_1_2 * ls_1_1_0_2_1_1_0 * c14_L1600 * d3_1_p1_p1
+    + ls_1_1_2_0_1_1_2 * ls_1_1_0_0_1_1_0 * c15_L1670 * d3_1_p1_p1
+    + ls_1_1_2_2_1_1_2 * ls_1_1_0_0_1_1_0 * c16_L1670 * d3_1_p1_p1
+    + ls_1_1_2_2_3_1_2 * ls_1_1_0_0_1_1_0 * c17_L1670 * d3_1_p1_p1
+    + ls_1_1_2_4_3_1_2 * ls_1_1_0_0_1_1_0 * c18_L1670 * d3_1_p1_p1
+    + ls_1_3_2_0_1_1_2 * ls_3_1_0_4_1_1_0 * c19_L1690 * d3_3_p1_p1
+    + ls_1_3_2_2_1_1_2 * ls_3_1_0_4_1_1_0 * c20_L1690 * d3_3_p1_p1
+    + ls_1_3_2_2_3_1_2 * ls_3_1_0_4_1_1_0 * c21_L1690 * d3_3_p1_p1
+    + ls_1_3_2_4_3_1_2 * ls_3_1_0_4_1_1_0 * c22_L1690 * d3_3_p1_p1
+    + ls_1_3_2_4_5_1_2 * ls_3_1_0_4_1_1_0 * c23_L1690 * d3_3_p1_p1
+    + ls_1_3_2_6_5_1_2 * ls_3_1_0_4_1_1_0 * c24_L1690 * d3_3_p1_p1
+    + ls_1_1_2_0_1_1_2 * ls_1_1_0_0_1_1_0 * c25_L1800 * d3_1_p1_p1
+    + ls_1_1_2_2_1_1_2 * ls_1_1_0_0_1_1_0 * c26_L1800 * d3_1_p1_p1
+    + ls_1_1_2_2_3_1_2 * ls_1_1_0_0_1_1_0 * c27_L1800 * d3_1_p1_p1
+    + ls_1_1_2_4_3_1_2 * ls_1_1_0_0_1_1_0 * c28_L1800 * d3_1_p1_p1
+    + ls_1_1_2_0_1_1_2 * ls_1_1_0_2_1_1_0 * c29_L1810 * d3_1_p1_p1
+    + ls_1_1_2_2_1_1_2 * ls_1_1_0_2_1_1_0 * c30_L1810 * d3_1_p1_p1
+    + ls_1_1_2_2_3_1_2 * ls_1_1_0_2_1_1_0 * c31_L1810 * d3_1_p1_p1
+    + ls_1_1_2_4_3_1_2 * ls_1_1_0_2_1_1_0 * c32_L1810 * d3_1_p1_p1
+    + ls_1_5_2_2_3_1_2 * ls_5_1_0_6_1_1_0 * c33_L1820 * d3_5_p1_p1
+    + ls_1_5_2_4_3_1_2 * ls_5_1_0_6_1_1_0 * c34_L1820 * d3_5_p1_p1
+    + ls_1_5_2_4_5_1_2 * ls_5_1_0_6_1_1_0 * c35_L1820 * d3_5_p1_p1
+    + ls_1_5_2_6_5_1_2 * ls_5_1_0_6_1_1_0 * c36_L1820 * d3_5_p1_p1
+    + ls_1_5_2_6_7_1_2 * ls_5_1_0_6_1_1_0 * c37_L1820 * d3_5_p1_p1
+    + ls_1_5_2_8_7_1_2 * ls_5_1_0_6_1_1_0 * c38_L1820 * d3_5_p1_p1
+    + ls_1_5_2_2_3_1_2 * ls_5_1_0_4_1_1_0 * c39_L1830 * d3_5_p1_p1
+    + ls_1_5_2_4_3_1_2 * ls_5_1_0_4_1_1_0 * c40_L1830 * d3_5_p1_p1
+    + ls_1_5_2_4_5_1_2 * ls_5_1_0_4_1_1_0 * c41_L1830 * d3_5_p1_p1
+    + ls_1_5_2_6_5_1_2 * ls_5_1_0_4_1_1_0 * c42_L1830 * d3_5_p1_p1
+    + ls_1_5_2_6_7_1_2 * ls_5_1_0_4_1_1_0 * c43_L1830 * d3_5_p1_p1
+    + ls_1_5_2_8_7_1_2 * ls_5_1_0_4_1_1_0 * c44_L1830 * d3_5_p1_p1
+    + ls_1_3_2_0_1_1_2 * ls_3_1_0_2_1_1_0 * c45_L1890 * d3_3_p1_p1
+    + ls_1_3_2_2_1_1_2 * ls_3_1_0_2_1_1_0 * c46_L1890 * d3_3_p1_p1
+    + ls_1_3_2_2_3_1_2 * ls_3_1_0_2_1_1_0 * c47_L1890 * d3_3_p1_p1
+    + ls_1_3_2_4_3_1_2 * ls_3_1_0_2_1_1_0 * c48_L1890 * d3_3_p1_p1
+    + ls_1_3_2_4_5_1_2 * ls_3_1_0_2_1_1_0 * c49_L1890 * d3_3_p1_p1
+    + ls_1_3_2_6_5_1_2 * ls_3_1_0_2_1_1_0 * c50_L1890 * d3_3_p1_p1
+    + ls_1_7_2_4_5_1_2 * ls_7_1_0_8_1_1_0 * c51_L2100 * d3_7_p1_p1
+    + ls_1_7_2_6_5_1_2 * ls_7_1_0_8_1_1_0 * c52_L2100 * d3_7_p1_p1
+    + ls_1_7_2_6_7_1_2 * ls_7_1_0_8_1_1_0 * c53_L2100 * d3_7_p1_p1
+    + ls_1_7_2_8_7_1_2 * ls_7_1_0_8_1_1_0 * c54_L2100 * d3_7_p1_p1
+    + ls_1_7_2_8_9_1_2 * ls_7_1_0_8_1_1_0 * c55_L2100 * d3_7_p1_p1
+    + ls_1_7_2_10_9_1_2 * ls_7_1_0_8_1_1_0 * c56_L2100 * d3_7_p1_p1
+    + ls_1_5_2_2_3_1_2 * ls_5_1_0_6_1_1_0 * c57_L2110 * d3_5_p1_p1
+    + ls_1_5_2_4_3_1_2 * ls_5_1_0_6_1_1_0 * c58_L2110 * d3_5_p1_p1
+    + ls_1_5_2_4_5_1_2 * ls_5_1_0_6_1_1_0 * c59_L2110 * d3_5_p1_p1
+    + ls_1_5_2_6_5_1_2 * ls_5_1_0_6_1_1_0 * c60_L2110 * d3_5_p1_p1
+    + ls_1_5_2_6_7_1_2 * ls_5_1_0_6_1_1_0 * c61_L2110 * d3_5_p1_p1
+    + ls_1_5_2_8_7_1_2 * ls_5_1_0_6_1_1_0 * c62_L2110 * d3_5_p1_p1
+    + ls_1_9_2_6_7_1_2 * ls_9_1_0_10_1_1_0 * c63_L2350 * d3_9_p1_p1
+    + ls_1_9_2_8_7_1_2 * ls_9_1_0_10_1_1_0 * c64_L2350 * d3_9_p1_p1
+    + ls_1_9_2_8_9_1_2 * ls_9_1_0_10_1_1_0 * c65_L2350 * d3_9_p1_p1
+    + ls_1_9_2_10_9_1_2 * ls_9_1_0_10_1_1_0 * c66_L2350 * d3_9_p1_p1
+    + ls_1_9_2_10_11_1_2 * ls_9_1_0_10_1_1_0 * c67_L2350 * d3_9_p1_p1
+    + ls_1_9_2_12_11_1_2 * ls_9_1_0_10_1_1_0 * c68_L2350 * d3_9_p1_p1
+    + ls_1_3_2_0_1_1_2 * ls_3_1_0_4_1_1_0 * c69_LNR3O * d3_3_p1_p1
+    + ls_1_3_2_2_1_1_2 * ls_3_1_0_4_1_1_0 * c70_LNR3O * d3_3_p1_p1
+    + ls_1_3_2_2_3_1_2 * ls_3_1_0_4_1_1_0 * c71_LNR3O * d3_3_p1_p1
+    + ls_1_3_2_4_3_1_2 * ls_3_1_0_4_1_1_0 * c72_LNR3O * d3_3_p1_p1
+    + ls_1_3_2_4_5_1_2 * ls_3_1_0_4_1_1_0 * c73_LNR3O * d3_3_p1_p1
+    + ls_1_3_2_6_5_1_2 * ls_3_1_0_4_1_1_0 * c74_LNR3O * d3_3_p1_p1
+)
+A3_p_p1_g_p2_Lb_p1 = (
+    ls_1_3_2_0_1_3_2 * ls_3_1_0_4_1_1_0 * c05_L1520 * d3_3_p3_p1
+    + ls_1_3_2_2_1_3_2 * ls_3_1_0_4_1_1_0 * c06_L1520 * d3_3_p3_p1
+    + ls_1_3_2_2_3_3_2 * ls_3_1_0_4_1_1_0 * c07_L1520 * d3_3_p3_p1
+    + ls_1_3_2_4_3_3_2 * ls_3_1_0_4_1_1_0 * c08_L1520 * d3_3_p3_p1
+    + ls_1_3_2_4_5_3_2 * ls_3_1_0_4_1_1_0 * c09_L1520 * d3_3_p3_p1
+    + ls_1_3_2_6_5_3_2 * ls_3_1_0_4_1_1_0 * c10_L1520 * d3_3_p3_p1
+    + ls_1_3_2_0_1_3_2 * ls_3_1_0_4_1_1_0 * c19_L1690 * d3_3_p3_p1
+    + ls_1_3_2_2_1_3_2 * ls_3_1_0_4_1_1_0 * c20_L1690 * d3_3_p3_p1
+    + ls_1_3_2_2_3_3_2 * ls_3_1_0_4_1_1_0 * c21_L1690 * d3_3_p3_p1
+    + ls_1_3_2_4_3_3_2 * ls_3_1_0_4_1_1_0 * c22_L1690 * d3_3_p3_p1
+    + ls_1_3_2_4_5_3_2 * ls_3_1_0_4_1_1_0 * c23_L1690 * d3_3_p3_p1
+    + ls_1_3_2_6_5_3_2 * ls_3_1_0_4_1_1_0 * c24_L1690 * d3_3_p3_p1
+    + ls_1_5_2_2_3_3_2 * ls_5_1_0_6_1_1_0 * c33_L1820 * d3_5_p3_p1
+    + ls_1_5_2_4_3_3_2 * ls_5_1_0_6_1_1_0 * c34_L1820 * d3_5_p3_p1
+    + ls_1_5_2_4_5_3_2 * ls_5_1_0_6_1_1_0 * c35_L1820 * d3_5_p3_p1
+    + ls_1_5_2_6_5_3_2 * ls_5_1_0_6_1_1_0 * c36_L1820 * d3_5_p3_p1
+    + ls_1_5_2_6_7_3_2 * ls_5_1_0_6_1_1_0 * c37_L1820 * d3_5_p3_p1
+    + ls_1_5_2_8_7_3_2 * ls_5_1_0_6_1_1_0 * c38_L1820 * d3_5_p3_p1
+    + ls_1_5_2_2_3_3_2 * ls_5_1_0_4_1_1_0 * c39_L1830 * d3_5_p3_p1
+    + ls_1_5_2_4_3_3_2 * ls_5_1_0_4_1_1_0 * c40_L1830 * d3_5_p3_p1
+    + ls_1_5_2_4_5_3_2 * ls_5_1_0_4_1_1_0 * c41_L1830 * d3_5_p3_p1
+    + ls_1_5_2_6_5_3_2 * ls_5_1_0_4_1_1_0 * c42_L1830 * d3_5_p3_p1
+    + ls_1_5_2_6_7_3_2 * ls_5_1_0_4_1_1_0 * c43_L1830 * d3_5_p3_p1
+    + ls_1_5_2_8_7_3_2 * ls_5_1_0_4_1_1_0 * c44_L1830 * d3_5_p3_p1
+    + ls_1_3_2_0_1_3_2 * ls_3_1_0_2_1_1_0 * c45_L1890 * d3_3_p3_p1
+    + ls_1_3_2_2_1_3_2 * ls_3_1_0_2_1_1_0 * c46_L1890 * d3_3_p3_p1
+    + ls_1_3_2_2_3_3_2 * ls_3_1_0_2_1_1_0 * c47_L1890 * d3_3_p3_p1
+    + ls_1_3_2_4_3_3_2 * ls_3_1_0_2_1_1_0 * c48_L1890 * d3_3_p3_p1
+    + ls_1_3_2_4_5_3_2 * ls_3_1_0_2_1_1_0 * c49_L1890 * d3_3_p3_p1
+    + ls_1_3_2_6_5_3_2 * ls_3_1_0_2_1_1_0 * c50_L1890 * d3_3_p3_p1
+    + ls_1_7_2_4_5_3_2 * ls_7_1_0_8_1_1_0 * c51_L2100 * d3_7_p3_p1
+    + ls_1_7_2_6_5_3_2 * ls_7_1_0_8_1_1_0 * c52_L2100 * d3_7_p3_p1
+    + ls_1_7_2_6_7_3_2 * ls_7_1_0_8_1_1_0 * c53_L2100 * d3_7_p3_p1
+    + ls_1_7_2_8_7_3_2 * ls_7_1_0_8_1_1_0 * c54_L2100 * d3_7_p3_p1
+    + ls_1_7_2_8_9_3_2 * ls_7_1_0_8_1_1_0 * c55_L2100 * d3_7_p3_p1
+    + ls_1_7_2_10_9_3_2 * ls_7_1_0_8_1_1_0 * c56_L2100 * d3_7_p3_p1
+    + ls_1_5_2_2_3_3_2 * ls_5_1_0_6_1_1_0 * c57_L2110 * d3_5_p3_p1
+    + ls_1_5_2_4_3_3_2 * ls_5_1_0_6_1_1_0 * c58_L2110 * d3_5_p3_p1
+    + ls_1_5_2_4_5_3_2 * ls_5_1_0_6_1_1_0 * c59_L2110 * d3_5_p3_p1
+    + ls_1_5_2_6_5_3_2 * ls_5_1_0_6_1_1_0 * c60_L2110 * d3_5_p3_p1
+    + ls_1_5_2_6_7_3_2 * ls_5_1_0_6_1_1_0 * c61_L2110 * d3_5_p3_p1
+    + ls_1_5_2_8_7_3_2 * ls_5_1_0_6_1_1_0 * c62_L2110 * d3_5_p3_p1
+    + ls_1_9_2_6_7_3_2 * ls_9_1_0_10_1_1_0 * c63_L2350 * d3_9_p3_p1
+    + ls_1_9_2_8_7_3_2 * ls_9_1_0_10_1_1_0 * c64_L2350 * d3_9_p3_p1
+    + ls_1_9_2_8_9_3_2 * ls_9_1_0_10_1_1_0 * c65_L2350 * d3_9_p3_p1
+    + ls_1_9_2_10_9_3_2 * ls_9_1_0_10_1_1_0 * c66_L2350 * d3_9_p3_p1
+    + ls_1_9_2_10_11_3_2 * ls_9_1_0_10_1_1_0 * c67_L2350 * d3_9_p3_p1
+    + ls_1_9_2_12_11_3_2 * ls_9_1_0_10_1_1_0 * c68_L2350 * d3_9_p3_p1
+    + ls_1_3_2_0_1_3_2 * ls_3_1_0_4_1_1_0 * c69_LNR3O * d3_3_p3_p1
+    + ls_1_3_2_2_1_3_2 * ls_3_1_0_4_1_1_0 * c70_LNR3O * d3_3_p3_p1
+    + ls_1_3_2_2_3_3_2 * ls_3_1_0_4_1_1_0 * c71_LNR3O * d3_3_p3_p1
+    + ls_1_3_2_4_3_3_2 * ls_3_1_0_4_1_1_0 * c72_LNR3O * d3_3_p3_p1
+    + ls_1_3_2_4_5_3_2 * ls_3_1_0_4_1_1_0 * c73_LNR3O * d3_3_p3_p1
+    + ls_1_3_2_6_5_3_2 * ls_3_1_0_4_1_1_0 * c74_LNR3O * d3_3_p3_p1
+)
+
+# ----------------------------------------------------------------------------
+# Alignment of the spins to the frames of the reference chain 3
+# ----------------------------------------------------------------------------
+
+# A particle with spin is rotated by its Wigner angle ζ between the frames of
+# chain k and the reference chain (THREEBODYDECAYS, ThreeBodyDecays.jl).
+cos_zeta3_Lb = amp.dalitz_cos_zeta(0, 3, 1, [sigma1, sigma2, sigma3], m0, [m1, m2, m3])
+dz3_Lb_m1_m1 = wd.wignerd_doublearg(1, -1, -1, cos_zeta3_Lb)
+dz3_Lb_m1_p1 = wd.wignerd_doublearg(1, -1, 1, cos_zeta3_Lb)
+dz3_Lb_p1_m1 = wd.wignerd_doublearg(1, 1, -1, cos_zeta3_Lb)
+dz3_Lb_p1_p1 = wd.wignerd_doublearg(1, 1, 1, cos_zeta3_Lb)
+
+# ----------------------------------------------------------------------------
+# Amplitudes in the frames of the reference chain and the intensity
+# ----------------------------------------------------------------------------
+
+A_p_m1_g_m2_Lb_m1 = (
+    dz3_Lb_m1_m1 * A3_p_m1_g_m2_Lb_m1
+    + dz3_Lb_m1_p1 * A3_p_m1_g_m2_Lb_p1
+)
+A_p_m1_g_m2_Lb_p1 = (
+    dz3_Lb_p1_m1 * A3_p_m1_g_m2_Lb_m1
+    + dz3_Lb_p1_p1 * A3_p_m1_g_m2_Lb_p1
+)
+A_p_m1_g_0_Lb_m1 = (
+    dz3_Lb_m1_m1 * A3_p_m1_g_0_Lb_m1
+    + dz3_Lb_m1_p1 * A3_p_m1_g_0_Lb_p1
+)
+A_p_m1_g_0_Lb_p1 = (
+    dz3_Lb_p1_m1 * A3_p_m1_g_0_Lb_m1
+    + dz3_Lb_p1_p1 * A3_p_m1_g_0_Lb_p1
+)
+A_p_m1_g_p2_Lb_m1 = (
+    dz3_Lb_m1_m1 * A3_p_m1_g_p2_Lb_m1
+    + dz3_Lb_m1_p1 * A3_p_m1_g_p2_Lb_p1
+)
+A_p_m1_g_p2_Lb_p1 = (
+    dz3_Lb_p1_m1 * A3_p_m1_g_p2_Lb_m1
+    + dz3_Lb_p1_p1 * A3_p_m1_g_p2_Lb_p1
+)
+A_p_p1_g_m2_Lb_m1 = (
+    dz3_Lb_m1_m1 * A3_p_p1_g_m2_Lb_m1
+    + dz3_Lb_m1_p1 * A3_p_p1_g_m2_Lb_p1
+)
+A_p_p1_g_m2_Lb_p1 = (
+    dz3_Lb_p1_m1 * A3_p_p1_g_m2_Lb_m1
+    + dz3_Lb_p1_p1 * A3_p_p1_g_m2_Lb_p1
+)
+A_p_p1_g_0_Lb_m1 = (
+    dz3_Lb_m1_m1 * A3_p_p1_g_0_Lb_m1
+    + dz3_Lb_m1_p1 * A3_p_p1_g_0_Lb_p1
+)
+A_p_p1_g_0_Lb_p1 = (
+    dz3_Lb_p1_m1 * A3_p_p1_g_0_Lb_m1
+    + dz3_Lb_p1_p1 * A3_p_p1_g_0_Lb_p1
+)
+A_p_p1_g_p2_Lb_m1 = (
+    dz3_Lb_m1_m1 * A3_p_p1_g_p2_Lb_m1
+    + dz3_Lb_m1_p1 * A3_p_p1_g_p2_Lb_p1
+)
+A_p_p1_g_p2_Lb_p1 = (
+    dz3_Lb_p1_m1 * A3_p_p1_g_p2_Lb_m1
+    + dz3_Lb_p1_p1 * A3_p_p1_g_p2_Lb_p1
+)
+
+intensity = (
+    abs2(A_p_m1_g_m2_Lb_m1)
+    + abs2(A_p_m1_g_m2_Lb_p1)
+    + abs2(A_p_m1_g_0_Lb_m1)
+    + abs2(A_p_m1_g_0_Lb_p1)
+    + abs2(A_p_m1_g_p2_Lb_m1)
+    + abs2(A_p_m1_g_p2_Lb_p1)
+    + abs2(A_p_p1_g_m2_Lb_m1)
+    + abs2(A_p_p1_g_m2_Lb_p1)
+    + abs2(A_p_p1_g_0_Lb_m1)
+    + abs2(A_p_p1_g_0_Lb_p1)
+    + abs2(A_p_p1_g_p2_Lb_m1)
+    + abs2(A_p_p1_g_p2_Lb_p1)
+)
+
+% The intensity as a function of the invariants
+intensity_of_sigmas = functionof(intensity, sigma1, sigma2, sigma3)
+amplitudes_of_sigmas = functionof(record(A_p_m1_g_m2_Lb_m1 = A_p_m1_g_m2_Lb_m1, A_p_m1_g_m2_Lb_p1 = A_p_m1_g_m2_Lb_p1, A_p_m1_g_0_Lb_m1 = A_p_m1_g_0_Lb_m1, A_p_m1_g_0_Lb_p1 = A_p_m1_g_0_Lb_p1, A_p_m1_g_p2_Lb_m1 = A_p_m1_g_p2_Lb_m1, A_p_m1_g_p2_Lb_p1 = A_p_m1_g_p2_Lb_p1, A_p_p1_g_m2_Lb_m1 = A_p_p1_g_m2_Lb_m1, A_p_p1_g_m2_Lb_p1 = A_p_p1_g_m2_Lb_p1, A_p_p1_g_0_Lb_m1 = A_p_p1_g_0_Lb_m1, A_p_p1_g_0_Lb_p1 = A_p_p1_g_0_Lb_p1, A_p_p1_g_p2_Lb_m1 = A_p_p1_g_p2_Lb_m1, A_p_p1_g_p2_Lb_p1 = A_p_p1_g_p2_Lb_p1), sigma1, sigma2, sigma3)

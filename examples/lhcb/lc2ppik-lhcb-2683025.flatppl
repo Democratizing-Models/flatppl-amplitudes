@@ -1,0 +1,88 @@
+%%%
+# Λc+ → p π+ K− (LHCb, arXiv:2208.03262)
+
+Kinematics, amplitude model, and observable. All masses are in GeV.
+The observable is the unnormalised decay rate in the reference coordinates.
+%%%
+flatppl_compat = "0.1"
+
+# Kinematics
+hep = standard_module("particle-physics", "0.1")
+amp = load_module("../../main.flatppl")
+kin = load_module("support/kinematics.flatppl")
+
+# ----------------------------------------------------------------------------
+# Masses
+# ----------------------------------------------------------------------------
+
+m0 = 2.28646  % Lc
+m1 = 0.938272046  % p
+m2 = 0.13957018  % pi
+m3 = 0.493677  % K
+s0 = m0^2
+ms1 = m1^2
+ms2 = m2^2
+ms3 = m3^2
+
+# ----------------------------------------------------------------------------
+# Decay coordinates of the reference topology [[3, 1], 2] and the four-momenta
+# ----------------------------------------------------------------------------
+
+# The coordinates of a node are the invariant mass m_<node> of the line and the
+# helicity angles cos_theta_<node>, phi_<node> of its first child in its helicity
+# frame, as the variables of the JSON file.
+cos_theta_31_2 = elementof(interval(-1.0, 1.0))
+phi_31_2 = elementof(interval(-pi, pi))
+m_31 = elementof(interval(m3 + m1, m0 - m2))
+cos_theta_31 = elementof(interval(-1.0, 1.0))
+phi_31 = elementof(interval(-pi, pi))
+
+q_31_2 = hep.breakup_momentum(m0, m_31, m2)
+e_31_in_31_2 = kin.momentum(q_31_2, cos_theta_31_2, phi_31_2, m_31)
+e_2_in_31_2 = kin.opposite(e_31_in_31_2, m2)
+q_31 = hep.breakup_momentum(m_31, m3, m1)
+e_3_in_31 = kin.momentum(q_31, cos_theta_31, phi_31, m3)
+e_1_in_31 = kin.opposite(e_3_in_31, m1)
+e3_31 = e_3_in_31
+e1_31 = e_1_in_31
+e3_31_2 = kin.from_frame(e3_31, e_31_in_31_2, 1.0)
+e1_31_2 = kin.from_frame(e1_31, e_31_in_31_2, 1.0)
+e2_31_2 = e_2_in_31_2
+
+% Four-momenta in the rest frame of the parent
+e1 = e1_31_2
+e2 = e2_31_2
+e3 = e3_31_2
+
+sigma1_event = amp.mass_squared(e2 + e3)
+sigma2_event = amp.mass_squared(e3 + e1)
+sigma3_event = amp.mass_squared(e1 + e2)
+
+# Amplitude model
+model = load_module("models/lc2ppik-lhcb-2683025.flatppl")
+
+# Observable
+intensity_event = model.intensity_of_sigmas(sigma1_event, sigma2_event, sigma3_event)
+
+
+# ----------------------------------------------------------------------------
+# Decay rate, decay distribution and generated events
+# ----------------------------------------------------------------------------
+
+% Phase-space density in the decay coordinates: dΦ3 ∝ q p dm dΩ dΩ
+phase_space_density = q_31_2 * q_31
+rate = phase_space_density * intensity_event
+decay_intensity = functionof(intensity_event, cos_theta_31_2, phi_31_2, m_31, cos_theta_31, phi_31)
+rate_fn = functionof(rate, cos_theta_31_2, phi_31_2, m_31, cos_theta_31, phi_31)
+decay_space = cartprod(cos_theta_31_2 = interval(-1.0, 1.0), phi_31_2 = interval(-pi, pi), m_31 = interval(m3 + m1, m0 - m2), cos_theta_31 = interval(-1.0, 1.0), phi_31 = interval(-pi, pi))
+decay_rate = weighted(fn(rate_fn(_)), Lebesgue(support = decay_space))
+decay_distribution = normalize(decay_rate)
+
+% Four-momenta in the rest frame of the parent
+momenta_fn = functionof(record(p = e1, pi = e2, K = e3), cos_theta_31_2, phi_31_2, m_31, cos_theta_31, phi_31)
+event_distribution = pushfwd(fn(momenta_fn(_)), decay_distribution)
+n_events = 1000
+events ~ iid(event_distribution, n_events)
+
+inputs = (cos_theta_31_2, phi_31_2, m_31, cos_theta_31, phi_31)
+outputs = rate
