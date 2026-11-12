@@ -7,12 +7,73 @@ The functions return cosines, not signed rotation angles.
 %%%
 flatppl_compat = "0.1"
 hep = standard_module("particle-physics", "0.1")
-_root_lambda = (x, y, z) -> sqrt(max(hep.kallen(x, y, z), 0.0))
-_cosine = (num, den) -> ifelse(den > 0, min(max(num / ifelse(den > 0, den, 1.0), -1.0), 1.0), 1.0)
-_theta = (sk, sj, s0, mi, mj, mk) -> _cosine(2 * sk * (sj - mk ^ 2 - mi ^ 2) - (sk + mi ^ 2 - mj ^ 2) * (s0 - sk - mk ^ 2), _root_lambda(s0, mk ^ 2, sk) * _root_lambda(sk, mi ^ 2, mj ^ 2))
-dalitz_cos_theta = (k, sigmas, m0, ms) -> _theta(sigmas[k], sigmas[mod(k + 1, 3) + 1], m0 ^ 2, ms[mod(k, 3) + 1], ms[mod(k + 1, 3) + 1], ms[k])
-_parent = (k, l, n, s, s0, ms) -> _cosine((s0 + ms[k] ^ 2 - s[k]) * (s0 + ms[l] ^ 2 - s[l]) - 2 * s0 * (s[n] - ms[k] ^ 2 - ms[l] ^ 2), _root_lambda(s0, ms[k] ^ 2, s[k]) * _root_lambda(s0, ms[l] ^ 2, s[l]))
-_spectator = (i, other, n, s, s0, ms) -> _cosine(2 * ms[i] ^ 2 * (s[n] - s0 - ms[n] ^ 2) + (s0 + ms[i] ^ 2 - s[i]) * (s[other] - ms[i] ^ 2 - ms[n] ^ 2), _root_lambda(s0, ms[i] ^ 2, s[i]) * _root_lambda(s[other], ms[i] ^ 2, ms[n] ^ 2))
-_third = (i, k, l, s, ms) -> _cosine(2 * ms[i] ^ 2 * (ms[k] ^ 2 + ms[l] ^ 2 - s[i]) + (s[k] - ms[i] ^ 2 - ms[l] ^ 2) * (s[l] - ms[i] ^ 2 - ms[k] ^ 2), _root_lambda(s[k], ms[i] ^ 2, ms[l] ^ 2) * _root_lambda(s[l], ms[i] ^ 2, ms[k] ^ 2))
-_zeta = (i, k, l, n, s, s0, ms) -> ifelse(i == 0, _parent(k, l, n, s, s0, ms), ifelse(iszero(ms[max(i, 1)]), 1.0, ifelse(i == k, _spectator(k, l, n, s, s0, ms), ifelse(i == l, _spectator(l, k, n, s, s0, ms), _third(max(i, 1), k, l, s, ms)))))
-dalitz_cos_zeta = (i, k, l, sigmas, m0, ms) -> ifelse(k == l, 1.0, _zeta(i, k, l, ifelse(k == l, mod(k, 3) + 1, 6 - k - l), sigmas, m0 ^ 2, ms))
+
+_root_lambda(x, y, z) = sqrt(max(hep.kallen(x, y, z), 0.0))
+
+_cosine(num, den) = ifelse(den > 0, min(max(num / ifelse(den > 0, den, 1.0), -1.0), 1.0), 1.0)
+
+_theta(sk, sj, s0, mi, mj, mk) = (
+    _cosine(
+        2 * sk * (sj - mk ^ 2 - mi ^ 2) - (sk + mi ^ 2 - mj ^ 2) * (s0 - sk - mk ^ 2),
+        _root_lambda(s0, mk ^ 2, sk) * _root_lambda(sk, mi ^ 2, mj ^ 2)
+    )
+)
+
+dalitz_cos_theta(k, sigmas, m0, ms) = (
+    _theta(
+        sigmas[k], sigmas[mod(k + 1, 3) + 1], m0 ^ 2,
+        ms[mod(k, 3) + 1], ms[mod(k + 1, 3) + 1], ms[k]
+    )
+)
+
+_parent(k, l, n, s, s0, ms) = (
+    _cosine(
+        (s0 + ms[k] ^ 2 - s[k]) * (s0 + ms[l] ^ 2 - s[l])
+        - 2 * s0 * (s[n] - ms[k] ^ 2 - ms[l] ^ 2),
+        _root_lambda(s0, ms[k] ^ 2, s[k]) * _root_lambda(s0, ms[l] ^ 2, s[l])
+    )
+)
+
+_spectator(i, other, n, s, s0, ms) = (
+    _cosine(
+        2 * ms[i] ^ 2 * (s[n] - s0 - ms[n] ^ 2)
+        + (s0 + ms[i] ^ 2 - s[i]) * (s[other] - ms[i] ^ 2 - ms[n] ^ 2),
+        _root_lambda(s0, ms[i] ^ 2, s[i]) * _root_lambda(s[other], ms[i] ^ 2, ms[n] ^ 2)
+    )
+)
+
+_third(i, k, l, s, ms) = (
+    _cosine(
+        2 * ms[i] ^ 2 * (ms[k] ^ 2 + ms[l] ^ 2 - s[i])
+        + (s[k] - ms[i] ^ 2 - ms[l] ^ 2) * (s[l] - ms[i] ^ 2 - ms[k] ^ 2),
+        _root_lambda(s[k], ms[i] ^ 2, ms[l] ^ 2) * _root_lambda(s[l], ms[i] ^ 2, ms[k] ^ 2)
+    )
+)
+
+_zeta(i, k, l, n, s, s0, ms) = (
+    ifelse(
+        i == 0,
+        _parent(k, l, n, s, s0, ms),
+        ifelse(
+            iszero(ms[max(i, 1)]),
+            1.0,
+            ifelse(
+                i == k,
+                _spectator(k, l, n, s, s0, ms),
+                ifelse(
+                    i == l,
+                    _spectator(l, k, n, s, s0, ms),
+                    _third(max(i, 1), k, l, s, ms)
+                )
+            )
+        )
+    )
+)
+
+dalitz_cos_zeta(i, k, l, sigmas, m0, ms) = (
+    ifelse(
+        k == l,
+        1.0,
+        _zeta(i, k, l, ifelse(k == l, mod(k, 3) + 1, 6 - k - l), sigmas, m0 ^ 2, ms)
+    )
+)

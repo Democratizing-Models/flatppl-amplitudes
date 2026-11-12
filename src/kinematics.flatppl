@@ -7,19 +7,81 @@ The helicity convention is R(phi,theta,0), matching the reference converter.
 Child 2 adds the Jacob-Wick rotation by pi about y.
 %%%
 flatppl_compat = "0.1"
-mass_squared = p -> p[1] ^ 2 - p[2] ^ 2 - p[3] ^ 2 - p[4] ^ 2
-_spatial_dot = (p, P) -> p[2] * P[2] + p[3] * P[3] + p[4] * P[4]
-_spatial_norm = p -> sqrt(p[2] ^ 2 + p[3] ^ 2 + p[4] ^ 2)
-_boost_factor = (p, P, sign) -> _spatial_dot(p, P) / (sqrt(mass_squared(P)) * (P[1] + sqrt(mass_squared(P)))) + sign * p[1] / sqrt(mass_squared(P))
-_boost = (p, P, sign) -> [(P[1] * p[1] + sign * _spatial_dot(p, P)) / sqrt(mass_squared(P)), p[2] + _boost_factor(p, P, sign) * P[2], p[3] + _boost_factor(p, P, sign) * P[3], p[4] + _boost_factor(p, P, sign) * P[4]]
-boost_to_rest = (p, P) -> _boost(p, P, -1)
-boost_from_rest = (p, P) -> _boost(p, P, 1)
-_rot_z = (p, a) -> [p[1], p[2] * cos(a) - p[3] * sin(a), p[2] * sin(a) + p[3] * cos(a), p[4]]
-_rot_y = (p, a) -> [p[1], p[4] * sin(a) + p[2] * cos(a), p[3], p[4] * cos(a) - p[2] * sin(a)]
-_boost_z = (p, g, bg) -> [g * p[1] + bg * p[4], p[2], p[3], g * p[4] + bg * p[1]]
-_child_sign = child -> [1, -1][child]
-_phi = (P, child) -> ifelse(iszero(_spatial_norm(P)), 0.0, atan2(_child_sign(child) * P[3], _child_sign(child) * P[2]))
-_theta = (P, child) -> ifelse(iszero(_spatial_norm(P)), 0.0, atan2(sqrt(P[2] ^ 2 + P[3] ^ 2), _child_sign(child) * P[4]))
-helicity_frame = (p, P, child) -> _boost_z(_rot_y(_rot_y(_rot_z(p, -_phi(P, child)), -_theta(P, child)), -(child - 1) * pi), P[1] / sqrt(mass_squared(P)), -_spatial_norm(P) / sqrt(mass_squared(P)))
-_angles = p -> record(costheta = p[4] / _spatial_norm(p), phi = atan2(p[3], p[2]))
-helicity_angles = (p, P, child) -> _angles(helicity_frame(p, P, child))
+
+mass_squared(p) = p[1] ^ 2 - p[2] ^ 2 - p[3] ^ 2 - p[4] ^ 2
+
+_spatial_dot(p, P) = p[2] * P[2] + p[3] * P[3] + p[4] * P[4]
+
+_spatial_norm(p) = sqrt(p[2] ^ 2 + p[3] ^ 2 + p[4] ^ 2)
+
+_boost_factor(p, P, sign) = (
+    _spatial_dot(p, P) / (sqrt(mass_squared(P)) * (P[1] + sqrt(mass_squared(P))))
+    + sign * p[1] / sqrt(mass_squared(P))
+)
+
+_boost(p, P, sign) = (
+    [
+        (P[1] * p[1] + sign * _spatial_dot(p, P)) / sqrt(mass_squared(P)),
+        p[2] + _boost_factor(p, P, sign) * P[2],
+        p[3] + _boost_factor(p, P, sign) * P[3],
+        p[4] + _boost_factor(p, P, sign) * P[4]
+    ]
+)
+
+boost_to_rest(p, P) = _boost(p, P, -1)
+
+boost_from_rest(p, P) = _boost(p, P, 1)
+
+_rot_z(p, a) = [
+    p[1],
+    p[2] * cos(a) - p[3] * sin(a),
+    p[2] * sin(a) + p[3] * cos(a),
+    p[4]
+]
+
+_rot_y(p, a) = [
+    p[1],
+    p[4] * sin(a) + p[2] * cos(a),
+    p[3],
+    p[4] * cos(a) - p[2] * sin(a)
+]
+
+_boost_z(p, g, bg) = [
+    g * p[1] + bg * p[4],
+    p[2],
+    p[3],
+    g * p[4] + bg * p[1]
+]
+
+_child_sign(child) = [1, -1][child]
+
+_phi(P, child) = (
+    ifelse(
+        iszero(_spatial_norm(P)),
+        0.0,
+        atan2(_child_sign(child) * P[3], _child_sign(child) * P[2])
+    )
+)
+
+_theta(P, child) = (
+    ifelse(
+        iszero(_spatial_norm(P)),
+        0.0,
+        atan2(sqrt(P[2] ^ 2 + P[3] ^ 2), _child_sign(child) * P[4])
+    )
+)
+
+helicity_frame(p, P, child) = (
+    _boost_z(
+        _rot_y(
+            _rot_y(_rot_z(p, -_phi(P, child)), -_theta(P, child)),
+            -(child - 1) * pi
+        ),
+        P[1] / sqrt(mass_squared(P)),
+        -_spatial_norm(P) / sqrt(mass_squared(P))
+    )
+)
+
+_angles(p) = record(costheta = p[4] / _spatial_norm(p), phi = atan2(p[3], p[2]))
+
+helicity_angles(p, P, child) = _angles(helicity_frame(p, P, child))

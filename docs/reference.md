@@ -88,8 +88,6 @@ This tests the normal import facade, gradients, and `vmap` in both precisions on
 
 ## Sources
 
-The interface follows [FlatPPL PR 234](https://github.com/flatppl/flatppl-design/pull/234),
-head `1660121a3463e9856b979f15c826d3d08f6f41d4`, now closed in favor of a community library.
 The frame convention and LHCb formulas follow the
 [hand-written models and converter](https://github.com/Democratizing-Models/statsmodel-rosetta-stone/tree/31c309d593018c04b14c06c58940548c4bfcd566/src/physics/hadron/amplitude-serialization).
 The reference repository's license notice is preserved in `THIRD-PARTY-NOTICES.txt`.
