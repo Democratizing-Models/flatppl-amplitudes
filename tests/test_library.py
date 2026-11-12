@@ -103,12 +103,17 @@ class LibraryTests(unittest.TestCase):
         cases += [
             ("a.clebschgordan(1,0,1,0,0,0)", -1 / math.sqrt(3)),
             ("a.clebschgordan_doublearg(1,0,1,0,0,0)", 0),
-            ("a.ls_coupling(3,1,2,2,1,1,0)", 1 / math.sqrt(6)),
+            (
+                "a.ls_coupling(two_j=3,two_j1=1,two_j2=2,two_l=2,two_s=1,two_lambda1=1,two_lambda2=0)",
+                1 / math.sqrt(6),
+            ),
+            # J=9/2, L=4, S=1/2 and helicities (1/2,1).
+            ("a.ls_coupling(9,1,2,8,1,1,2)", 1 / math.sqrt(3)),
         ]
         self.check_cases(cases)
 
     def test_wigner_matrices(self):
-        for j in (1, 2, 3, 6):
+        for j in (1, 2, 9):
             beta, theta = 0.4, 0.7
             matrices = evaluate(
                 [

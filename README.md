@@ -7,9 +7,15 @@ angular-momentum couplings, Wigner matrices, Lorentz boosts, and Dalitz angles.
 flatppl_compat = "0.1"
 amp = load_module("https://github.com/Democratizing-Models/flatppl-amplitudes/archive/refs/heads/main.zip")
 
-coupling = amp.ls_coupling(3, 1, 2, 2, 1, 1, 0)
-rotation = amp.wignerd_matrix_doublearg(1, 0.4)
+coupling = amp.ls_coupling(
+    two_j = 3, two_j1 = 1, two_j2 = 2,
+    two_l = 2, two_s = 1, two_lambda1 = 1, two_lambda2 = 0)
+rotation = amp.wignerd_matrix_doublearg(two_j = 1, cosbeta = 0.4)
 ```
+
+The coupling describes a spin-3/2 parent decaying to spins 1/2 and 1, with
+orbital momentum 1, total spin 1/2, and helicities (1/2, 0). The example uses
+doubled angular momenta.
 
 With the Rust CLI, run `flatppl prepare model.flatppl` and approve the URL before
 compiling a model that imports it. The source ZIP contains `main.flatppl` inside
