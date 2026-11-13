@@ -6,7 +6,7 @@ Library version **0.1** is independent of the FlatPPL language version in `flatp
 
 ```flatppl
 flatppl_compat = "0.1"
-amp = load_module("https://github.com/Democratizing-Models/flatppl-amplitudes/archive/ea0f502ee4f67feb3a28e3fbdd7413f0d1a5408a.zip")
+amp = load_module("https://github.com/flatppl-community/flatppl-amplitudes/archive/ea0f502ee4f67feb3a28e3fbdd7413f0d1a5408a.zip")
 
 coupling = amp.ls_coupling(
     two_j = 3, two_j1 = 1, two_j2 = 2,
