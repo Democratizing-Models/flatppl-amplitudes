@@ -6,7 +6,7 @@ Library version **0.1** is independent of the FlatPPL language version in `flatp
 
 ```flatppl
 flatppl_compat = "0.1"
-amp = load_module("https://github.com/Democratizing-Models/flatppl-amplitudes/archive/refs/tags/v0.1.zip")
+amp = load_module("https://github.com/Democratizing-Models/flatppl-amplitudes/archive/a7465ec85c9c7502216453c8bd7518322a837571.zip")
 
 coupling = amp.ls_coupling(
     two_j = 3, two_j1 = 1, two_j2 = 2,
@@ -24,7 +24,7 @@ GitHub's repository folder. A local checkout also loads with
 `load_module("path/to/flatppl-amplitudes")` or `load_module("main.flatppl")`
 from a file in that checkout.
 
-The URL selects release `v0.1`. Use `/archive/<commit-sha>.zip` to pin an exact commit.
+The URL pins a source commit. `VERSION` records the library version; it does not imply a published release.
 GitHub's redirect and CORS policy currently prevent direct archive imports in
 the web playground.
 
