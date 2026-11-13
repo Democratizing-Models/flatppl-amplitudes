@@ -1,7 +1,9 @@
 # Function reference
 
 All functions below are exported by `main.flatppl`. Arguments are positional or named in the listed order.
-Masses and four-momentum components share one energy unit. Rotations use right-handed axes and act on vectors.
+Four-vectors are real arrays `[E, px, py, pz]`, with energy first and metric signature `(+,-,-,-)`.
+Natural units use $c=1$, so $p^2=E^2-p_x^2-p_y^2-p_z^2$. Masses and four-momentum components share one energy unit.
+Spatial axes are right-handed. Rotations are active: they transform vectors while the coordinate axes stay fixed.
 The domains below are caller obligations; the library does not validate a whole decay configuration.
 Lineshapes are complex amplitudes, not normalized probability densities.
 
@@ -166,7 +168,6 @@ This is the simplified form used in the reference LHCb model, not the full Bugg 
 ## Four-vectors and helicity frames
 
 Defined in [`src/kinematics.flatppl`](../src/kinematics.flatppl).
-Four-vectors are real arrays `[E, px, py, pz]`, with metric $\mathrm{diag}(1,-1,-1,-1)$.
 For a frame momentum $P$, write $M=\sqrt{(P^0)^2-|\mathbf P|^2}$.
 Future-timelike means $P^0>0$ and $M^2>0$.
 
