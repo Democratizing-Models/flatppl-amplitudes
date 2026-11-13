@@ -1,4 +1,6 @@
-# Function reference
+# Amplitudes reference
+
+Library version **0.1** · [Package overview](../README.md)
 
 All functions below are exported by `main.flatppl`. Arguments are positional or named in the listed order.
 Four-vectors are real arrays `[E, px, py, pz]`, with energy first and metric signature `(+,-,-,-)`.

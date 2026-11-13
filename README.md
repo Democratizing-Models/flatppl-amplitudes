@@ -1,5 +1,7 @@
 # FlatPPL amplitudes
 
+[Function reference](docs/reference.md)
+
 A FlatPPL library for hadron amplitude analysis: coupled-channel lineshapes,
 angular-momentum couplings, Wigner matrices, Lorentz boosts, and Dalitz angles.
 Library version **0.1** is independent of the FlatPPL language version in `flatppl_compat`.
