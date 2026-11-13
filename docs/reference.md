@@ -33,7 +33,9 @@ The finite factorial sums have no artificial spin cutoff, but cancellation limit
 
 <a id="clebschgordan"></a>**`clebschgordan(j1, m1, j2, m2, j, m)`** — the real Clebsch–Gordan coefficient in the Condon–Shortley convention:
 
-$$C^{jm}_{j_1m_1,j_2m_2}=\langle j_1m_1;j_2m_2\mid jm\rangle.$$
+```math
+C^{jm}_{j_1m_1,j_2m_2}=\langle j_1m_1;j_2m_2\mid jm\rangle.
+```
 
 Arguments:
 
@@ -55,10 +57,12 @@ In addition to the preceding selection rules, $2j_a+2m_a$, $2j+2m$, and $2j_1+2j
 
 <a id="ls_coupling"></a>**`ls_coupling(two_j, two_j1, two_j2, two_l, two_s, two_lambda1, two_lambda2)`** — the real LS-to-helicity coupling for a parent of spin $J$ decaying to spins $j_1,j_2$:
 
-$$H_{\lambda_1\lambda_2}^{LS;J}
+```math
+H_{\lambda_1\lambda_2}^{LS;J}
 =\sqrt{\frac{2L+1}{2J+1}}\,
 C^{S\lambda}_{j_1\lambda_1,j_2(-\lambda_2)}
-C^{J\lambda}_{L0,S\lambda},\qquad \lambda=\lambda_1-\lambda_2.$$
+C^{J\lambda}_{L0,S\lambda},\qquad \lambda=\lambda_1-\lambda_2.
+```
 
 Arguments:
 
@@ -70,8 +74,10 @@ The Clebsch–Gordan selection rules apply to both factors. Additional decay-cha
 
 <a id="wignerd_matrix"></a>**`wignerd_matrix(j, cosbeta)`** — returns the real $(2j+1)\times(2j+1)$ small Wigner matrix
 
-$$d^j_{m_1m_2}(\beta)=\langle jm_1\mid e^{-i\beta J_y}\mid jm_2\rangle,
-\qquad \beta=\arccos(\texttt{cosbeta})\in[0,\pi].$$
+```math
+d^j_{m_1m_2}(\beta)=\langle jm_1\mid e^{-i\beta J_y}\mid jm_2\rangle,
+\qquad \beta=\arccos(\mathrm{cosbeta})\in[0,\pi].
+```
 
 Arguments:
 
@@ -79,9 +85,9 @@ Arguments:
 - `cosbeta`: real polar-angle cosine in `interval(-1, 1)`.
 
 Rows and columns descend from $m=j$ to $m=-j$. Equivalent to [`wignerd_matrix_doublearg`](#wignerd_matrix_doublearg) with `two_j = 2*j`.
-Derivatives with respect to `cosbeta` are intended for the interior $-1<\texttt{cosbeta}<1$.
+Derivatives with respect to `cosbeta` are intended for the interior $-1<\mathrm{cosbeta}<1$.
 
-<a id="wignerd_matrix_doublearg"></a>**`wignerd_matrix_doublearg(two_j, cosbeta)`** — returns the small Wigner matrix for spin $j=\texttt{two_j}/2$.
+<a id="wignerd_matrix_doublearg"></a>**`wignerd_matrix_doublearg(two_j, cosbeta)`** — returns the small Wigner matrix for spin $j=\mathrm{two\_j}/2$.
 
 Arguments:
 
@@ -91,7 +97,9 @@ Arguments:
 The result has shape `(two_j + 1, two_j + 1)` and the ordering and rotation convention above.
 For spin $1/2$,
 
-$$d^{1/2}(\beta)=\begin{pmatrix}\cos(\beta/2)&-\sin(\beta/2)\\\sin(\beta/2)&\cos(\beta/2)\end{pmatrix}.$$
+```math
+d^{1/2}(\beta)=\begin{pmatrix}\cos(\beta/2)&-\sin(\beta/2)\\\sin(\beta/2)&\cos(\beta/2)\end{pmatrix}.
+```
 
 ## Lineshapes
 
@@ -100,9 +108,11 @@ $\lambda(x,y,z)=x^2+y^2+z^2-2xy-2yz-2zx$ for the Källén function.
 
 <a id="twobody_phasespace"></a>**`twobody_phasespace(sigma, ma, mb)`** — returns the complex dimensionless two-body phase-space factor
 
-$$\rho(\sigma;m_a,m_b)=
+```math
+\rho(\sigma;m_a,m_b)=
 \sqrt{1-\frac{(m_a+m_b)^2}{\sigma}}\,
-\sqrt{1-\frac{(m_a-m_b)^2}{\sigma}}.$$
+\sqrt{1-\frac{(m_a-m_b)^2}{\sigma}}.
+```
 
 Arguments:
 
@@ -116,9 +126,11 @@ Threshold values are defined, but derivatives can be singular there.
 
 <a id="resonance_multichannel_breitwigner"></a>**`resonance_multichannel_breitwigner(sigma, m, gsq, mas, mbs, ls, ds)`** — returns the coupled-channel amplitude
 
-$$\operatorname{BW}(\sigma)=\left[m^2-\sigma-i\sum_a g_a^2\rho(\sigma;m_{a1},m_{a2})
+```math
+\mathrm{BW}(\sigma)=\left[m^2-\sigma-i\sum_a g_a^2\rho(\sigma;m_{a1},m_{a2})
 \frac{z_a^{\ell_a}}{\chi_{\ell_a}(z_a)}\right]^{-1},\qquad
-z_a=\frac{d_a^2\lambda(\sigma,m_{a1}^2,m_{a2}^2)}{4\sigma}.$$
+z_a=\frac{d_a^2\lambda(\sigma,m_{a1}^2,m_{a2}^2)}{4\sigma}.
+```
 
 Arguments:
 
@@ -136,8 +148,10 @@ Two S-wave channels give the Flatté form in this coupling convention. Closed ch
 
 <a id="resonance_bugg_breitwigner"></a>**`resonance_bugg_breitwigner(sigma, m, width, sa, gamma)`** — returns the simplified LHCb Adler-zero amplitude
 
-$$\operatorname{BW}_{\rm Bugg}(\sigma)=
-\left[m^2-\sigma-i m\Gamma\frac{\sigma-s_A}{m^2-s_A}e^{-\gamma\sigma}\right]^{-1}.$$
+```math
+\mathrm{BW}_{\mathrm{Bugg}}(\sigma)=
+\left[m^2-\sigma-i m\Gamma\frac{\sigma-s_A}{m^2-s_A}e^{-\gamma\sigma}\right]^{-1}.
+```
 
 Arguments:
 
@@ -152,20 +166,24 @@ This is the simplified form used in the reference LHCb model, not the full Bugg 
 ## Four-vectors and helicity frames
 
 Defined in [`src/kinematics.flatppl`](../src/kinematics.flatppl).
-Four-vectors are real arrays `[E, px, py, pz]`, with metric $\operatorname{diag}(1,-1,-1,-1)$.
+Four-vectors are real arrays `[E, px, py, pz]`, with metric $\mathrm{diag}(1,-1,-1,-1)$.
 For a frame momentum $P$, write $M=\sqrt{(P^0)^2-|\mathbf P|^2}$.
 Future-timelike means $P^0>0$ and $M^2>0$.
 
 <a id="mass_squared"></a>**`mass_squared(p)`** — returns the real Minkowski norm squared
 
-$$p^2=E^2-p_x^2-p_y^2-p_z^2.$$
+```math
+p^2=E^2-p_x^2-p_y^2-p_z^2.
+```
 
 `p` is a real four-vector. The result has units of energy squared and may be negative for a spacelike vector.
 
 <a id="boost_to_rest"></a>**`boost_to_rest(p, P)`** — returns the four-vector $p'$ after a rotation-free boost into the rest frame of $P$:
 
-$$E'=\frac{P^0E-\mathbf P\cdot\mathbf p}{M},\qquad
-\mathbf p'=\mathbf p+\left[\frac{\mathbf P\cdot\mathbf p}{M(P^0+M)}-\frac{E}{M}\right]\mathbf P.$$
+```math
+E'=\frac{P^0E-\mathbf P\cdot\mathbf p}{M},\qquad
+\mathbf p'=\mathbf p+\left[\frac{\mathbf P\cdot\mathbf p}{M(P^0+M)}-\frac{E}{M}\right]\mathbf P.
+```
 
 Arguments:
 
@@ -176,8 +194,10 @@ The result has four real components in the same energy unit. It maps $P$ to $(M,
 
 <a id="boost_from_rest"></a>**`boost_from_rest(p, P)`** — returns the inverse of [`boost_to_rest`](#boost_to_rest), with components
 
-$$E'=\frac{P^0E+\mathbf P\cdot\mathbf p}{M},\qquad
-\mathbf p'=\mathbf p+\left[\frac{\mathbf P\cdot\mathbf p}{M(P^0+M)}+\frac{E}{M}\right]\mathbf P.$$
+```math
+E'=\frac{P^0E+\mathbf P\cdot\mathbf p}{M},\qquad
+\mathbf p'=\mathbf p+\left[\frac{\mathbf P\cdot\mathbf p}{M(P^0+M)}+\frac{E}{M}\right]\mathbf P.
+```
 
 Arguments:
 
@@ -194,12 +214,14 @@ Arguments:
 - `P`: future-timelike real frame four-vector.
 - `child`: integer one or two, selecting the first- or second-child convention.
 
-Let $\epsilon=3-2\,\texttt{child}$, $\phi=\operatorname{atan2}(\epsilon P_y,\epsilon P_x)$,
-and $\theta=\operatorname{atan2}(\sqrt{P_x^2+P_y^2},\epsilon P_z)$.
+Let $\epsilon=3-2\,\mathrm{child}$, $\phi=\mathrm{atan2}(\epsilon P_y,\epsilon P_x)$,
+and $\theta=\mathrm{atan2}(\sqrt{P_x^2+P_y^2},\epsilon P_z)$.
 The transformation is
 
-$$p'=B_z(-v)\,R_y[-(\texttt{child}-1)\pi]\,R_y(-\theta)\,R_z(-\phi)\,p,
-\qquad v=|\mathbf P|/P^0,$$
+```math
+p'=B_z(-v)\,R_y[-(\mathrm{child}-1)\pi]\,R_y(-\theta)\,R_z(-\phi)\,p,
+\qquad v=|\mathbf P|/P^0,
+```
 
 where $B_z(-v)$ has $E'=\gamma_v E-\gamma_v v p_z$ and $p'_z=\gamma_v p_z-\gamma_v v E$.
 At $\mathbf P=0$, the angle convention sets $\phi=\theta=0$.
@@ -215,7 +237,9 @@ No angle is defined when $\mathbf q=0$.
 
 Defined in [`src/dalitz.flatppl`](../src/dalitz.flatppl). Let
 
-$$s_0=m_0^2,\qquad (s_1,s_2,s_3)=(m_{23}^2,m_{31}^2,m_{12}^2).$$
+```math
+s_0=m_0^2,\qquad (s_1,s_2,s_3)=(m_{23}^2,m_{31}^2,m_{12}^2).
+```
 
 `sigmas = [s1, s2, s3]` and `ms = [m1, m2, m3]` describe a physical three-body decay, with $m_0>0$, $m_a\geq0$ and $s_1+s_2+s_3=s_0+m_1^2+m_2^2+m_3^2$.
 The invariant sum alone does not establish physical kinematics. Chains one through three are $(23)1$, $(31)2$, $(12)3$.
@@ -234,9 +258,11 @@ Arguments:
 
 For the cyclic ordering $(i,j,k)=(2,3,1),(3,1,2),(1,2,3)$,
 
-$$\cos\theta_k=
+```math
+\cos\theta_k=
 \frac{2s_k(s_j-m_k^2-m_i^2)-(s_k+m_i^2-m_j^2)(s_0-s_k-m_k^2)}
-{Q(s_0,m_k^2,s_k)\,Q(s_k,m_i^2,m_j^2)}.$$
+{Q(s_0,m_k^2,s_k)\,Q(s_k,m_i^2,m_j^2)}.
+```
 
 The result is real and dimensionless, with the boundary convention above.
 
@@ -251,18 +277,24 @@ Arguments:
 For equal chains, the result is one. For distinct chains, let $n=6-k-l$ be the remaining daughter index.
 For the parent,
 
-$$\cos\zeta_0^{kl}=\frac{(s_0+m_k^2-s_k)(s_0+m_l^2-s_l)-2s_0(s_n-m_k^2-m_l^2)}
-{Q(s_0,m_k^2,s_k)\,Q(s_0,m_l^2,s_l)}.$$
+```math
+\cos\zeta_0^{kl}=\frac{(s_0+m_k^2-s_k)(s_0+m_l^2-s_l)-2s_0(s_n-m_k^2-m_l^2)}
+{Q(s_0,m_k^2,s_k)\,Q(s_0,m_l^2,s_l)}.
+```
 
 For a massive daughter that is the spectator of chain $k$,
 
-$$\cos\zeta_k^{kl}=\frac{2m_k^2(s_n-s_0-m_n^2)+(s_0+m_k^2-s_k)(s_l-m_k^2-m_n^2)}
-{Q(s_0,m_k^2,s_k)\,Q(s_l,m_k^2,m_n^2)}.$$
+```math
+\cos\zeta_k^{kl}=\frac{2m_k^2(s_n-s_0-m_n^2)+(s_0+m_k^2-s_k)(s_l-m_k^2-m_n^2)}
+{Q(s_0,m_k^2,s_k)\,Q(s_l,m_k^2,m_n^2)}.
+```
 
 The case $i=l$ follows by exchanging $k$ and $l$. For the remaining massive daughter,
 
-$$\cos\zeta_n^{kl}=\frac{2m_n^2(m_k^2+m_l^2-s_n)+(s_k-m_n^2-m_l^2)(s_l-m_n^2-m_k^2)}
-{Q(s_k,m_n^2,m_l^2)\,Q(s_l,m_n^2,m_k^2)}.$$
+```math
+\cos\zeta_n^{kl}=\frac{2m_n^2(m_k^2+m_l^2-s_n)+(s_k-m_n^2-m_l^2)(s_l-m_n^2-m_k^2)}
+{Q(s_k,m_n^2,m_l^2)\,Q(s_l,m_n^2,m_k^2)}.
+```
 
 For a massless daughter, the result is one by convention. All results are real and dimensionless, with the boundary convention above.
 
