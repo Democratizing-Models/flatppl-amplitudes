@@ -14,7 +14,7 @@ coupling = amp.ls_coupling(
 rotation = amp.wignerd_matrix_doublearg(two_j = 1, cosbeta = 0.4)
 ```
 
-Spin arguments use doubled angular momenta. The coupling describes a spin-3/2 decay to spins 1/2 and 1, with orbital momentum 1. Array dimensions must be fixed before compilation.
+The example uses doubled angular momenta. The coupling describes a spin-3/2 decay to spins 1/2 and 1, with orbital momentum 1. Array dimensions must be fixed before compilation.
 
 The [resonance example](examples/playground.flatppl) infers a pole mass from synthetic intensities. The [LHCb examples](docs/lhcb-examples.md) present kinematics, amplitude models, and observables in that order.
 
