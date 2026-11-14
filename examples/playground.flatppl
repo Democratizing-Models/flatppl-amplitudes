@@ -1,0 +1,30 @@
+%%%
+# Two-channel resonance inference
+
+Infer the Lambda(1405) pole mass from five illustrative intensity measurements.
+All masses use GeV. Intensities and Gaussian errors are synthetic and do not
+represent an experimental amplitude analysis.
+%%%
+flatppl_compat = "0.1"
+a = load_module("https://raw.githubusercontent.com/flatppl-community/flatppl-amplitudes/858849d2d32dd0593eba37ca3e1d955f497ef796/main.flatppl")
+
+% Kinematics
+masses = [1.36, 1.38, 1.40, 1.42, 1.44]
+
+% Amplitude model: p K and Sigma pi channels, including closed-channel continuation.
+pole_mass ~ Uniform(interval(1.39, 1.42))
+amplitude(mass, pole) = a.resonance_multichannel_breitwigner(
+    mass ^ 2, pole, [0.328725260215546, 0.328725260215546],
+    [0.938272046, 1.18937], [0.493677, 0.13957018], [0, 0], [1.5, 1.5])
+intensity(mass, pole) = real(amplitude(mass, pole)) ^ 2 + imag(amplitude(mass, pole)) ^ 2
+
+% Observable
+predicted = intensity.(masses, pole_mass)
+observed_data = [19, 35, 91, 160, 42]
+observed ~ Normal.(predicted, 5.0)
+Pi_prior = lawof(record(pole_mass = pole_mass))
+K_model = kernelof(record(observed = observed), pole_mass = pole_mass)
+L = likelihoodof(K_model, record(observed = observed_data))
+Pi_post = bayesupdate(L, Pi_prior)
+theta_default = record(pole_mass = 1.4051)
+Theta = cartprod(pole_mass = interval(1.39, 1.42))

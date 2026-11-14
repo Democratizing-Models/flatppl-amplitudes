@@ -341,3 +341,52 @@ The Dalitz formulas are Eqs. 20, 22, 26, and 29 of
 [Mikhasenko et al., PRD 101 (2020) 034033](https://doi.org/10.1103/PhysRevD.101.034033).
 The simplified Bugg form follows
 [LHCb, PRD 108 (2023) 012023](https://doi.org/10.1103/PhysRevD.108.012023).
+
+
+## Examples and imports
+
+The coupling describes a spin-3/2 parent decaying to spins 1/2 and 1, with
+orbital momentum 1, total spin 1/2, and helicities (1/2, 0). The example uses
+doubled angular momenta.
+
+With the Rust CLI, run `flatppl prepare model.flatppl` and approve the URL before
+compiling a model that imports it. The source ZIP contains `main.flatppl` inside
+GitHub's repository folder. A local checkout also loads with
+`load_module("path/to/flatppl-amplitudes")` or `load_module("main.flatppl")`
+from a file in that checkout.
+
+A source ZIP can be loaded with `load_module("https://github.com/flatppl-community/flatppl-amplitudes/archive/ea0f502ee4f67feb3a28e3fbdd7413f0d1a5408a.zip")`. The URL pins a source commit. `VERSION` records the library version; it does not imply a published release.
+GitHub's redirect and CORS policy currently prevent direct archive imports in
+the web playground.
+
+See the [function reference](reference.md) for all 15 functions, domains,
+phase conventions, and test commands. Spin arguments that determine array
+sizes must be fixed before compilation.
+
+[The Lambda(1405) example](../examples/lambda1405.flatppl) evaluates a two-channel
+lineshape, including the closed-channel continuation. Values, gradients, and
+`vmap` pass checks on CPU and GH200 in float32 and float64.
+
+The [complete LHCb examples](lhcb-examples.md) cover Λc, Λb, and both B+ amplitudes,
+with kinematics, amplitude model, and observable presented in that order.
+Each helper module in `src/` can also be loaded directly.
+
+MIT license. See [LICENSE](../LICENSE) and [third-party notices](../THIRD-PARTY-NOTICES.txt).
+
+## Resonance inference
+
+The [live example](https://live.flatppl.org/#model=https%3A%2F%2Fraw.githubusercontent.com%2Fflatppl-community%2Fflatppl-amplitudes%2Fmain%2Fexamples%2Fplayground.flatppl&target=Pi_post) fits the Lambda(1405) pole mass using five synthetic intensity measurements.
+It fixes the two channel couplings and uses a uniform prior on `[1.39,1.42]` GeV.
+The likelihood has independent Gaussian errors with standard deviation `5.0` in intensity units.
+It scores measured intensities, rather than treating the lineshape as a normalized mass density.
+No lineshape-normalization integral is required.
+
+The example follows kinematics, amplitude model, and observable sections.
+The existing [two-channel evaluation](../examples/lambda1405.flatppl) exposes invariant mass squared as a runtime input.
+Both include the closed-channel continuation below the proton–kaon threshold.
+
+```sh
+FLATPPL_JS_DIR=/path/to/flatppl-js python tests/test_playground.py
+```
+
+The posterior test uses independent complex arithmetic and checks three parameter points.
